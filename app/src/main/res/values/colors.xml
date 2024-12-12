@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#1B1B1B</color>
+    <color name="grey8">#7E7E7E</color>
+    <color name="rectanglecolor">#EDEDED</color>
+    <color name="buttonbackgroudcolor">#1B1B1B</color>
+    <color name="textview">#A5A5A5</color>
+
+
+
 </resources>
