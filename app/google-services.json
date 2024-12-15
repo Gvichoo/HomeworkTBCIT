@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "518960152395",
+    "project_id": "logintbc-df837",
+    "storage_bucket": "logintbc-df837.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518960152395:android:9065623b1a3deb6b63b2ce",
+        "android_client_info": {
+          "package_name": "com.example.homeworktbc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFzyg8SOXjkj1XZvrk_gEoMDeK8qNL4Uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

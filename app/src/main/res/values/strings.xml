@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">HomeworkTBC</string>
+    <string name="log_in">LOG IN</string>
+    <string name="register">REGISTER</string>
+    <string name="next">Next</string>
+    <string name="password">Password:</string>
+    <string name="email">Email:</string>
+    <string name="register1">Register</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="username">Username:</string>
+    <string name="register2">Register</string>
+    <string name="terms">By signing up, you agree to Photo’s Terms of Service and Privacy Policy.</string>
+    <string name="next1">Next</string>
+    <string name="password1">Password:</string>
+    <string name="email1">Email:</string>
+    <string name="log_in1">Log In</string>
+    <string name="loged_in_successfully">Loged in successfully</string>
 </resources>
