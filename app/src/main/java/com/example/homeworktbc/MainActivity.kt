@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateCounts() {
         binding.activeUsersTV.text = "Active Users: $activeUsers"
-        binding.removedUsersTV.text = "Deleted Users: $removedUsers"
+        binding.removedUsersTV.text = "Removed Users: $removedUsers"
     }
 
     private fun showOperation(outPut: String, color: Int) {

@@ -98,7 +98,7 @@
         android:id="@+id/removedUsersTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/deleted_users_0"
+        android:text="@string/removed_users_0"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/activeUsersTV"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,4 +9,5 @@
     <string name="add_user">Add User</string>
     <string name="remove_user">Remove User</string>
     <string name="update_user">Update User</string>
+    <string name="removed_users_0">Removed Users: 0</string>
 </resources>
