@@ -72,6 +72,7 @@
         android:textColor="@color/black"
         android:focusable="true"
         android:drawableStart="@drawable/lock_svgrepo_com"
+        android:drawableEnd="@drawable/eye_password_hide_svgrepo_com"
         />
     <CheckBox
         android:layout_width="wrap_content"
