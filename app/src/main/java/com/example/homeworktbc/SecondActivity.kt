@@ -32,6 +32,12 @@ class SecondActivity : AppCompatActivity() {
                 signUpUser(email, password)
             }
         }
+
+        binding.checkbox.setOnCheckedChangeListener{_,isChecked ->
+            if(isChecked){
+                Toast.makeText(this,"Email and password will be remembered!",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
     private fun validateInput(email: String, password: String): Boolean {
         if (email.isEmpty() && password.isEmpty() || password.length < 6 ){

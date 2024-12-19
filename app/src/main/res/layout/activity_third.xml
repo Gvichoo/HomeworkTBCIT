@@ -73,24 +73,23 @@
         android:focusable="true"
         android:drawableStart="@drawable/lock_svgrepo_com"
         />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/tochka"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox"
         app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintBottom_toTopOf="@id/signIn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="110dp"
-        android:background="@drawable/remember"
+        android:layout_marginStart="110dp"
         />
     <TextView
+        android:id="@+id/remember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/password"
-        app:layout_constraintStart_toEndOf="@+id/tochka"
+        app:layout_constraintStart_toEndOf="@+id/checkbox"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="15dp"
+
         android:text="Remember me"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -99,7 +98,7 @@
         android:id="@+id/signIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tochka"
+        app:layout_constraintTop_toBottomOf="@+id/remember"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/button1"
@@ -107,7 +106,7 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textAllCaps="false"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="23dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         />
