@@ -1,4 +1,4 @@
-package com.example.usersapp
+package com.example.homeworktbc
 
 import User
 import android.content.Intent
@@ -7,7 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.homeworktbc.databinding.ActivityMainBinding
-import java.time.format.DateTimeFormatter
+import com.example.usersapp.AddUser
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         users.addAll(
             listOf(
-                User(1, "გრიშა", "ონიანი", "1724647601641", "სტალინის სახლმუზეუმი", "grisha@mail.ru"),
+                User(1, "grisha", "oniani", "1724647601641", "სტალინის სახლმუზეუმი", "grisha@mail.ru"),
                 User(2, "Jemal", "Kakauridze", "1714647601641", "თბილისი, ლილოს მიტოვებული ქარხანა", "jemal@gmail.com")
             )
         )
@@ -33,17 +34,17 @@ class MainActivity : AppCompatActivity() {
             if (user != null) {
                 binding.result.text = "User: ${user.firstName} ${user.lastName} - Birthday: ${(user.birthday)}"
                 binding.result.visibility = View.VISIBLE
-                binding.btnAddUser.visibility = View.GONE
+                binding.addUser.visibility = View.GONE
             } else {
                 binding.result.text = "User not found"
                 binding.result.visibility = View.VISIBLE
-                binding.btnAddUser.visibility = View.VISIBLE
+                binding.addUser.visibility = View.VISIBLE
             }
         }
 
-        binding.btnAddUser.setOnClickListener {
+        binding.addUser.setOnClickListener {
             val intent = Intent(this, AddUser::class.java)
-            startActivityForResult(intent, ADD_USER_REQUEST_CODE)
+            startActivity(intent)
         }
     }
 
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         return users.find {
             it.firstName.contains(searchText) ||
                     it.lastName.contains(searchText)
+
         }
     }
 

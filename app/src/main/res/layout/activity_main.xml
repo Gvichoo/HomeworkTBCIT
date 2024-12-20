@@ -23,16 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User not found"
-        android:visibility="gone"
         android:textColor="@color/black"
         android:gravity="center"
         android:paddingTop="20dp"
+        android:visibility="gone"
         />
 
     <Button
-        android:id="@+id/btnAddUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New User"
-        android:visibility="gone" />
+        android:id="@+id/addUser"
+        android:text="add user"/>
 </LinearLayout>
