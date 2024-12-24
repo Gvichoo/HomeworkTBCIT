@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="backgroundImage">#EDF1FA</color>
+    <color name="Price">#96A7AF</color>
+    <color name="btnUnSelect">#30444E</color>
+    <color name="btnSelect">#3ED598</color>
+    <color name="appBackground">#1F2E35</color>
+    <color name="textUnSelected">#96A7AF</color>
 </resources>
