@@ -22,12 +22,10 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bindCategory()
     }
-    private var selectedCategoryPosition: Int = run {
-        val idx = categories.indexOfFirst {
-            it.name.lowercase() == "all"
-        }
-        if (idx == -1) 0 else idx
-    }
+    private var selectedCategoryPosition: Int = categories.find {
+        it.name.equals("all", ignoreCase = true)
+    }?.let { categories.indexOf(it) } ?: 0
+
 
     inner class CategoryViewHolder(private val binding: CategoryButtonsBinding) :
         RecyclerView.ViewHolder(binding.root) {
