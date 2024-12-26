@@ -24,24 +24,31 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        listener()
+    }
+    private fun listener(){
         binding.btnSaveAddress.setOnClickListener {
-            val location = binding.etLocation.text?.toString()?.trim()
-            val address = binding.etAddress.text?.toString()?.trim()
+            val location = binding.etLocation.text.toString()
+            val address = binding.etAddress.text.toString()
 
-            if (location.isNullOrEmpty() || address.isNullOrEmpty()) {
+            if (location.isEmpty() || address.isEmpty()) {
                 Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Pass data to HomeFragment
+            val newHome = Home(
+                id = id,
+                image = null,
+                title = location,
+                address = address
+            )
+
             val bundle = Bundle().apply {
-                putString("location", location)
-                putString("address", address)
+                putParcelable("newItem", newHome)
             }
-            findNavController().navigate(R.id.AddFragment, bundle)
+            findNavController().navigate(R.id.homeFragment2, bundle)
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

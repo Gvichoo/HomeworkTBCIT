@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworktbc.databinding.FragmentHomeBinding
 
@@ -13,9 +14,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var addresses = mutableListOf(
-        Home(1, null, "Saba", "Varketili"),
-        Home(2, null, "John", "Downtown"),
-        Home(3, null, "Jane", "Midtown")
+        Home(1, R.drawable.img_1, "Home", "SBI Building, street 3, Software Park"),
+        Home(1, R.drawable.img, "Office", "SBI Building, street 3, Software Park"),
+        Home(1, null, "Saba", "Varketili")
     )
 
     override fun onCreateView(
@@ -24,20 +25,21 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
+        listener()
+
+
 
         arguments?.let {
-            val location = it.getString("location")
-            val address = it.getString("address")
-
-            if (!location.isNullOrEmpty() && !address.isNullOrEmpty()) {
-                val newHome = Home(addresses.size + 1, null, location, address)
-                addresses.add(newHome)
-                addressAdapter.submitList(addresses.toList()) // Create a new list for DiffUtil
+            val newHome = it.getParcelable<Home>("newItem") // Retrieve the Home object passed from AddFragment
+            newHome?.let { newItem ->
+                addresses.add(newItem)
+                addressAdapter.submitList(addresses.toList())
             }
         }
     }
@@ -45,11 +47,19 @@ class HomeFragment : Fragment() {
     private fun setUp() {
         binding.recyclerViewAddresses1.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewAddresses1.adapter = addressAdapter
-        addressAdapter.submitList(addresses) // Populate initially
+        addressAdapter.submitList(addresses)
+
+    }
+    private fun listener(){
+        binding.btnAddNewAddress.setOnClickListener {
+            findNavController().navigate(R.id.AddFragment)
+        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

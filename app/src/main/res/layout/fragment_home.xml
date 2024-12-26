@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="70dp"
-        android:text="Delivery address"
+        android:text="@string/delivery_address"
         android:textSize="25sp"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -28,6 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/btnAddNewAddress"
         android:layout_marginTop="70dp"
+        android:layout_marginBottom="20dp"
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddNewAddress"
@@ -37,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="200dp"
         android:background="@drawable/add_address_button"
-        android:text=" Add new addres"
+        android:text="@string/add_new_addres"
         android:textColor="@color/white"
         android:textAllCaps="false"
         android:textSize="19sp"

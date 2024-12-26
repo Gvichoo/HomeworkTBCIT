@@ -2,4 +2,14 @@
     <string name="app_name">HomeworkTBC</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="add_new_addres">Add new addres</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="enter_location">Enter Location</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_image">Enter Image</string>
+    <string name="save_address">Save Address</string>
+    <string name="edit">Edit</string>
+    <string name="my_office">My Office</string>
+    <string name="send_to">SEND TO</string>
 </resources>

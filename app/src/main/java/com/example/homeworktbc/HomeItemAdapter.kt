@@ -25,13 +25,14 @@ class HomeAddressAdapter :ListAdapter<Home,HomeAddressAdapter.AddressViewHolder>
 
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
         holder.onBind(getItem(position))
+
     }
 
-    inner class AddressViewHolder(val binding :HomeViewBinding ) : RecyclerView.ViewHolder(binding.root){
-        fun onBind(home: Home){
+    inner class AddressViewHolder(private val binding :HomeViewBinding ) : RecyclerView.ViewHolder(binding.root){
+        fun onBind(item: Home){
             binding.apply {
-                tvAddress.text = home.address
-                tvLocation.text = home.title
+                tvAddress.text = item.address
+                tvLocation.text = item.title
 
             }
 
