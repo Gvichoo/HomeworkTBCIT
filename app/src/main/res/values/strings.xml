@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">HomeworkTBC</string>
+    <string name="pending_delivered" />
+    <string name="_13_05_2021">_13_05_2021</string>
+    <string name="order">order</string>
 </resources>
