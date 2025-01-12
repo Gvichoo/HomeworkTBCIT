@@ -121,7 +121,7 @@
                 app:layout_constraintStart_toStartOf="@id/circle"
                 android:background="@drawable/corner"
                 android:textColor="@color/item_text_color"
-                android:text="@string/in_delivery"
+                android:text="@string/completed"
                 android:textAllCaps="false"
                 android:textSize="10sp"/>
 
@@ -137,9 +137,10 @@
                 android:layout_marginTop="15dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLeaveReview"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:text="@string/track_order"
+                android:text="@string/leave_review"
                 android:background="@drawable/corner2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -5,55 +5,60 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.homeworktbc.databinding.FragmentCompletedOrdersBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CompletedOrdersFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CompletedOrdersFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCompletedOrdersBinding
+    private lateinit var adapter: CompletedFragmentsAdapter
+
+    private val itemsList = listOf(
+        Items2(
+            name = "Modern Wingback Chair",
+            image = R.drawable.chair,
+            color = "red",
+            price = "$280.00",
+            qtyNum = 2
+        ),
+        Items2(
+            name = "Chair",
+            image = R.drawable.chair2,
+            color = "BLue",
+            price = "$500.00",
+            qtyNum = 1
+        ),
+        Items2(
+            name = "Chair ",
+            image = R.drawable.chair,
+            color = "red",
+            price = "$150.00",
+            qtyNum = 3
+        ),
+        Items2(
+            name = "Chair chair",
+            image = R.drawable.chair2,
+            color = "blue",
+            price = "$200.00",
+            qtyNum = 1
+        )
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_completed_orders, container, false)
+    ): View {
+        binding = FragmentCompletedOrdersBinding.inflate(inflater, container, false)
+
+        adapter = CompletedFragmentsAdapter()
+        binding.rvActive.layoutManager = LinearLayoutManager(context)
+        binding.rvActive.adapter = adapter
+
+        adapter.submitList(itemsList)
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CompletedOrdersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CompletedOrdersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
