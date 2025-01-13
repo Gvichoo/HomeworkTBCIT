@@ -7,7 +7,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class MyFragmentAdapter(
     private val fragments : List<Fragment>,
+    //Manages fragments lifecycle
     fragmentManager : FragmentManager,
+    //Provides lifecycle awareness for the adapter to optimize memory usage and ensure fragments are appropriately managed.
     lifeCycle : Lifecycle
 ) : FragmentStateAdapter(
     fragmentManager,

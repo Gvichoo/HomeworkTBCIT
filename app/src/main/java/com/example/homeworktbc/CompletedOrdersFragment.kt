@@ -11,7 +11,9 @@ import com.example.homeworktbc.databinding.FragmentCompletedOrdersBinding
 
 class CompletedOrdersFragment : Fragment() {
 
-    private lateinit var binding: FragmentCompletedOrdersBinding
+    private var _binding: FragmentCompletedOrdersBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var adapter: CompletedFragmentsAdapter
 
     private val itemsList = listOf(
@@ -49,16 +51,19 @@ class CompletedOrdersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCompletedOrdersBinding.inflate(inflater, container, false)
+        _binding = FragmentCompletedOrdersBinding.inflate(inflater, container, false)
 
+        setUp()
+
+        return binding.root
+    }
+
+    private fun setUp(){
         adapter = CompletedFragmentsAdapter()
         binding.rvActive.layoutManager = LinearLayoutManager(context)
         binding.rvActive.adapter = adapter
-
+        //Takes new list
         adapter.submitList(itemsList)
-
-
-        return binding.root
     }
 
 }
