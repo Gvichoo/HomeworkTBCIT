@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">HomeworkTBC</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="payment">Payment</string>
+    <string name="card_management">Card Management</string>
+    <string name="or_check_out_with">or check out with</string>
+    <string name="add_new">Add new +</string>
+    <string name="add_new_card">Add new card</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="cvv">CVV</string>
+    <string name="expires">Expires</string>
+    <string name="card_number">Card Number</string>
+    <string name="add_card">Add card</string>
+    <string name="yes">Yes</string>
 </resources>
