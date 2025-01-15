@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.fragment.app.DialogFragment
 import com.example.homeworktbc.dataClasses.Card
 import com.example.homeworktbc.databinding.FragmentDeleteCardBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class DeleteCardFragment : DialogFragment() {
+class DeleteCardFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentDeleteCardBinding? = null
     private val binding get() = _binding!!
@@ -42,6 +42,7 @@ class DeleteCardFragment : DialogFragment() {
         cardToDelete = card
     }
 
+    //What happens after after confirming delete
     fun setOnCardDeleteListener(listener: (Card) -> Unit) {
         onCardDeleteListener = listener
     }

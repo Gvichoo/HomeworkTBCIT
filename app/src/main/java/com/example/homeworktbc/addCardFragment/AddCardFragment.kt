@@ -36,8 +36,9 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding>(FragmentAddCardBind
             }
 
             btnAddCard.setOnClickListener {
-                if (etCardNumber.text.isNullOrEmpty() || etCardHolder.text.isNullOrEmpty() || etExpires.text.isNullOrEmpty()) {
-                    Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                if (etCardNumber.text.isNullOrEmpty() || etCardNumber.text.length !=16 || etCardHolder.text.isNullOrEmpty() ||etCardHolder.text.length <11
+                    || etExpires.text.isNullOrEmpty() || etExpires.text.length != 5){
+                    Toast.makeText(context, "Invalid Fields", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
@@ -49,7 +50,6 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding>(FragmentAddCardBind
                 )
 
                 val action = AddCardFragmentDirections.actionAddCardFragmentToPaymentFragment(card)
-
                 findNavController().navigate(action)
             }
         }

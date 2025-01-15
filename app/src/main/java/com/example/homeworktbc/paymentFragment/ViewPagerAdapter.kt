@@ -12,17 +12,50 @@ class ViewPagerAdapter : ListAdapter<Card, ViewPagerAdapter.ViewPagerHolder>(Car
 
     private var onItemLongClickListener: ((Int) -> Unit)? = null
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerHolder {
+        val binding = CardsLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewPagerHolder(binding)
 
-    fun setOnItemLongClickListener(listener: (Int) -> Unit) {
-        onItemLongClickListener = listener
     }
+
+    override fun onBindViewHolder(holder: ViewPagerHolder, position: Int) {
+        val card = getItem(position)
+        holder.bind(card)
+
+        holder.itemView.setOnLongClickListener {
+            onItemLongClickListener?.invoke(position)
+            true
+        }
+
+    }
+
+    override fun getItemCount(): Int {
+        return currentList.size
+    }
+
+
+
+    class CardDiffUtil : DiffUtil.ItemCallback<Card>() {
+        override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Card, newItem: Card): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+
+
     inner class ViewPagerHolder(private val binding: CardsLayoutBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
         fun bind(card: Card) {
+
             binding.ivCard.setImageResource(card.card.img)
             binding.cardNumber.text = card.cardNumber.toString()
             binding.cardHolderName.text = card.cardHolderName
             binding.tvValid.text = card.valid
             binding.cardNumber.text = formatCardNumber(card.cardNumber)
+
         }
         private fun formatCardNumber(cardNumber: Long): String {
             val cardString = cardNumber.toString()
@@ -43,35 +76,8 @@ class ViewPagerAdapter : ListAdapter<Card, ViewPagerAdapter.ViewPagerHolder>(Car
 
             return formatted.toString()
         }
-
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerHolder {
-        val binding = CardsLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewPagerHolder(binding)
-
-    }
-
-    override fun onBindViewHolder(holder: ViewPagerHolder, position: Int) {
-        val card = getItem(position)
-        holder.bind(card)
-
-        holder.itemView.setOnLongClickListener {
-            onItemLongClickListener?.invoke(position)
-            true
-        }
-
-    }
-
-    override fun getItemCount(): Int = currentList.size
-
-    class CardDiffUtil : DiffUtil.ItemCallback<Card>() {
-        override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Card, newItem: Card): Boolean {
-            return oldItem == newItem
-        }
+    fun setOnItemLongClickListener(listener: (Int) -> Unit) {
+        onItemLongClickListener = listener
     }
 }

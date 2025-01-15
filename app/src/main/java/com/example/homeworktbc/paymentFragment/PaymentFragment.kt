@@ -22,29 +22,50 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(FragmentPaymentBind
 
     override fun start() {
 
+        setUpViewPager()
+
+        deleteCard()
+
+        addPassedCard()
+
+        addCard()
+
+        back()
+
+        navigateToAddFragment()
+
+    }
+    private fun setUpViewPager(){
         viewPagerAdapter = ViewPagerAdapter()
         binding.viewPager.adapter = viewPagerAdapter
         viewPagerAdapter.submitList(cardList)
+    }
 
+    private fun deleteCard(){
         viewPagerAdapter.setOnItemLongClickListener { position ->
             if (position < cardList.size) {
                 val card = cardList[position]
-                showDeleteCardBottomSheet(card)
+                deleteCardBottomSheet(card)
             }
         }
+    }
 
+    private fun addPassedCard(){
         //Add the passed card to the list
         args.card?.let {
             cardList.add(it)
             //Update list
             viewPagerAdapter.submitList(cardList)
         }
+    }
 
+    private fun addCard(){
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.addCardFragment)
         }
-        navigateToAddFragment()
+    }
 
+    private fun back(){
         binding.btnBack1.setOnClickListener{
             findNavController().popBackStack()
         }
@@ -56,9 +77,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(FragmentPaymentBind
         }
     }
 
-
-
-    private fun showDeleteCardBottomSheet(card: Card) {
+    private fun deleteCardBottomSheet(card: Card) {
         val deleteCardFragment = DeleteCardFragment()
 
         deleteCardFragment.setCardToDelete(card)
@@ -71,7 +90,6 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(FragmentPaymentBind
     private fun deleteCard(cardToDelete: Card) {
         val newList = cardList.toMutableList()
         newList.remove(cardToDelete)
-
         viewPagerAdapter.submitList(newList)
     }
 
