@@ -1,21 +1,58 @@
 package com.example.homeworktbc.addCardFragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.R
+import com.example.homeworktbc.baseClass.BaseFragment
+import com.example.homeworktbc.dataClasses.Card
+import com.example.homeworktbc.dataClasses.CardTypes
+import com.example.homeworktbc.databinding.FragmentAddCardBinding
 
 
-class AddCardFragment : Fragment() {
+class AddCardFragment : BaseFragment<FragmentAddCardBinding>(FragmentAddCardBinding :: inflate) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_card, container, false)
+    private var selectedCardType: CardTypes = CardTypes.VISA_CARD
+
+    override fun start() {
+
+        binding.btnBack2.setOnClickListener{
+            findNavController().popBackStack()
+        }
+
+        binding.apply {
+            ivCard.setImageResource(R.drawable.visa)
+
+            radioGroup.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.btnVisa -> {
+                        selectedCardType = CardTypes.VISA_CARD
+                        ivCard.setImageResource(R.drawable.visa)
+                    }
+                    R.id.btnMaster -> {
+                        selectedCardType = CardTypes.MASTER_CARD
+                        ivCard.setImageResource(R.drawable.master)
+                    }
+                }
+            }
+
+            btnAddCard.setOnClickListener {
+                if (etCardNumber.text.isNullOrEmpty() || etCardHolder.text.isNullOrEmpty() || etExpires.text.isNullOrEmpty()) {
+                    Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val card = Card(
+                    cardNumber = etCardNumber.text.toString().toLong(),
+                    cardHolderName = etCardHolder.text.toString(),
+                    valid = etExpires.text.toString(),
+                    card = selectedCardType
+                )
+
+                val action = AddCardFragmentDirections.actionAddCardFragmentToPaymentFragment(card)
+
+                findNavController().navigate(action)
+            }
+        }
     }
 
 }

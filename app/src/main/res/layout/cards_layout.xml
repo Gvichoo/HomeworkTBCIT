@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/ivCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/visa"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/cardNumber"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/ivCard"
+        app:layout_constraintEnd_toEndOf="@+id/ivCard"
+        app:layout_constraintTop_toTopOf="@+id/ivCard"
+        app:layout_constraintBottom_toBottomOf="@+id/ivCard"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:text="1 2 3 2   1 4 1 2   3 1 2 4   2 1 4 3"/>
+    
+    <TextView
+        android:id="@+id/cardHolderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/cardNumber"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumber"
+        android:text="Saba Gvichiani"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        android:layout_marginTop="50dp"
+        />
+
+    <TextView
+        android:id="@+id/tvValid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/cardHolderName"
+        app:layout_constraintEnd_toEndOf="@+id/ivCard"
+        android:text="11/22"
+        android:textSize="11sp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/white"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
