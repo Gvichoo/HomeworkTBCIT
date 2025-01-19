@@ -10,7 +10,7 @@ import com.example.homeworktbc.baseClass.BaseFragment
 import com.example.homeworktbc.databinding.FragmentLogInBinding
 import kotlinx.coroutines.launch
 
-class LoginFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
+class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
 
     private val loginViewModel: LoginViewModel by viewModels()
 
