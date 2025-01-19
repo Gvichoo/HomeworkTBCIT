@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
-
 }
 
 android {
@@ -51,6 +50,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.kotlinx.serialization.json.v160)
+    implementation (libs.retrofit2.kotlinx.serialization.converter)
+    implementation (libs.jetbrains.kotlinx.serialization.json.v160)
+    implementation (libs.okhttp)
+    implementation (libs.retrofit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
