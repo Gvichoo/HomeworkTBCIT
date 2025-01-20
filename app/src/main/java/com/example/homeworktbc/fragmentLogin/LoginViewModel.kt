@@ -24,7 +24,7 @@ class LoginViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = serviceLogin.login(AuthRequest(email, password))
+                serviceLogin.login(AuthRequest(email, password))
 
                 withContext(Dispatchers.Main) {
                     _loginResult.value = true

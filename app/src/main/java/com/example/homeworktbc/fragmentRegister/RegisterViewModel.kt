@@ -24,16 +24,10 @@ class RegisterViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = serviceRegister.register(AuthRequest(email, password))
+                serviceRegister.register(AuthRequest(email, password))
 
-                if (response.token != null) {
-                    withContext(Dispatchers.Main) {
-                        _registerResult.value = true
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        _registerResult.value = false
-                    }
+                withContext(Dispatchers.Main) {
+                    _registerResult.value = true
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
