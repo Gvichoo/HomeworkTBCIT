@@ -53,6 +53,7 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
     implementation (libs.moshi )
     implementation (libs.com.github.bumptech.glide.glide)
+    implementation(libs.androidx.tools.core)
     annotationProcessor (libs.compiler)
     implementation (libs.moshi.kotlin.v1130)
     implementation(libs.moshi.kotlin)

@@ -3,22 +3,22 @@ package com.example.homeworktbc.fragmentMain
 import androidx.lifecycle.ViewModel
 import com.example.homeworktbc.MessageTypeAdapter
 import com.example.homeworktbc.models.ChatItem
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 class MainViewModel : ViewModel() {
 
     private val moshi = Moshi.Builder()
-        .add(MessageTypeAdapter()) // If MessageType is a custom enum
+        .add(MessageTypeAdapter())
         .add(KotlinJsonAdapterFactory())
         .build()
 
-    // Updated to use Moshi's adapter for a list of ChatItem objects
     private val jsonAdapter: JsonAdapter<List<ChatItem>> = moshi.adapter(
         Types.newParameterizedType(List::class.java, ChatItem::class.java)
     )
 
-    // JSON data
     val json = """
         [
             {
@@ -64,10 +64,8 @@ class MainViewModel : ViewModel() {
         ]
     """.trimIndent()
 
-    // Fix parseJson method
     fun parseJson(): List<ChatItem>? {
         return try {
-            // Correct parsing to List<ChatItem>
             jsonAdapter.fromJson(json)
         } catch (e: Exception) {
             e.printStackTrace()
