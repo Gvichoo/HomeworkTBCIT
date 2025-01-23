@@ -2,38 +2,73 @@ package com.example.homeworktbc.fragmentRegister
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.models.AuthRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.example.homeworktbc.authRetro.AuthenticationClient
+import com.example.homeworktbc.enumClass.AuthorizationError
+import com.example.homeworktbc.authRetro.AuthRequest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class RegisterViewModel : ViewModel() {
 
-    private val _registerResult = MutableStateFlow<Boolean?>(null)
-    val registerResult: StateFlow<Boolean?> get() = _registerResult
+    private val authClient = AuthenticationClient()
 
-    private val serviceRegister = ServiceRegister()
+    fun registerUSer(email: String, password: String,passwordRepeated : String,onResult: (Result<AuthorizationError,String>) -> Unit) {
 
-    fun registerUser(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
-            _registerResult.value = false
+
+        if (email.isEmpty() || password.isEmpty() || passwordRepeated.isEmpty()) {
+            onResult(Result.Failed(AuthorizationError.NoFieldsFilledError))
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                serviceRegister.register(AuthRequest(email, password))
+        if(password.length < 8){
+            onResult(Result.Failed(AuthorizationError.InvalidPassword))
+            return
+        }
 
-                withContext(Dispatchers.Main) {
-                    _registerResult.value = true
+        if (password != passwordRepeated) {
+            onResult(Result.Failed(AuthorizationError.PasswordMissMatch))
+            return
+        }
+        viewModelScope.launch {
+            try {
+                onResult(Result.IsLoading(true))
+                val response: Response<RegisterResponse> = authClient.register(AuthRequest(email, password))
+                onResult(Result.IsLoading(false))
+
+                if (response.isSuccessful) {
+
+                    val registerResponse = response.body()
+                    if (registerResponse?.token != null) {
+                        onResult(Result.Success("Registration successful"))
+                    } else {
+                        onResult(Result.Failed(AuthorizationError.NoTokenError))
+                    }
+                } else {
+                    onResult(Result.Failed(AuthorizationError.RegistrationFailedError))
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _registerResult.value = false
-                }
+                onResult(Result.Failed(AuthorizationError.ExceptionHappened))
             }
         }
     }
 }
+
+sealed interface Result<E : Error,Success> {
+
+    data class Success<E : Error ,Success>(
+        val result: Success
+    ) : Result<E,Success>
+
+    data class IsLoading<E : Error,Success>(
+        val isLoading: Boolean
+    ) : Result<E,Success>
+
+    data class Failed<E : Error,Success>(
+        val error: E
+    ) : Result<E,Success>
+
+}
+
+interface Error
+
+

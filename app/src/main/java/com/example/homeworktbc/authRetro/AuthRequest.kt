@@ -1,4 +1,4 @@
-package com.example.homeworktbc.models
+package com.example.homeworktbc.authRetro
 
 import kotlinx.serialization.Serializable
 

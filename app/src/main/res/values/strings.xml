@@ -2,4 +2,29 @@
     <string name="app_name">HomeworkTBC</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="register">Register</string>
+    <string name="registeri">Register</string>
+    <string name="login">Login</string>
+    <string name="logini">Login</string>
+    <string name="usernamee">Username</string>
+    <string name="passwordi">Password</string>
+    <string name="welcome">Welcome</string>
+    <string name="registerr">Register</string>
+    <string name="loginn">Login</string>
+    <string name="log_out">Log out</string>
+    <string name="fields_must_be_filled">Fields must be filled!</string>
+    <string name="no_token_received">No Token received!</string>
+    <string name="registration_failed">Registration failed!</string>
+    <string name="exception_happened">Exception happened!</string>
+    <string name="if_you_havn_t_registered_yet_register_here">If you havn\'t registered yet,register here.</string>
+    <string name="register3">Register</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="network">network</string>
+
 </resources>

@@ -2,37 +2,42 @@ package com.example.homeworktbc.fragmentLogin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.models.AuthRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.example.homeworktbc.authRetro.AuthenticationClient
+import com.example.homeworktbc.enumClass.AuthorizationError
+import com.example.homeworktbc.fragmentRegister.Result
+import com.example.homeworktbc.authRetro.AuthRequest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
+    private val authClient = AuthenticationClient()
 
-    private val _loginResult = MutableStateFlow<Boolean?>(null)
-    val loginResult: StateFlow<Boolean?> get() = _loginResult
 
-    private val serviceLogin = ServiceLogin()
 
-    fun loginUser(email: String, password: String) {
+    fun loginUser(email: String, password: String, onResult: (Result<AuthorizationError, String>) -> Unit) {
         if (email.isEmpty() || password.isEmpty()) {
-            _loginResult.value = false
+            onResult(Result.Failed(AuthorizationError.NoFieldsFilledError))
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
-                serviceLogin.login(AuthRequest(email, password))
+                onResult(Result.IsLoading(true))
+                val response: Response<LoginResponse> = authClient.login(AuthRequest(email, password))
+                onResult(Result.IsLoading(false))
 
-                withContext(Dispatchers.Main) {
-                    _loginResult.value = true
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    if (loginResponse?.token != null) {
+                        onResult(Result.Success("Login successful"))
+                    } else {
+                        onResult(Result.Failed(AuthorizationError.NoTokenError))
+                    }
+                } else {
+                    onResult(Result.Failed(AuthorizationError.LoginFailedError))
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _loginResult.value = false
-                }
+                onResult(Result.Failed(AuthorizationError.ExceptionHappened))
             }
         }
     }

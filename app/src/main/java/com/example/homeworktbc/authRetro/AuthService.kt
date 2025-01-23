@@ -1,6 +1,5 @@
-package com.example.homeworktbc
+package com.example.homeworktbc.authRetro
 
-import com.example.homeworktbc.models.AuthRequest
 import com.example.homeworktbc.fragmentLogin.LoginResponse
 import com.example.homeworktbc.fragmentRegister.RegisterResponse
 import retrofit2.Response
@@ -14,5 +13,4 @@ interface AuthService {
 
     @POST("/api/register")
     suspend fun register(@Body registerRequest: AuthRequest): Response<RegisterResponse>
-
 }

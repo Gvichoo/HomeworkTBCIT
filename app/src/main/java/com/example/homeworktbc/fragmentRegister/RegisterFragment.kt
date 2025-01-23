@@ -1,44 +1,58 @@
 package com.example.homeworktbc.fragmentRegister
 
+import android.os.Bundle
+import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.homeworktbc.R
 import com.example.homeworktbc.baseClass.BaseFragment
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
-import kotlinx.coroutines.launch
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
-
-    private val registerViewModel: RegisterViewModel by viewModels()
+    private lateinit var viewModel: RegisterViewModel
 
     override fun start() {
+        viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
+
         binding.btnRegister.setOnClickListener {
+
             val email = binding.etLoginRegister.text.toString().trim()
-            val password = binding.etPasswordRegister.text.toString()
+            val password = binding.etPasswordRegister.text.toString().trim()
+            val passwordRepeated = binding.etPasswordRepeat.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
-            } else {
-                registerViewModel.registerUser(email, password)
-            }
-        }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
-                registerViewModel.registerResult.collect { success ->
-                    if (success != null) {
-                        if (success) {
-                            Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.logInFragment)
-                        } else {
-                            Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
+            viewModel.registerUSer(email, password,passwordRepeated) { result ->
+                when(result){
+
+                    is Result.Failed -> {
+                        Toast.makeText(requireContext(),
+                            getString(result.error.errorMessageResource), Toast.LENGTH_SHORT).show()
+                    }
+
+                    is Result.IsLoading -> {
+                        if(result.isLoading){
+                            binding.loader.visibility = View.VISIBLE
+                        }else{
+                            binding.loader.visibility = View.GONE
                         }
+                    }
+                    is Result.Success -> {
+                        setFragmentResult(
+                            "registration_request_key",
+                            Bundle().apply {
+                                putString("email", email)
+                                putString("password", password)
+                            }
+                        )
+                        Toast.makeText(requireContext(), result.result, Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
                     }
                 }
             }
         }
+
     }
+
 }
+
