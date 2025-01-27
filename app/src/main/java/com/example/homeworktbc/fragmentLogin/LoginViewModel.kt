@@ -12,8 +12,6 @@ import retrofit2.Response
 class LoginViewModel : ViewModel() {
     private val authClient = AuthenticationClient()
 
-
-
     fun loginUser(email: String, password: String, onResult: (Result<AuthorizationError, String>) -> Unit) {
         if (email.isEmpty() || password.isEmpty()) {
             onResult(Result.Failed(AuthorizationError.NoFieldsFilledError))

@@ -29,11 +29,20 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.homeworktbc.fragmentHome.HomeFragment"
+        android:name="com.example.homeworktbc.fragmentProfile.ProfileFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_homeFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment2"
+        android:name="com.example.homeworktbc.fragmentHome.HomeFragment"
+        android:label="HomeFragment" />
+
+
 </navigation>

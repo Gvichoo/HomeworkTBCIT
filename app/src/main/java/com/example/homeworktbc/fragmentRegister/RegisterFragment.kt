@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.baseClass.BaseFragment
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
@@ -15,44 +16,39 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     override fun start() {
         viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
-        binding.btnRegister.setOnClickListener {
-
-            val email = binding.etLoginRegister.text.toString().trim()
-            val password = binding.etPasswordRegister.text.toString().trim()
-            val passwordRepeated = binding.etPasswordRepeat.text.toString().trim()
-
-
-            viewModel.registerUSer(email, password,passwordRepeated) { result ->
-                when(result){
-
-                    is Result.Failed -> {
-                        Toast.makeText(requireContext(),
-                            getString(result.error.errorMessageResource), Toast.LENGTH_SHORT).show()
+        lifecycleScope.launchWhenStarted {
+            viewModel.registerState.collect { state ->
+                when {
+                    state.loading -> {
+                        binding.loader.visibility = View.VISIBLE
                     }
+                    state.success != null -> {
+                        binding.loader.visibility = View.GONE
+                        Toast.makeText(requireContext(), state.success, Toast.LENGTH_SHORT).show()
 
-                    is Result.IsLoading -> {
-                        if(result.isLoading){
-                            binding.loader.visibility = View.VISIBLE
-                        }else{
-                            binding.loader.visibility = View.GONE
-                        }
-                    }
-                    is Result.Success -> {
                         setFragmentResult(
                             "registration_request_key",
                             Bundle().apply {
-                                putString("email", email)
-                                putString("password", password)
+                                putString("email", binding.etLoginRegister.text.toString())
+                                putString("password", binding.etPasswordRegister.text.toString())
                             }
                         )
-                        Toast.makeText(requireContext(), result.result, Toast.LENGTH_SHORT).show()
                         findNavController().popBackStack()
+                    }
+                    state.error != null -> {
+                        binding.loader.visibility = View.GONE
+                        Toast.makeText(requireContext(), getString(state.error.errorMessageResource), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
 
+        binding.btnRegister.setOnClickListener {
+            val email = binding.etLoginRegister.text.toString().trim()
+            val password = binding.etPasswordRegister.text.toString().trim()
+            val passwordRepeated = binding.etPasswordRepeat.text.toString().trim()
+
+            viewModel.registerUser(email, password, passwordRepeated)
+        }
     }
-
 }
-

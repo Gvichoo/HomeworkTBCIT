@@ -52,12 +52,19 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v160)
     implementation (libs.retrofit2.kotlinx.serialization.converter)
     implementation (libs.jetbrains.kotlinx.serialization.json.v160)
-
+    implementation (libs.androidx.navigation.fragment.ktx)
+    implementation (libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.datastore.preferences.rxjava2)
-    implementation(libs.androidx.datastore.preferences.rxjava3)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+
+
+
+
     implementation (libs.okhttp)
     implementation (libs.retrofit)
+    implementation(libs.androidx.runner)
+    implementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

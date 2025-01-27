@@ -16,9 +16,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
     private lateinit var viewModel: LoginViewModel
 
     override fun start() {
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-
-        navToRegister()
+        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
         setFragmentResultListener("registration_request_key") { _, bundle ->
             val email = bundle.getString("email")
@@ -27,7 +25,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             binding.etPassword.setText(password)
         }
 
-
+        navToRegister()
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etLogin.text.toString().trim()
@@ -40,11 +38,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                             getString(result.error.errorMessageResource), Toast.LENGTH_SHORT).show()
                     }
                     is Result.IsLoading -> {
-                        if (result.isLoading) {
-                            binding.loader.visibility = View.VISIBLE
-                        } else {
-                            binding.loader.visibility = View.GONE
-                        }
+                        binding.loader.visibility = if (result.isLoading) View.VISIBLE else View.GONE
                     }
                     is Result.Success -> {
                         setFragmentResult(

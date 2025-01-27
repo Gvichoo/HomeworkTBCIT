@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.authRetro.AuthenticationClient
 import com.example.homeworktbc.enumClass.AuthorizationError
 import com.example.homeworktbc.authRetro.AuthRequest
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -12,42 +14,45 @@ class RegisterViewModel : ViewModel() {
 
     private val authClient = AuthenticationClient()
 
-    fun registerUSer(email: String, password: String,passwordRepeated : String,onResult: (Result<AuthorizationError,String>) -> Unit) {
+    private val _registerState = MutableStateFlow(RegisterState())
+    val registerState: StateFlow<RegisterState> = _registerState
 
-
+    fun registerUser(email: String, password: String, passwordRepeated: String) {
         if (email.isEmpty() || password.isEmpty() || passwordRepeated.isEmpty()) {
-            onResult(Result.Failed(AuthorizationError.NoFieldsFilledError))
+            _registerState.value = RegisterState(error = AuthorizationError.NoFieldsFilledError)
             return
         }
 
-        if(password.length < 8){
-            onResult(Result.Failed(AuthorizationError.InvalidPassword))
+        if (password.length < 8) {
+            _registerState.value = RegisterState(error = AuthorizationError.InvalidPassword)
             return
         }
 
         if (password != passwordRepeated) {
-            onResult(Result.Failed(AuthorizationError.PasswordMissMatch))
+            _registerState.value = RegisterState(error = AuthorizationError.PasswordMissMatch)
             return
         }
+
         viewModelScope.launch {
             try {
-                onResult(Result.IsLoading(true))
+                _registerState.value = RegisterState(loading = true)
+
                 val response: Response<RegisterResponse> = authClient.register(AuthRequest(email, password))
-                onResult(Result.IsLoading(false))
+
+                _registerState.value = RegisterState(loading = false)
 
                 if (response.isSuccessful) {
-
                     val registerResponse = response.body()
                     if (registerResponse?.token != null) {
-                        onResult(Result.Success("Registration successful"))
+                        _registerState.value = RegisterState(success = "Registration successful")
                     } else {
-                        onResult(Result.Failed(AuthorizationError.NoTokenError))
+                        _registerState.value = RegisterState(error = AuthorizationError.NoTokenError)
                     }
                 } else {
-                    onResult(Result.Failed(AuthorizationError.RegistrationFailedError))
+                    _registerState.value = RegisterState(error = AuthorizationError.RegistrationFailedError)
                 }
             } catch (e: Exception) {
-                onResult(Result.Failed(AuthorizationError.ExceptionHappened))
+                _registerState.value = RegisterState(error = AuthorizationError.ExceptionHappened)
             }
         }
     }
@@ -68,6 +73,9 @@ sealed interface Result<E : Error,Success> {
     ) : Result<E,Success>
 
 }
+
+
+
 
 interface Error
 
