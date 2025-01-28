@@ -42,7 +42,7 @@ android {
         viewBinding = true
     }
 }
-
+val paging_version = "3.3.5"
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v160)
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
-    val pagingVersion = "3.3.5"
     implementation(libs.androidx.paging.runtime)
     
     implementation (libs.okhttp)
