@@ -10,6 +10,7 @@ material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
 kotlinxSerializationJsonVersion = "1.6.3"
+pagingVersion = "3.3.5"
 retrofit2KotlinxSerializationConverter = "0.8.0"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
@@ -17,8 +18,10 @@ safeArgsVer = "2.8.5"
 navigationFragment = "2.8.5"
 
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
