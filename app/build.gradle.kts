@@ -35,6 +35,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -42,7 +43,9 @@ android {
         viewBinding = true
     }
 }
+
 val paging_version = "3.3.5"
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -54,7 +57,15 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
-    
+
+    implementation (libs.converter.gson)
+    implementation (libs.gson )
+
+    implementation (libs.moshi)
+    implementation (libs.moshi.kotlin)
+    implementation (libs.converter.moshi)
+
+    implementation (libs.glide.v4151)
     implementation (libs.okhttp)
     implementation (libs.retrofit)
     testImplementation(libs.junit)

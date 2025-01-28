@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HomeworkTBC</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rame">rame</string>
+    <string name="users">USERS</string>
+    <string name="saba">Saba</string>
+    <string name="gvichiani">Gvichiani</string>
+    <string name="gvichiani_gmail_com">gvichiani@gmail.com</string>
 </resources>
