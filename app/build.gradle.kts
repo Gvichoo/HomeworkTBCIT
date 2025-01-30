@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
+    id("com.google.protobuf") version "0.9.4"
 
 
 }
@@ -41,6 +42,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
 }
 val paging_version = "3.3.5"
 dependencies {
@@ -54,10 +57,42 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
-    
+
+    implementation  (libs.androidx.datastore.core)
+    implementation  (libs.protobuf.javalite)
+
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
+
+
+
     implementation (libs.okhttp)
     implementation (libs.retrofit)
+    implementation(libs.support.annotations)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.24.0"
+    }
+    generateProtoTasks {
+        all().configureEach {
+            builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        google()
+    }
+}
+
