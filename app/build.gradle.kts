@@ -6,6 +6,7 @@ plugins {
     id("kotlin-parcelize")
 
 
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
 }
 
 android {
@@ -43,7 +44,11 @@ android {
     }
 }
 val paging_version = "3.3.5"
+val room_version = "2.6.1"
 dependencies {
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -57,7 +62,14 @@ dependencies {
     
     implementation (libs.okhttp)
     implementation (libs.retrofit)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation("androidx.room:room-ktx:$room_version")
+
 }
