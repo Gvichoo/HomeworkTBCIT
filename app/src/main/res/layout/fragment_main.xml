@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragmentMain.MainFragment">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/white"
+        android:columnCount="3"
+        android:rowCount="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonOne"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_1"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonTwo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_2"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="90dp"
+            android:id="@+id/buttonThree"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_3"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonFour"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_4"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonFive"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_5"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonSix"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_6"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonSeven"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_7"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonEight"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_8"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonNine"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_9"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonFingerPrint"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:drawableStart="@drawable/touch__id_1"
+            android:paddingStart="23dp"
+            android:paddingEnd="1dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonZero"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:text="@string/_0"
+            android:textSize="35sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button"
+            android:drawableStart="@drawable/vector"
+            android:paddingStart="28dp"
+            android:paddingEnd="19dp" />
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/security_screen"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="@string/enter_your_passcode"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text1" />
+
+    <View
+        android:id="@+id/one"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="180dp"
+        android:background="@drawable/pass_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text2" />
+
+    <View
+        android:id="@+id/two"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginEnd="170dp"
+        android:background="@drawable/pass_grey"
+        app:layout_constraintStart_toEndOf="@id/one"
+        app:layout_constraintTop_toTopOf="@id/one" />
+
+    <View
+        android:id="@+id/three"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginEnd="170dp"
+        android:background="@drawable/pass_grey"
+        app:layout_constraintStart_toEndOf="@id/two"
+        app:layout_constraintTop_toTopOf="@id/two" />
+
+    <View
+        android:id="@+id/four"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginEnd="170dp"
+        android:background="@drawable/pass_grey"
+        app:layout_constraintStart_toEndOf="@id/three"
+        app:layout_constraintTop_toTopOf="@id/three" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipse_28"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/ellipse_30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Forgot password?"
+        android:textColor="#8E8E93"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
