@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_logInFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_recyclerFragment"
+            app:destination="@id/recyclerFragment" />
 
     </fragment>
     <fragment
@@ -40,9 +43,14 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment2"
-        android:name="com.example.homeworktbc.fragmentHome.HomeFragment"
-        android:label="HomeFragment" />
+        android:id="@+id/recyclerFragment"
+        android:name="com.example.homeworktbc.fragmentNew.RecyclerFragment"
+        android:label="fragment_recycler"
+        tools:layout="@layout/fragment_recycler" >
+        <action
+            android:id="@+id/action_recyclerFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
 
 
 </navigation>

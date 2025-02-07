@@ -58,6 +58,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation (libs.androidx.lifecycle.livedata.ktx)
 
+    //moshi
+    implementation (libs.moshi)
+    implementation (libs.moshi.kotlin)
+    implementation (libs.converter.moshi)
+    //glide
+    implementation (libs.glide)
 
 
 
