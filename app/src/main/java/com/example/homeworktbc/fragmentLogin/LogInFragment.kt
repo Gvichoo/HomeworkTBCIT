@@ -2,6 +2,7 @@ package com.example.homeworktbc.fragmentLogin
 
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
@@ -9,11 +10,16 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.PreferenceKeys
+import com.example.DataStoreManager
 import com.example.homeworktbc.R
-import com.example.homeworktbc.baseClass.BaseFragment
+import com.example.homeworktbc.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentLogInBinding
 import com.example.homeworktbc.fragmentRegister.Result
+import kotlinx.coroutines.launch
+import java.io.File
 
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
     private lateinit var viewModel: LoginViewModel
@@ -23,6 +29,15 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
         setupPasswordToggle(binding.etPassword, binding.ivEye)
 
+
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            DataStoreManager.readValue(PreferenceKeys.email)?.collect { savedEmail ->
+                Log.d("DataStore", "Read value: $savedEmail")
+            }
+        }
+
+
         setFragmentResultListener("registration_request_key") { _, bundle ->
             val email = bundle.getString("email")
             val password = bundle.getString("password")
@@ -31,6 +46,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         }
 
         navToRegister()
+
+
+
+
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etLogin.text.toString().trim()
@@ -46,6 +65,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                         binding.loader.visibility = if (result.isLoading) View.VISIBLE else View.GONE
                     }
                     is Result.Success -> {
+
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            DataStoreManager.saveValue(PreferenceKeys.email, email)
+                        }
+
                         setFragmentResult(
                             "login_success_key",
                             Bundle().apply {

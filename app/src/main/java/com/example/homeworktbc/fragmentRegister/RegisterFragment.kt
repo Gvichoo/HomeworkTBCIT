@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.homeworktbc.baseClass.BaseFragment
+import com.example.homeworktbc.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
 import kotlinx.coroutines.launch
 

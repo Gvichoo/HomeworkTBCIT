@@ -26,5 +26,10 @@
     <string name="remember_me">Remember me</string>
     <string name="login_failed">Login Failed</string>
     <string name="network">network</string>
+    <string name="users">Users</string>
+    <string name="saba">Saba</string>
+    <string name="gvichiani">Gvichiani</string>
+    <string name="sabagvichiani_gmail_com">sabagvichiani@gmail.com</string>
+    <string name="profile">Profile</string>
 
 </resources>

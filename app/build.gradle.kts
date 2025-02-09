@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-
+    val paging_version = "3.3.5"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -58,12 +58,16 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation (libs.androidx.lifecycle.livedata.ktx)
 
+    //paging
+    implementation(libs.androidx.paging.runtime)
     //moshi
     implementation (libs.moshi)
     implementation (libs.moshi.kotlin)
     implementation (libs.converter.moshi)
     //glide
     implementation (libs.glide)
+    //dataStore
+    implementation(libs.androidx.datastore.preferences)
 
 
 

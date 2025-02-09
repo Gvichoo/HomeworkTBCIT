@@ -1,13 +1,19 @@
 package com.example.homeworktbc.fragmentLogin
 
+import android.util.Log
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.App
+import com.PreferenceKeys
+import com.example.DataStoreManager
+import com.example.dataStore
 import com.example.homeworktbc.authRetro.AuthenticationClient
 import com.example.homeworktbc.enumClass.AuthorizationError
 import com.example.homeworktbc.fragmentRegister.Result
 import com.example.homeworktbc.authRetro.AuthRequest
+import com.example.homeworktbc.fragmentRegister.handleHttpRequest
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
     private val authClient = AuthenticationClient()
@@ -19,24 +25,29 @@ class LoginViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            try {
-                onResult(Result.IsLoading(true))
-                val response: Response<LoginResponse> = authClient.login(AuthRequest(email, password))
-                onResult(Result.IsLoading(false))
+            val result = handleHttpRequest {
+                authClient.login(AuthRequest(email, password))
+            }
 
-                if (response.isSuccessful) {
-                    val loginResponse = response.body()
-                    if (loginResponse?.token != null) {
-                        onResult(Result.Success("Login successful"))
-                    } else {
-                        onResult(Result.Failed(AuthorizationError.NoTokenError))
-                    }
-                } else {
-                    onResult(Result.Failed(AuthorizationError.LoginFailedError))
+            when (result) {
+                is Result.Success -> {
+                    onResult(Result.Success(result = "Login successful"))
                 }
-            } catch (e: Exception) {
-                onResult(Result.Failed(AuthorizationError.ExceptionHappened))
+                is Result.Failed -> {
+                    when (result.error) {
+                        AuthorizationError.NoFieldsFilledError -> {
+                        }
+                        else -> {
+                            onResult(Result.Failed(error = AuthorizationError.LoginFailedError))
+                        }
+                    }
+                }
+                is Result.IsLoading -> {
+                        onResult(Result.IsLoading(isLoading = true))
+                }
             }
         }
     }
+
+
 }

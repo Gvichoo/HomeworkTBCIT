@@ -2,12 +2,20 @@ package com.example.homeworktbc.fragmentProfile
 
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import com.PreferenceKeys
+import com.example.DataStoreManager
 import com.example.homeworktbc.R
-import com.example.homeworktbc.baseClass.BaseFragment
+import com.example.homeworktbc.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentProfileBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
+
+    private lateinit var dataStoreManager: DataStoreManager
+
 
     override fun start() {
         setFragmentResultListener("login_success_key") { _, bundle ->
@@ -17,8 +25,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
         }
 
+        dataStoreManager = DataStoreManager
+
         binding.btnLogout.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_logInFragment)
+            CoroutineScope(Dispatchers.Main).launch {
+                dataStoreManager.removeByKey(requireContext(), PreferenceKeys.email)
+                findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
+            }
         }
     }
 

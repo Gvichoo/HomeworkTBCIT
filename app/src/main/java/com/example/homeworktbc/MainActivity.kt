@@ -2,44 +2,31 @@ package com.example.homeworktbc
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import com.example.homeworktbc.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import com.PreferenceKeys
+import com.example.DataStoreManager
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var navController: NavController
-    private lateinit var bottomNavView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController = navHostFragment.navController
 
-        bottomNavView = findViewById(R.id.bottomNavView)
-        NavigationUI.setupWithNavController(bottomNavView, navController)
 
-        bottomNavView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    navController.navigate(R.id.logInFragment)
-                    true
-                }
-                R.id.nav_profile -> {
-                    navController.navigate(R.id.recyclerFragment)
-                    true
-                }
-                else -> false
+        setContentView(R.layout.activity_main)
+
+        lifecycleScope.launch {
+            val email = DataStoreManager.readValue(PreferenceKeys.email)?.firstOrNull()
+            val navController = findNavController(R.id.fragmentContainerView)
+            if (!email.isNullOrEmpty()) {
+                navController.navigate(R.id.homeFragment)
+            } else {
+                navController.navigate(R.id.logInFragment)
             }
         }
-    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

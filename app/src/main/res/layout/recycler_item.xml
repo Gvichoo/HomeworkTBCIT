@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="300dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -20,12 +20,12 @@
                 android:id="@+id/tvFirstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gegi"
+                android:text="@string/saba"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
                 android:textSize="22sp"
+                android:layout_marginTop="-15dp"
                 app:layout_constraintStart_toEndOf="@id/ivAvatar"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivAvatar"
                 />
 
             <TextView
@@ -35,14 +35,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvFirstName"
                 app:layout_constraintStart_toStartOf="@id/tvFirstName"
                 android:textSize="22sp"
-                android:text="vinmevinme@gmail.com"
+                android:text="@string/sabagvichiani_gmail_com"
                 />
 
             <TextView
                 android:id="@+id/tvLastName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Robaqidze"
+                android:text="@string/gvichiani"
                 app:layout_constraintStart_toEndOf="@id/tvFirstName"
                 app:layout_constraintTop_toTopOf="@id/tvFirstName"
                 android:textSize="22sp"

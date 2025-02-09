@@ -24,6 +24,7 @@ constraintlayout = "2.2.0"
 kotlinxSerializationJsonVersion = "1.6.3"
 moshi = "1.15.2"
 okhttp = "4.11.0"
+pagingRuntime = "3.3.5"
 retrofit = "2.9.0"
 retrofit2KotlinxSerializationConverter = "0.8.0"
 safeArgsVer = "2.8.5"
@@ -43,6 +44,7 @@ androidx-datastore-preferences-v100 = { module = "androidx.datastore:datastore-p
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "safeArgsVer" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "safeArgsVer" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 datastore-preferences-v100 = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastorePreferences" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }

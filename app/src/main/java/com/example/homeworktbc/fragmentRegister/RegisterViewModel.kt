@@ -1,5 +1,6 @@
 package com.example.homeworktbc.fragmentRegister
 
+import androidx.datastore.core.IOException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.authRetro.AuthenticationClient
@@ -8,6 +9,7 @@ import com.example.homeworktbc.authRetro.AuthRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import retrofit2.Response
 
 class RegisterViewModel : ViewModel() {
@@ -33,50 +35,62 @@ class RegisterViewModel : ViewModel() {
             return
         }
 
+
+
+
         viewModelScope.launch {
-            try {
-                _registerState.value = RegisterState(loading = true)
+            _registerState.value = RegisterState(loading = true)
 
-                val response: Response<RegisterResponse> = authClient.register(AuthRequest(email, password))
+            val result = handleHttpRequest {
+                authClient.register(AuthRequest(email, password))
+            }
 
-                _registerState.value = RegisterState(loading = false)
-
-                if (response.isSuccessful) {
-                    val registerResponse = response.body()
-                    if (registerResponse?.token != null) {
-                        _registerState.value = RegisterState(success = "Registration successful")
-                    } else {
-                        _registerState.value = RegisterState(error = AuthorizationError.NoTokenError)
-                    }
-                } else {
-                    _registerState.value = RegisterState(error = AuthorizationError.RegistrationFailedError)
-                }
-            } catch (e: Exception) {
-                _registerState.value = RegisterState(error = AuthorizationError.ExceptionHappened)
+            _registerState.value = when (result) {
+                is Result.Success -> RegisterState(success = "Registration successful")
+                is Result.Failed -> RegisterState(error = AuthorizationError.RegistrationFailedError)
+                is Result.IsLoading -> RegisterState(loading = true)
             }
         }
     }
 }
 
-sealed interface Result<E : Error,Success> {
+sealed interface Result<E : Error, Success> {
 
-    data class Success<E : Error ,Success>(
+    data class Success<E : Error, Success>(
         val result: Success
-    ) : Result<E,Success>
+    ) : Result<E, Success>
 
-    data class IsLoading<E : Error,Success>(
+    data class IsLoading<E : Error, Success>(
         val isLoading: Boolean
-    ) : Result<E,Success>
+    ) : Result<E, Success>
 
-    data class Failed<E : Error,Success>(
+    data class Failed<E : Error, Success>(
         val error: E
-    ) : Result<E,Success>
+    ) : Result<E, Success>
 
 }
 
-
-
-
 interface Error
 
+
+suspend fun <T> handleHttpRequest(apiCall: suspend () -> Response<T>): Result<Error, T> {
+    return try {
+        val response = apiCall.invoke()
+
+        if (response.isSuccessful) {
+            response.body()?.let {
+                Result.Success(result = it)
+            } ?: Result.Failed(error = object : Error {})
+        } else {
+            Result.Failed(error = object : Error {})
+        }
+    } catch (throwable: Throwable) {
+        when (throwable) {
+            is IOException -> Result.Failed(error = object : Error {})
+            is HttpException -> Result.Failed(error = object : Error {})
+            is IllegalStateException -> Result.Failed(error = object : Error {})
+            else -> Result.Failed(error = object : Error {})
+        }
+    }
+}
 
