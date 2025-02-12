@@ -1,13 +1,9 @@
 package com.example.homeworktbc.fragmentLogin
 
-import android.util.Log
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.App
-import com.PreferenceKeys
-import com.example.DataStoreManager
-import com.example.dataStore
+import com.example.homeworktbc.datastore.DataStoreManager
+import com.example.homeworktbc.datastore.PreferenceKeys
 import com.example.homeworktbc.authRetro.AuthenticationClient
 import com.example.homeworktbc.enumClass.AuthorizationError
 import com.example.homeworktbc.fragmentRegister.Result
@@ -18,11 +14,23 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
     private val authClient = AuthenticationClient()
 
-    fun loginUser(email: String, password: String, onResult: (Result<AuthorizationError, String>) -> Unit) {
+    private fun saveEmailToDataStore(email: String) {
+        viewModelScope.launch {
+            val emailKey = PreferenceKeys.email
+            DataStoreManager.saveValue(emailKey, email)
+        }
+    }
+
+    fun loginUser(email: String, password: String,rememberMe: Boolean, onResult: (Result<AuthorizationError, String>) -> Unit) {
         if (email.isEmpty() || password.isEmpty()) {
             onResult(Result.Failed(AuthorizationError.NoFieldsFilledError))
             return
         }
+
+        if (rememberMe) {
+            saveEmailToDataStore(email)
+        }
+
 
         viewModelScope.launch {
             val result = handleHttpRequest {
@@ -48,6 +56,4 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
-
-
 }

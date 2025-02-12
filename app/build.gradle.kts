@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -43,6 +44,7 @@ android {
 
 dependencies {
     val paging_version = "3.3.5"
+    val room_version = "2.6.1"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -68,6 +70,18 @@ dependencies {
     implementation (libs.glide)
     //dataStore
     implementation(libs.androidx.datastore.preferences)
+    //proto
+    implementation  (libs.androidx.datastore)
+    implementation  (libs.protobuf.javalite)
+    //room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    //repository
+    implementation (libs.androidx.paging.runtime)
+    implementation (libs.androidx.room.ktx)
 
 
 
@@ -79,3 +93,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+

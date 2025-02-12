@@ -1,13 +1,12 @@
-package com.example
+package com.example.homeworktbc.datastore
 
 import android.content.Context
-import android.system.Os.remove
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.App
+import com.example.homeworktbc.App
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -22,7 +21,7 @@ object DataStoreManager {
     }
 
 
-    fun readValue(key: Preferences.Key<String>): Flow<String>? {
+    fun <T> readValue(key: Preferences.Key<String>): Flow<String>? {
         return App.context?.dataStore?.data?.map {
             it[key] ?: ""
         }

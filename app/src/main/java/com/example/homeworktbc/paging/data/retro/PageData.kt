@@ -1,4 +1,4 @@
-package com.example.homeworktbc.paging.retro
+package com.example.homeworktbc.paging.data.retro
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -12,14 +12,13 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.PreferenceKeys
-import com.example.DataStoreManager
+import com.example.homeworktbc.datastore.PreferenceKeys
+import com.example.homeworktbc.datastore.DataStoreManager
 import com.example.homeworktbc.R
 import com.example.homeworktbc.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentLogInBinding
 import com.example.homeworktbc.fragmentRegister.Result
 import kotlinx.coroutines.launch
-import java.io.File
 
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
     private lateinit var viewModel: LoginViewModel
@@ -32,7 +31,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
 
         viewLifecycleOwner.lifecycleScope.launch {
-            DataStoreManager.readValue(PreferenceKeys.email)?.collect { savedEmail ->
+            DataStoreManager.readValue<Any>(PreferenceKeys.email)?.collect { savedEmail ->
                 Log.d("DataStore", "Read value: $savedEmail")
             }
         }
@@ -54,8 +53,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         binding.btnLogin.setOnClickListener {
             val email = binding.etLogin.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
+            val rememberMe = binding.cbRememberMe.isChecked
 
-            viewModel.loginUser(email, password) { result ->
+
+            viewModel.loginUser(email, password, rememberMe = false) { result ->
                 when (result) {
                     is Result.Failed -> {
                         Toast.makeText(requireContext(),
@@ -65,9 +66,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                         binding.loader.visibility = if (result.isLoading) View.VISIBLE else View.GONE
                     }
                     is Result.Success -> {
-
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            DataStoreManager.saveValue(PreferenceKeys.email, email)
+                        if(rememberMe){
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                DataStoreManager.saveValue(PreferenceKeys.email, email)
+                            }
                         }
 
                         setFragmentResult(

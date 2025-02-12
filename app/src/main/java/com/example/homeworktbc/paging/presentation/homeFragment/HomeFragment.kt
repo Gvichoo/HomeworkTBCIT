@@ -1,7 +1,8 @@
-package com.example.homeworktbc.paging.homeFragment
+package com.example.homeworktbc.paging.presentation.homeFragment
 
 import android.util.Log
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.homeworktbc.App
 import com.example.homeworktbc.R
 import com.example.homeworktbc.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentHomeBinding
@@ -17,11 +19,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
-    private lateinit var pageViewModel: HomeViewModel
+
+    private val viewModel: HomeViewModel by viewModels {
+        HomeViewModelFactory((requireActivity().application as App).userRepository)
+    }
+
     private lateinit var adapter: UserPagingAdapter
 
+
     override fun start() {
-        pageViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+
 
         setUpRecyclerView()
 
@@ -38,11 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
 
-
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                pageViewModel.users.collectLatest { pagingData ->
+                viewModel.users.collectLatest { pagingData ->
                     Log.d("PageFragment", "PagingData received: $pagingData")
                     adapter.submitData(pagingData)
 

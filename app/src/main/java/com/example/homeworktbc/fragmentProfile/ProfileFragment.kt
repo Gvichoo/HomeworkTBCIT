@@ -2,8 +2,8 @@ package com.example.homeworktbc.fragmentProfile
 
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
-import com.PreferenceKeys
-import com.example.DataStoreManager
+import com.example.homeworktbc.datastore.PreferenceKeys
+import com.example.homeworktbc.datastore.DataStoreManager
 import com.example.homeworktbc.R
 import com.example.homeworktbc.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentProfileBinding
@@ -22,8 +22,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             val email = bundle.getString("email")
             if (email != null) {
                 binding.tvEmail.text = email
+
+
             }
         }
+
+        readSavedEmail()
 
         dataStoreManager = DataStoreManager
 
@@ -35,4 +39,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
+    private fun readSavedEmail() {
+        CoroutineScope(Dispatchers.Main).launch {
+            dataStoreManager.readValue<String>(PreferenceKeys.email)?.collect { savedEmail ->
+                if (savedEmail.isNotEmpty()) {
+                    binding.tvEmail.text = savedEmail
+                }
+            }
+        }
+    }
 }
