@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    //HILT
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,6 +42,9 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    kapt {
+        correctErrorTypes = true
     }
 }
 
@@ -82,6 +88,15 @@ dependencies {
     //repository
     implementation (libs.androidx.paging.runtime)
     implementation (libs.androidx.room.ktx)
+    //HILT
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+
+    val hilt_version = "2.55" // Ensure this is the latest stable version
+
+    implementation(libs.hilt.android.v250)
+    kapt(libs.hilt.android.compiler.v250)
 
 
 
@@ -92,5 +107,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }
+
+
+
 

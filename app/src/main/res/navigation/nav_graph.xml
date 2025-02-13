@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.example.homeworktbc.fragmentLogin.LogInFragment"
+        android:name="com.example.homeworktbc.presentation.fragmentLogin.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.homeworktbc.fragmentRegister.RegisterFragment"
+        android:name="com.example.homeworktbc.presentation.fragmentRegister.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.homeworktbc.fragmentProfile.ProfileFragment"
+        android:name="com.example.homeworktbc.presentation.fragmentProfile.ProfileFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_profile" >
 
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.homeworktbc.paging.presentation.homeFragment.HomeFragment"
+        android:name="com.example.homeworktbc.presentation.homeFragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.homeworktbc.splash.SplashFragment"
+        android:name="com.example.homeworktbc.presentation.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
