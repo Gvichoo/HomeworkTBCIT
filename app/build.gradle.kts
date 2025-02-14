@@ -5,6 +5,11 @@ plugins {
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
 
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
+
+
 
 }
 
@@ -54,7 +59,19 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
-    
+
+    //glide
+    implementation (libs.glide)
+
+
+    implementation(libs.logging.interceptor)
+
+
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+
     implementation (libs.okhttp)
     implementation (libs.retrofit)
     testImplementation(libs.junit)
