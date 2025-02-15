@@ -1,4 +1,4 @@
-package com.example.homeworktbc.base
+package com.example.homeworktbc.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
