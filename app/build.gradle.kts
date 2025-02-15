@@ -4,7 +4,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
-
+    //Hilt
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -54,6 +56,14 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.viewpager2)
+
+    //glide
+    implementation (libs.glide)
+
+    //Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
     
     implementation (libs.okhttp)
     implementation (libs.retrofit)
