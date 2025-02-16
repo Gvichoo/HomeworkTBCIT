@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,14 +15,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterBinding::inflate) {
-    private lateinit var viewModel: RegisterViewModel
+
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun start() {
-        viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
-
         setupPasswordToggle(binding.etPasswordRegister, binding.ivEye)
         setupPasswordToggle(binding.etPasswordRepeat, binding.ivEye2)
 
@@ -66,6 +68,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             viewModel.registerUser(email, password, passwordRepeated)
         }
     }
+
     private fun setupPasswordToggle(editText: AppCompatEditText, toggleButton: AppCompatImageButton) {
         toggleButton.setOnClickListener {
             if (editText.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {

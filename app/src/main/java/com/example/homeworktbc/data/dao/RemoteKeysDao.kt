@@ -1,10 +1,10 @@
-package com.example.homeworktbc.data.paging.dao
+package com.example.homeworktbc.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.homeworktbc.data.paging.entity.RemoteKeyEntity
+import com.example.homeworktbc.data.entity.RemoteKeyEntity
 
 @Dao
 interface RemoteKeysDao {

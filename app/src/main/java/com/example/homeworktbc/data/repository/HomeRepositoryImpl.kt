@@ -1,21 +1,22 @@
-package com.example.homeworktbc.data.paging.repo
+package com.example.homeworktbc.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.homeworktbc.paging.UserRemoteMediator
-import com.example.homeworktbc.data.paging.database.RoomDb
-import com.example.homeworktbc.data.paging.entity.User
+import com.example.homeworktbc.data.database.RoomDb
+import com.example.homeworktbc.data.entity.User
 import com.example.homeworktbc.data.remote.api.UserApi
+import com.example.homeworktbc.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-open class Repository(
+class HomeRepositoryImpl @Inject constructor(
     private val database: RoomDb,
     private val userService: UserApi
-) {
+) : HomeRepository {
     @OptIn(ExperimentalPagingApi::class)
-    fun getUsersPager(): Flow<PagingData<User>> {
+    override fun getUsersPager(): Flow<PagingData<User>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 6,

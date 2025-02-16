@@ -13,15 +13,16 @@ import com.example.homeworktbc.App
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentHomeBinding
-import com.example.homeworktbc.presentation.homeFragment.adapter.UserPagingAdapter
+import com.example.homeworktbc.presentation.adapter.UserPagingAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val viewModel: HomeViewModel by viewModels {
-        HomeViewModelFactory((requireActivity().application as App).userRepository)
-    }
+    private val viewModel: HomeViewModel by viewModels()
+
 
     private lateinit var adapter: UserPagingAdapter
 
@@ -31,40 +32,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         setUpRecyclerView()
 
-        binding.btnProfile.setOnClickListener{
+        binding.btnProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
 
         }
 
-
         viewLifecycleOwner.lifecycleScope.launch {
-            adapter.loadStateFlow.collectLatest { loadStates ->
-                binding.loader.isVisible = loadStates.refresh is LoadState.Loading
-            }
-        }
-
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.users.collectLatest { pagingData ->
-                    Log.d("PageFragment", "PagingData received: $pagingData")
-                    adapter.submitData(pagingData)
-
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.loadStateFlow.collectLatest { loadStates ->
+                    binding.loader.isVisible = loadStates.refresh is LoadState.Loading
                 }
             }
         }
-    }
 
+
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.users.collectLatest { pagingData ->
+                        Log.d("PageFragment", "PagingData received: $pagingData")
+                        adapter.submitData(pagingData)
+
+                    }
+                }
+            }
+
+        }
+    }
 
 
     private fun setUpRecyclerView() {
         adapter = UserPagingAdapter()
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = this@HomeFragment.adapter
 
         }
     }
-
 
 }

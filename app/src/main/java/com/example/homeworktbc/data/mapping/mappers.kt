@@ -1,6 +1,6 @@
-package com.example.homeworktbc.data.paging.mapping
+package com.example.homeworktbc.data.mapping
 
-import com.example.homeworktbc.data.paging.entity.User
+import com.example.homeworktbc.data.entity.User
 import com.example.homeworktbc.data.remote.response.UserData
 
 fun UserData.toUser(): User {

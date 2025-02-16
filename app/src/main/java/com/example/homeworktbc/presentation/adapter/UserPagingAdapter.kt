@@ -1,4 +1,4 @@
-package com.example.homeworktbc.presentation.homeFragment.adapter
+package com.example.homeworktbc.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.homeworktbc.databinding.RecyclerItemBinding
-import com.example.homeworktbc.data.paging.entity.User
+import com.example.homeworktbc.data.entity.User
 
 class UserPagingAdapter : PagingDataAdapter<User, UserPagingAdapter.MyViewHolder>(UserDiffUtil) {
 

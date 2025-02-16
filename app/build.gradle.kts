@@ -93,7 +93,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
 
-    val hilt_version = "2.55" // Ensure this is the latest stable version
+    val hilt_version = "2.55"
 
     implementation(libs.hilt.android.v250)
     kapt(libs.hilt.android.compiler.v250)

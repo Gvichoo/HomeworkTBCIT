@@ -1,9 +1,8 @@
-package com.example.homeworktbc.data.enumClass
+package com.example.homeworktbc.data.resource
 
 import com.example.homeworktbc.R
-import com.example.homeworktbc.presentation.fragmentRegister.Error
 
-enum class AuthorizationError(val errorMessageResource : Int) : Error {
+enum class AuthorizationError(val errorMessageResource : Int) {
     NoFieldsFilledError(R.string.fields_must_be_filled),
     NoTokenError(R.string.no_token_received),
     RegistrationFailedError(R.string.registration_failed),

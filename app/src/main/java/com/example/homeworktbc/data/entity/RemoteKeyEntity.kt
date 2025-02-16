@@ -1,4 +1,4 @@
-package com.example.homeworktbc.data.paging.entity
+package com.example.homeworktbc.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

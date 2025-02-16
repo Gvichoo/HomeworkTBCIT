@@ -1,49 +1,48 @@
 package com.example.homeworktbc.presentation.fragmentProfile
 
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.homeworktbc.data.datastore.PreferenceKeys
-import com.example.homeworktbc.data.datastore.DataStoreManager
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentProfileBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
-    private lateinit var dataStoreManager: DataStoreManager
-
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun start() {
         setFragmentResultListener("login_success_key") { _, bundle ->
             val email = bundle.getString("email")
-            if (email != null) {
+            if (!email.isNullOrEmpty()) {
                 binding.tvEmail.text = email
-
-
             }
         }
 
-        readSavedEmail()
-
-        dataStoreManager = DataStoreManager
+        observeEmail()
 
         binding.btnLogout.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                dataStoreManager.removeByKey(requireContext(), PreferenceKeys.email)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.logout()
                 findNavController().navigate(R.id.action_profileFragment_to_logInFragment)
             }
         }
     }
 
-    private fun readSavedEmail() {
-        CoroutineScope(Dispatchers.Main).launch {
-            dataStoreManager.readValue<String>(PreferenceKeys.email)?.collect { savedEmail ->
-                if (savedEmail.isNotEmpty()) {
-                    binding.tvEmail.text = savedEmail
+    private fun observeEmail() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.savedEmail.collect { savedEmail ->
+                    if (savedEmail.isNotEmpty()) {
+                        binding.tvEmail.text = savedEmail
+                    }
                 }
             }
         }

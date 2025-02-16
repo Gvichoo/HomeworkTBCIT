@@ -1,22 +1,23 @@
-package com.example.homeworktbc.paging
+package com.example.homeworktbc.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.homeworktbc.data.paging.database.RoomDb
-import com.example.homeworktbc.data.paging.mapping.toUser
-import com.example.homeworktbc.data.paging.entity.RemoteKeyEntity
-import com.example.homeworktbc.data.paging.entity.User
+import com.example.homeworktbc.data.database.RoomDb
+import com.example.homeworktbc.data.entity.RemoteKeyEntity
+import com.example.homeworktbc.data.entity.User
+import com.example.homeworktbc.data.mapping.toUser
 import com.example.homeworktbc.data.remote.api.UserApi
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 private const val USER_STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
-class UserRemoteMediator(
+class UserRemoteMediator @Inject constructor(
     private val service: UserApi,
     private val repoDatabase: RoomDb
 ) : RemoteMediator<Int, User>() {
