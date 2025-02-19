@@ -10,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -20,12 +22,30 @@ private const val BASE_URL = "https://reqres.in/api/"
 class RemoteModule {
 
     @Provides
+    fun provideHttpLoggingInterceptor():HttpLoggingInterceptor{
+        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        return httpLoggingInterceptor
+    }
+
+
+    @Provides
+    fun provideOkhttpClient(logging:HttpLoggingInterceptor):OkHttpClient{
+        return OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+    }
+
+
+    @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(client : OkHttpClient): Retrofit {
         val json = Json { ignoreUnknownKeys = true }
         @OptIn(ExperimentalSerializationApi::class)
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
@@ -42,26 +62,4 @@ class RemoteModule {
         return retrofit.create(UserApi::class.java)
     }
 
-
-
-
-//
-//    @Binds
-//    @Singleton
-//    abstract fun bindLoginRepository(
-//        loginRepositoryImpl: LoginRepositoryImpl
-//    ): LoginRepository
-//
-//    companion object {
-//        @OptIn(ExperimentalSerializationApi::class)
-//        @Provides
-//        @Singleton
-//        fun provideMyApi(): MyApi {
-//            return Retrofit.Builder()
-//                .baseUrl("https://reqres.in")
-//                .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
-//                .build()
-//                .create(MyApi::class.java)
-//        }
-//    }
 }

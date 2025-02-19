@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.homeworktbc.BuildConfig
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         setupPasswordToggle(binding.etPasswordRegister, binding.ivEye)
         setupPasswordToggle(binding.etPasswordRepeat, binding.ivEye2)
 
+        if (BuildConfig.DEBUG){}
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.registerState.collect { state ->

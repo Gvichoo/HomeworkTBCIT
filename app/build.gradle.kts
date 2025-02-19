@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.homeworktbc"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -25,6 +25,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -42,6 +45,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     kapt {
         correctErrorTypes = true
@@ -91,6 +95,8 @@ dependencies {
     //HILT
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+    //Okhttp
+    implementation(libs.logging.interceptor)
 
 
     val hilt_version = "2.55"
