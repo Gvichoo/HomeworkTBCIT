@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
     alias(libs.plugins.google.gms.google.services)
+    //Hilt
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 
 
 }
@@ -55,6 +58,10 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
+
+    //Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
     
     implementation (libs.okhttp)
     implementation (libs.retrofit)

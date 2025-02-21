@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_logInFragment_to_RegisterFragment"
             app:destination="@id/RegisterFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_splashFragment"
+            app:destination="@id/splashFragment" />
     </fragment>
 
     <fragment
@@ -23,4 +26,9 @@
             android:id="@+id/action_RegisterFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.homeworktbc.presentation.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" />
 </navigation>

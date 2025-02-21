@@ -3,15 +3,18 @@ package com.example.homeworktbc.presentation.register
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.Resource
-import com.google.firebase.auth.FirebaseAuth
+import com.example.homeworktbc.data.resource.Resource
+import com.example.homeworktbc.di.repository.RegisterRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
-
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    private val registerRepository: RegisterRepository
+) : ViewModel() {
 
     private val _signUpState = MutableStateFlow<Resource<Boolean>>(Resource.Loading())
     val signUpState: StateFlow<Resource<Boolean>> = _signUpState
@@ -47,17 +50,10 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun signUpUser(email: String, password: String) {
-        _signUpState.value = Resource.Loading()
-
         viewModelScope.launch {
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _signUpState.value = Resource.Success(true)
-                    } else {
-                        _signUpState.value = Resource.Error("Sign-up failed: ${task.exception?.message}")
-                    }
-                }
+            registerRepository.register(email, password).collect { result ->
+                _signUpState.value = result
+            }
         }
     }
 }
