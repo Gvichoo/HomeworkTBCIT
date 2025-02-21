@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "183386481852",
+    "project_id": "midtermusers",
+    "storage_bucket": "midtermusers.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183386481852:android:c4650ebcebb9327db05cb9",
+        "android_client_info": {
+          "package_name": "com.example.homeworktbc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCva3Et-Zmojhjzb9XNfOwIGLo3lz8SAus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
