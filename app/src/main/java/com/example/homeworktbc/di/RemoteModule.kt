@@ -1,5 +1,6 @@
 package com.example.homeworktbc.di
 
+import com.example.homeworktbc.BuildConfig
 import com.example.homeworktbc.data.remote.api.AuthApi
 import com.example.homeworktbc.data.remote.api.UserApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -15,7 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-private const val BASE_URL = "https://reqres.in/api/"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,7 +44,7 @@ class RemoteModule {
         val json = Json { ignoreUnknownKeys = true }
         @OptIn(ExperimentalSerializationApi::class)
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
