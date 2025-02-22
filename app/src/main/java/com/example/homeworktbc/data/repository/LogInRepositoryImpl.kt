@@ -18,7 +18,7 @@ class LogInRepositoryImpl @Inject constructor(
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             emit(Resource.Success(result.user != null))
         } catch (e: Exception) {
-            emit(Resource.Error("Login failed: ${e.message}"))
+            emit(Resource.Failed("Login failed: ${e.message}"))
         }
     }
 }

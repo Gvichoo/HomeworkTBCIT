@@ -27,22 +27,22 @@ class RegisterViewModel @Inject constructor(
 
     private fun validateInputs(email: String, password: String, repeatedPassword: String): Boolean {
         if (email.isEmpty() || password.isEmpty() || repeatedPassword.isEmpty()) {
-            _signUpState.value = Resource.Error("All fields are required!")
+            _signUpState.value = Resource.Failed("All fields are required!")
             return false
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _signUpState.value = Resource.Error("Please enter a valid email address!")
+            _signUpState.value = Resource.Failed("Please enter a valid email address!")
             return false
         }
 
         if (password.length < 8) {
-            _signUpState.value = Resource.Error("Password must be at least 8 characters!")
+            _signUpState.value = Resource.Failed("Password must be at least 8 characters!")
             return false
         }
 
         if (password != repeatedPassword) {
-            _signUpState.value = Resource.Error("Passwords do not match!")
+            _signUpState.value = Resource.Failed("Passwords do not match!")
             return false
         }
 

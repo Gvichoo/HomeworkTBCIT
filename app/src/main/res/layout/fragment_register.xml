@@ -11,24 +11,22 @@
     <ImageView
         android:layout_width="185dp"
         android:layout_height="200dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginEnd="-95dp"
         android:scaleType="centerCrop"
         android:src="@drawable/flower"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="-60dp"
-        android:layout_marginEnd="-95dp"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="185dp"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/flower"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="-92dp"
         android:layout_marginBottom="-60dp"
-        />
+        android:scaleType="centerCrop"
+        android:src="@drawable/flower"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvHeadline"
@@ -70,6 +68,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivGmail"
+        android:layout_width="28dp"
+        android:layout_height="27dp"
+        android:layout_marginEnd="15dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/gmail"
+        app:layout_constraintBottom_toBottomOf="@id/etEmail"
+        app:layout_constraintEnd_toEndOf="@id/etEmail"
+        app:layout_constraintTop_toTopOf="@id/etEmail" />
+
     <TextView
         android:id="@+id/tvPassword"
         android:layout_width="wrap_content"
@@ -90,9 +100,23 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text"
         android:hint="@string/enter_your_password3"
+        android:inputType="textPassword"
         android:padding="16dp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/tvPassword" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnSeen"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/unseen"
+        app:layout_constraintBottom_toBottomOf="@id/etPassword"
+        app:layout_constraintEnd_toEndOf="@id/etPassword"
+        app:layout_constraintTop_toTopOf="@id/etPassword" />
+
 
     <TextView
         android:id="@+id/tvPasswordRepeat"
@@ -114,6 +138,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text"
         android:hint="@string/repeat_you_password"
+        android:inputType="textPassword"
         android:padding="16dp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/tvPasswordRepeat" />

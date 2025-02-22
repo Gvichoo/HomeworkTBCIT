@@ -1,4 +1,4 @@
-package com.example.homeworktbc
+package com.example.homeworktbc.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -62,6 +62,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+    //Glide
+    implementation (libs.glide)
     
     implementation (libs.okhttp)
     implementation (libs.retrofit)

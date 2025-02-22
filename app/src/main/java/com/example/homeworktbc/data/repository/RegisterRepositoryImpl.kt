@@ -19,7 +19,7 @@ class RegisterRepositoryImpl @Inject constructor(
             firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             emit(Resource.Success(true))
         } catch (e: Exception) {
-            emit(Resource.Error("Sign-up failed: ${e.message}"))
+            emit(Resource.Failed("Sign-up failed: ${e.message}"))
         }
     }
 }

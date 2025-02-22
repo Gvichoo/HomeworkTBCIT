@@ -1,39 +1,46 @@
 package com.example.homeworktbc.domain
 
-import com.example.homeworktbc.data.repository.LogInRepositoryImpl
-import com.example.homeworktbc.data.repository.RegisterRepositoryImpl
-import com.example.homeworktbc.di.repository.LogInRepository
-import com.example.homeworktbc.di.repository.RegisterRepository
+import com.example.homeworktbc.data.api.EventApiService
 import com.google.firebase.auth.FirebaseAuth
-import dagger.Binds
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    private const val BASE_URL = "https://6b34adc7-0dc6-4c1b-89b3-5a9ba337ebad.mock.pstmn.io/"
+
+    private val json by lazy {
+        Json { ignoreUnknownKeys = true }
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventApiService(retrofit: Retrofit): EventApiService {
+        return retrofit.create(EventApiService::class.java)
+    }
+
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 }
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
 
-    // Binds RegisterRepository to its implementation
-    @Binds
-    abstract fun bindRegisterRepository(
-        impl: RegisterRepositoryImpl
-    ): RegisterRepository
-
-    // Binds LogInRepository to its implementation
-    @Binds
-    abstract fun bindLogInRepository(
-        impl: LogInRepositoryImpl
-    ): LogInRepository
-}

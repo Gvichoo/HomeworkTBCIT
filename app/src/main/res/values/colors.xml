@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cream">#fd987a</color>
     <color name="grey">#b2b4b6</color>
+    <color name="blue">#000C94</color>
+    <color name="purple">#321c4a</color>
+    <color name="btnSignColor">#143f69</color>
 </resources>

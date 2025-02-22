@@ -13,8 +13,8 @@
             android:id="@+id/action_logInFragment_to_RegisterFragment"
             app:destination="@id/RegisterFragment" />
         <action
-            android:id="@+id/action_logInFragment_to_splashFragment"
-            app:destination="@id/splashFragment" />
+            android:id="@+id/action_logInFragment_to_eventsFragment"
+            app:destination="@id/eventsFragment" />
     </fragment>
 
     <fragment
@@ -28,7 +28,21 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.homeworktbc.presentation.SplashFragment"
+        android:name="com.example.homeworktbc.presentation.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventsFragment"
+        android:name="com.example.homeworktbc.presentation.event.EventsFragment"
+        android:label="fragment_events"
+        tools:layout="@layout/fragment_events" >
+
+        <action
+            android:id="@+id/action_eventsFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
 </navigation>
