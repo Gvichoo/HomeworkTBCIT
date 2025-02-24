@@ -6,11 +6,13 @@ import com.example.homeworktbc.data.resource.Resource
 import com.example.homeworktbc.data.resource.handleHttpRequest
 import com.example.homeworktbc.di.repository.PostRepository
 import com.example.homeworktbc.domain.PostRetrofit
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Retrofit
 import javax.inject.Inject
 
+@ViewModelScoped
 class PostRepositoryImpl @Inject constructor(
     @PostRetrofit private val retrofit: Retrofit
 ) : PostRepository{

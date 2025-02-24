@@ -7,19 +7,20 @@ import com.example.homeworktbc.di.repository.PostRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 abstract class RepositoryModule {
 
     @Binds
-    @Singleton
+    @ViewModelScoped
     abstract fun bindStoryRepository(impl: StoryRepositoryImpl): StoryRepository
 
 
     @Binds
-    @Singleton
+    @ViewModelScoped
     abstract fun bindPostRepository(impl: PostRepositoryImpl) : PostRepository
 }
