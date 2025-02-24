@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".presentation.home.HomeFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerStory"
+        android:layout_width="match_parent"
+        android:layout_height="215dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerStory"
+        app:layout_constraintEnd_toEndOf="@id/recyclerStory"
+        app:layout_constraintStart_toStartOf="@id/recyclerStory"
+        app:layout_constraintTop_toTopOf="@id/recyclerStory" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPost"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@id/navBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerStory" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerPost"
+        app:layout_constraintEnd_toEndOf="@id/recyclerPost"
+        app:layout_constraintStart_toStartOf="@id/recyclerPost"
+        app:layout_constraintTop_toTopOf="@id/recyclerPost"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nav_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivHeart"
+        android:layout_width="22dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/heart"
+        app:layout_constraintEnd_toStartOf="@id/ivHome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/navBar"
+        app:layout_constraintWidth_percent="0.15" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivHome"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home"
+        app:layout_constraintEnd_toStartOf="@id/ivComment"
+        app:layout_constraintStart_toEndOf="@id/ivHeart"
+        app:layout_constraintTop_toTopOf="@id/ivHeart"
+        app:layout_constraintWidth_percent="0.28" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivComment"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/comment"
+        app:layout_constraintEnd_toStartOf="@id/ivRing"
+        app:layout_constraintStart_toEndOf="@id/ivHome"
+        app:layout_constraintTop_toTopOf="@id/ivHeart"
+        app:layout_constraintWidth_percent="0.28" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivRing"
+        android:layout_width="19dp"
+        android:layout_height="22dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ring"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivComment"
+        app:layout_constraintTop_toTopOf="@id/ivHeart"
+        app:layout_constraintWidth_percent="0.29" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
