@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.homeworktbc.R
 import com.example.homeworktbc.databinding.FragmentEventsBinding
 import com.example.homeworktbc.presentation.event.adapter.EventItemAdapter
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
@@ -21,8 +20,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
 
     private val eventViewModel: EventViewModel by viewModels()
     private val eventAdapter by lazy {
-        EventItemAdapter {
-                event ->
+        EventItemAdapter { event ->
             val action = EventsFragmentDirections.actionEventsFragmentToDetailsFragment(
                 name = event.name,
                 image = event.image,
@@ -85,11 +83,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
 
     private fun showError(message: String?) {
         Toast.makeText(requireContext(), message ?: "Unknown error", Toast.LENGTH_SHORT).show()
-    }
-
-
-    private fun navToDetailsFragment(){
-        findNavController().navigate(R.id.action_eventsFragment_to_detailsFragment)
     }
 
 
