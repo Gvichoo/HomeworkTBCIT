@@ -64,7 +64,9 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     //Glide
     implementation (libs.glide)
-    
+    //DataStore Preferences
+    implementation(libs.androidx.datastore.preferences)
+
     implementation (libs.okhttp)
     implementation (libs.retrofit)
     implementation(libs.firebase.auth)

@@ -2,6 +2,7 @@ package com.example.homeworktbc.presentation.event.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.homeworktbc.data.model.Event
 import com.example.homeworktbc.databinding.EventItemBinding
 
 class EventItemAdapter(private val onItemClick : (Event) -> Unit)
-    : ListAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
+    : PagingDataAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = EventItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,7 +20,9 @@ class EventItemAdapter(private val onItemClick : (Event) -> Unit)
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = getItem(position)
-        holder.bind(event)
+        if (event != null) {
+            holder.bind(event)
+        }
     }
 
     inner class EventViewHolder(private val binding: EventItemBinding) : RecyclerView.ViewHolder(binding.root) {

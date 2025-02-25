@@ -19,5 +19,7 @@ class EventRepositoryImpl @Inject constructor(
         val response = handleHttpRequest { eventApiService.getEvents() }
 
         emit(response)
+
+
     }
 }

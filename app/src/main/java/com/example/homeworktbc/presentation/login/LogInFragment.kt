@@ -22,6 +22,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
     private val loginViewModel: LogInViewModel by viewModels()
 
     override fun start() {
+
+
         startSignUpClickListener()
 
         startSignInClickListener()
@@ -45,6 +47,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                         }
                     }
                 }
+
             }
         }
     }

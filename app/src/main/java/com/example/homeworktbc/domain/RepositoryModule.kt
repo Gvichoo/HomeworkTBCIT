@@ -1,8 +1,10 @@
 package com.example.homeworktbc.domain
 
+import com.example.homeworktbc.data.repository.DataStoreRepositoryImpl
 import com.example.homeworktbc.data.repository.EventRepositoryImpl
 import com.example.homeworktbc.data.repository.LogInRepositoryImpl
 import com.example.homeworktbc.data.repository.RegisterRepositoryImpl
+import com.example.homeworktbc.di.repository.DataStoreRepository
 import com.example.homeworktbc.di.repository.EventRepository
 import com.example.homeworktbc.di.repository.LogInRepository
 import com.example.homeworktbc.di.repository.RegisterRepository
@@ -10,6 +12,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -27,5 +30,9 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindEventRepository(impl: EventRepositoryImpl): EventRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsDataStoreRepository(impl : DataStoreRepositoryImpl) : DataStoreRepository
 
 }

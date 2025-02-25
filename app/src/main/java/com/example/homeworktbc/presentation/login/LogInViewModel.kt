@@ -2,7 +2,9 @@ package com.example.homeworktbc.presentation.login
 
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
+import com.example.homeworktbc.data.datastore.PreferenceKeys
 import com.example.homeworktbc.data.resource.Resource
+import com.example.homeworktbc.di.repository.DataStoreRepository
 import com.example.homeworktbc.di.repository.LogInRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.login.effect.LoginEffect
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val logInRepository: LogInRepository
+    private val logInRepository: LogInRepository,
+    private val dataStoreRepository: DataStoreRepository
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
 
 
@@ -62,7 +65,7 @@ class LogInViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Success -> {
                         updateState { copy(isSuccess = true) }
-                        emitEffect(LoginEffect.NavToEventsFragment)
+
                     }
                     is Resource.Failed -> {
                         emitEffect(LoginEffect.ShowError(resource.message ?: "Login failed"))
@@ -74,6 +77,8 @@ class LogInViewModel @Inject constructor(
             }
         }
     }
+
+
 
 
     override fun obtainEvent(event: LoginEvent) {
