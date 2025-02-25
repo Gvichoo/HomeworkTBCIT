@@ -26,4 +26,8 @@ abstract class BaseViewModel<STATE, EVENT, EFFECT>(
     protected fun updateState(editor: STATE.() -> STATE) {
         _viewState.value = editor(_viewState.value)
     }
+
+
+
+
 }

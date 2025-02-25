@@ -1,6 +1,7 @@
 package com.example.homeworktbc.presentation.login
 
 import android.text.InputType
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -8,7 +9,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.R
 import com.example.homeworktbc.databinding.FragmentLogInBinding
-import com.example.homeworktbc.presentation.base.BaseFragment
+import com.example.homeworktbc.presentation.base_fragment.BaseFragment
+import com.example.homeworktbc.presentation.login.effect.LoginEffect
+import com.example.homeworktbc.presentation.login.event.LoginEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -19,61 +22,49 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
     private val loginViewModel: LogInViewModel by viewModels()
 
     override fun start() {
-        signUp()
+        startSignUpClickListener()
 
-        signIn()
+        startSignInClickListener()
 
         makePasswordVisible()
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                loginViewModel.loginState.collect { resource ->
-//                    when (resource) {
-//                        is Resource.Success -> {
-//                            navToEventFragment()
-//
-//                        }
-//                        is Resource.Failed -> {
-//                            Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
-//                        }
-//                        is Resource.Loading -> {
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                loginViewModel.loginEffectFlow.collect { effect ->
+                loginViewModel.effects.collect { effect ->
                     when (effect) {
 
                         LoginEffect.NavToEventsFragment ->
                             navToEventFragment()
 
-                        LoginEffect.NavToRegisterFragment -> Unit
+                        LoginEffect.NavToRegisterFragment ->
+                            findNavController().navigate(R.id.action_logInFragment_to_RegisterFragment)
+
+                        is LoginEffect.ShowError -> {
+                            showError(effect.message)
+                        }
                     }
                 }
             }
         }
-
     }
 
     private fun navToEventFragment(){
         findNavController().navigate(R.id.action_logInFragment_to_eventsFragment)
     }
 
-    private fun signUp(){
+    private fun startSignUpClickListener(){
         binding.btnSignUp.setOnClickListener {
-            findNavController().navigate(R.id.action_logInFragment_to_RegisterFragment)
+            loginViewModel.obtainEvent(LoginEvent.SignUpClicked)
         }
     }
 
-    private fun signIn(){
+    private fun startSignInClickListener(){
         binding.btnSignIn.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
-            loginViewModel.validateInputsAndLogin(email, password)
+            loginViewModel.obtainEvent(LoginEvent.LoginButtonClicked(email, password))
         }
     }
 
@@ -93,6 +84,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
             binding.etPassword.setSelection(binding.etPassword.text.length)
         }
+    }
+
+    private fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
 }

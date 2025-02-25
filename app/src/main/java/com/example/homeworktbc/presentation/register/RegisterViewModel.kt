@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.resource.Resource
 import com.example.homeworktbc.di.repository.RegisterRepository
+import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
+import com.example.homeworktbc.presentation.register.effect.RegisterEffect
+import com.example.homeworktbc.presentation.register.event.RegisterEvent
+import com.example.homeworktbc.presentation.register.state.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,12 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerRepository: RegisterRepository
-) : ViewModel() {
+) : BaseViewModel<RegisterState, RegisterEvent, RegisterEffect>(RegisterState()) {
 
-    private val _signUpState = MutableStateFlow<Resource<Boolean>>(Resource.Loading())
-    val signUpState: StateFlow<Resource<Boolean>> = _signUpState
 
-    fun validateInputsAndSignUp(email: String, password: String, repeatedPassword: String) {
+    private fun validateInputsAndSignUp(email: String, password: String, repeatedPassword: String) {
         if (validateInputs(email, password, repeatedPassword)) {
             signUpUser(email, password)
         }
@@ -27,22 +29,30 @@ class RegisterViewModel @Inject constructor(
 
     private fun validateInputs(email: String, password: String, repeatedPassword: String): Boolean {
         if (email.isEmpty() || password.isEmpty() || repeatedPassword.isEmpty()) {
-            _signUpState.value = Resource.Failed("All fields are required!")
+            viewModelScope.launch {
+                emitEffect(RegisterEffect.ShowError("All fields are required!"))
+            }
             return false
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _signUpState.value = Resource.Failed("Please enter a valid email address!")
+            viewModelScope.launch {
+                emitEffect(RegisterEffect.ShowError("Please enter a valid email address!"))
+            }
             return false
         }
 
         if (password.length < 8) {
-            _signUpState.value = Resource.Failed("Password must be at least 8 characters!")
+            viewModelScope.launch {
+                emitEffect(RegisterEffect.ShowError("Password must be at least 8 characters!"))
+            }
             return false
         }
 
         if (password != repeatedPassword) {
-            _signUpState.value = Resource.Failed("Passwords do not match!")
+            viewModelScope.launch {
+                emitEffect(RegisterEffect.ShowError("Passwords do not match!"))
+            }
             return false
         }
 
@@ -50,10 +60,44 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun signUpUser(email: String, password: String) {
+        updateState { copy(isLoading = true) }
+
         viewModelScope.launch {
             registerRepository.register(email, password).collect { result ->
-                _signUpState.value = result
+                when (result) {
+                    is Resource.Success -> {
+                        updateState { copy(isSuccess = true) }
+                        emitEffect(RegisterEffect.NavToLogInFragment)
+                    }
+
+                    is Resource.Failed -> {
+                        emitEffect(
+                            RegisterEffect.ShowError(
+                                result.message ?: "Registration failed"
+                            )
+                        )
+                    }
+
+                    is Resource.Loading -> {
+                        updateState { copy(isLoading = true) }
+                    }
+                }
             }
         }
     }
+
+
+    override fun obtainEvent(event: RegisterEvent) {
+        when (event) {
+            RegisterEvent.LogInClicked -> viewModelScope.launch {
+                emitEffect(RegisterEffect.NavToLogInFragment)
+            }
+
+            is RegisterEvent.SignUpButtonClicked -> {
+                validateInputsAndSignUp(event.email, event.password, event.repeatedPassword)
+            }
+        }
+    }
+
+
 }

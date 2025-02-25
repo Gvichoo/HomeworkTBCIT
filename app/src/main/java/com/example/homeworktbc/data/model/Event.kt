@@ -8,5 +8,7 @@ data class Event(
     val name: String,
     val image: String,
     val organizer: String,
-    val date: String
+    val date: String,
+    val info : String,
+    val price : String
 )

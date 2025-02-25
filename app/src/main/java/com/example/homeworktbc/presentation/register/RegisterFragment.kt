@@ -8,9 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.R
-import com.example.homeworktbc.data.resource.Resource
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
-import com.example.homeworktbc.presentation.base.BaseFragment
+import com.example.homeworktbc.presentation.base_fragment.BaseFragment
+import com.example.homeworktbc.presentation.register.effect.RegisterEffect
+import com.example.homeworktbc.presentation.register.event.RegisterEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -22,9 +23,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
     override fun start() {
 
-        singIn()
+        startSingInClickListener()
 
-        signUp()
+        startSignUpClickListener()
 
         observeViewModel()
 
@@ -35,16 +36,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                registerViewModel.signUpState.collect { resource ->
-                    when (resource) {
-                        is Resource.Success -> {
-                            Toast.makeText(requireContext(), "Registration successful!", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.action_RegisterFragment_to_logInFragment)
+                registerViewModel.effects.collect { effect ->
+                    when (effect) {
+                        RegisterEffect.NavToLogInFragment -> {
+                            navToLoginFragment()
                         }
-                        is Resource.Failed -> {
-                            Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
-                        }
-                        is Resource.Loading -> {
+                        is RegisterEffect.ShowError -> {
+                            showError(effect.message)
                         }
                     }
                 }
@@ -52,19 +50,19 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
     }
 
-    private fun signUp(){
+    private fun startSignUpClickListener(){
         binding.btnSignUp.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val repeatedPassword = binding.etPasswordRepeat.text.toString().trim()
 
-            registerViewModel.validateInputsAndSignUp(email, password, repeatedPassword)
+            registerViewModel.obtainEvent(RegisterEvent.SignUpButtonClicked(email, password, repeatedPassword))
         }
     }
 
-    private fun singIn(){
+    private fun startSingInClickListener(){
         binding.btnLogIn.setOnClickListener {
-            navToLoginFragment()
+            registerViewModel.obtainEvent(RegisterEvent.LogInClicked)
         }
     }
 
@@ -93,6 +91,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             binding.etPassword.setSelection(binding.etPassword.text.length)
             binding.etPasswordRepeat.setSelection(binding.etPasswordRepeat.text.length)
         }
+    }
+
+    private fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
 }

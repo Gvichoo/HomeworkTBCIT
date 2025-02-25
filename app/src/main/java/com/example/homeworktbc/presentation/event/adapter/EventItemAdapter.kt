@@ -1,4 +1,4 @@
-package com.example.homeworktbc.presentation.adapter
+package com.example.homeworktbc.presentation.event.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.homeworktbc.data.model.Event
 import com.example.homeworktbc.databinding.EventItemBinding
 
-class EventItemAdapter : ListAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
+class EventItemAdapter(private val onItemClick : (Event) -> Unit)
+    : ListAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = EventItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,9 +33,9 @@ class EventItemAdapter : ListAdapter<Event, EventItemAdapter.EventViewHolder>(Ev
                 .load(event.image)
                 .into(binding.image)
 
-            // Optionally, you can handle item clicks
+
             itemView.setOnClickListener {
-                // Handle click if needed
+                onItemClick(event)
             }
         }
     }

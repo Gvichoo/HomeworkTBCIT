@@ -44,5 +44,38 @@
         <action
             android:id="@+id/action_eventsFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_eventsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.homeworktbc.presentation.detail.DetailFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_detail" >
+
+        <argument
+            android:name="price"
+            app:argType="string" />
+
+        <argument
+            android:name="name"
+            app:argType="string" />
+
+        <argument
+            android:name="image"
+            app:argType="string" />
+
+        <argument
+            android:name="organizer"
+            app:argType="string" />
+
+        <argument
+            android:name="date"
+            app:argType="string" />
+
+        <argument
+            android:name="info"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -1,10 +1,13 @@
 package com.example.homeworktbc.presentation.event
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.model.Event
 import com.example.homeworktbc.data.resource.Resource
 import com.example.homeworktbc.di.repository.EventRepository
+import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
+import com.example.homeworktbc.presentation.event.effect.EventEffect
+import com.example.homeworktbc.presentation.event.event.EventEvent
+import com.example.homeworktbc.presentation.event.state.EventState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,16 +17,33 @@ import javax.inject.Inject
 @HiltViewModel
 class EventViewModel @Inject constructor(
     private val eventRepository: EventRepository
-) : ViewModel() {
+) : BaseViewModel<EventState,EventEvent,EventEffect>(EventState()) {
 
-    private val _events =
-        MutableStateFlow<Resource<List<Event>>>(Resource.Loading())
-    val events: StateFlow<Resource<List<Event>>> = _events
 
     fun getEvents() {
+        updateState { copy(isLoading = true) }
         viewModelScope.launch {
             eventRepository.getEvents().collect { resource ->
-                _events.value = resource
+                when (resource) {
+                    is Resource.Loading -> {
+                        updateState { copy(isLoading = true) }
+                    }
+                    is Resource.Success -> {
+                        updateState { copy(isLoading = false, events = resource.data) }
+                    }
+                    is Resource.Failed -> {
+                        updateState { copy(isLoading = false, errorMessage = resource.message) }
+                        emitEffect(EventEffect.ShowErrorMessage)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun obtainEvent(event: EventEvent) {
+        when(event){
+            EventEvent.FetchEvents -> {
+                getEvents()
             }
         }
     }
