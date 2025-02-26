@@ -11,7 +11,7 @@ import com.example.homeworktbc.data.model.Event
 import com.example.homeworktbc.databinding.EventItemBinding
 
 class EventItemAdapter(private val onItemClick : (Event) -> Unit)
-    : PagingDataAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
+    : ListAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = EventItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

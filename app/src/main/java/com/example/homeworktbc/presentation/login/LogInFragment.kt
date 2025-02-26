@@ -52,6 +52,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         }
     }
 
+
+
     private fun navToEventFragment(){
         findNavController().navigate(R.id.action_logInFragment_to_eventsFragment)
     }
@@ -66,8 +68,9 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
         binding.btnSignIn.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
+            val rememberMe = binding.cbRememberMe.isChecked
 
-            loginViewModel.obtainEvent(LoginEvent.LoginButtonClicked(email, password))
+            loginViewModel.obtainEvent(LoginEvent.LoginButtonClicked(email, password,rememberMe))
         }
     }
 
@@ -88,6 +91,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             binding.etPassword.setSelection(binding.etPassword.text.length)
         }
     }
+
 
     private fun showError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()

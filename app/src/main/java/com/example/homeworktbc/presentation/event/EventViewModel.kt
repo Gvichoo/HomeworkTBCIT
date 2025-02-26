@@ -20,7 +20,16 @@ class EventViewModel @Inject constructor(
 ) : BaseViewModel<EventState,EventEvent,EventEffect>(EventState()) {
 
 
+    private var isDataFetched = false
+
+    fun isDataLoaded() : Boolean{
+        return isDataFetched
+    }
+
     fun getEvents() {
+
+        if (isDataLoaded()) return
+
         updateState { copy(isLoading = true) }
         viewModelScope.launch {
             eventRepository.getEvents().collect { resource ->
@@ -30,6 +39,7 @@ class EventViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         updateState { copy(isLoading = false, events = resource.data) }
+                        isDataFetched = true
                     }
                     is Resource.Failed -> {
                         updateState { copy(isLoading = false, errorMessage = resource.message) }

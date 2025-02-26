@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.homeworktbc.R
 import com.example.homeworktbc.databinding.FragmentEventsBinding
 import com.example.homeworktbc.presentation.event.adapter.EventItemAdapter
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
@@ -38,6 +39,9 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         setupRecyclerView()
         observeEvents()
         eventViewModel.getEvents()
+        navToProfileClickListener()
+        observeEffects()
+        observeViewState()
 
     }
 
@@ -68,6 +72,8 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
                 }
             }
         }
+    }
+    private fun observeEffects(){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 eventViewModel.effects.collect { effect ->
@@ -80,10 +86,27 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
             }
         }
     }
+    private fun observeViewState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                eventViewModel.viewState.collect { state ->
+                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                    state.events?.let { eventAdapter.submitList(it) }
+                    state.errorMessage?.let { showError(it) }
+                }
+            }
+        }
+    }
+    private fun navToProfileClickListener(){
+        binding.btnProfile.setOnClickListener{
+            findNavController().navigate(R.id.action_eventsFragment_to_profileFragment)
+        }
+    }
 
     private fun showError(message: String?) {
         Toast.makeText(requireContext(), message ?: "Unknown error", Toast.LENGTH_SHORT).show()
     }
+
 
 
 }

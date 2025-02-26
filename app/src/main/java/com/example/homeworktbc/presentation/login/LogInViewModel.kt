@@ -24,14 +24,14 @@ class LogInViewModel @Inject constructor(
 
 
 
-    private fun validateInputsAndLogin(email: String, password: String) {
-        if (validateInputs(email, password)) {
+    private fun validateInputsAndLogin(email: String, password: String,rememberMe : Boolean) {
+        if (validateInputs(email, password,rememberMe)) {
             loginUser(email, password)
         }
     }
 
 
-    private fun validateInputs(email: String, password: String): Boolean {
+    private fun validateInputs(email: String, password: String,rememberMe: Boolean): Boolean {
 
         if (email.isEmpty() || password.isEmpty()) {
             viewModelScope.launch {
@@ -53,9 +53,21 @@ class LogInViewModel @Inject constructor(
             }
             return false
         }
+        if (rememberMe){
+            saveEmailToDataStore(email)
+        }
 
         return true
     }
+
+
+    private fun saveEmailToDataStore(email: String) {
+        viewModelScope.launch {
+            val emailKey = PreferenceKeys.email
+            dataStoreRepository.saveValue(emailKey, email)
+        }
+    }
+
 
     private fun loginUser(email: String, password: String) {
         updateState { copy(isLoading = true) }
@@ -65,6 +77,7 @@ class LogInViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Success -> {
                         updateState { copy(isSuccess = true) }
+                        emitEffect(LoginEffect.NavToEventsFragment)
 
                     }
                     is Resource.Failed -> {
@@ -84,7 +97,7 @@ class LogInViewModel @Inject constructor(
     override fun obtainEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.LoginButtonClicked -> {
-                validateInputsAndLogin(event.email, event.password)
+                validateInputsAndLogin(event.email, event.password,event.rememberMe)
             }
 
             LoginEvent.SignUpClicked -> viewModelScope.launch{
