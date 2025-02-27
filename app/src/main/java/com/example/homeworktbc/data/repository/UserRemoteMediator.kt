@@ -8,7 +8,7 @@ import androidx.room.withTransaction
 import com.example.homeworktbc.data.database.RoomDb
 import com.example.homeworktbc.data.entity.RemoteKeyEntity
 import com.example.homeworktbc.data.entity.User
-import com.example.homeworktbc.data.mapping.toUser
+import com.example.homeworktbc.presentation.mapping.toUser
 import com.example.homeworktbc.data.remote.api.UserApi
 import retrofit2.HttpException
 import java.io.IOException

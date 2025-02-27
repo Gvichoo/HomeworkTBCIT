@@ -1,4 +1,4 @@
-package com.example.homeworktbc.data.mapping
+package com.example.homeworktbc.presentation.mapping
 
 import com.example.homeworktbc.data.entity.User
 import com.example.homeworktbc.data.remote.response.UserData

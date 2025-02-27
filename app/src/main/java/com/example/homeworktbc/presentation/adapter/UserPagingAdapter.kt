@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.homeworktbc.databinding.RecyclerItemBinding
 import com.example.homeworktbc.data.entity.User
+import com.example.homeworktbc.presentation.extension.loadImagesGlide
 
 class UserPagingAdapter : PagingDataAdapter<User, UserPagingAdapter.MyViewHolder>(UserDiffUtil) {
 
@@ -42,10 +41,8 @@ class UserPagingAdapter : PagingDataAdapter<User, UserPagingAdapter.MyViewHolder
             binding.tvEmail.text = item.email
             binding.tvLastName.text = item.lastName
 
-            Glide.with(binding.ivAvatar.context)
-                .load(item.avatar)
-                .transform(RoundedCorners(20))
-                .into(binding.ivAvatar)
+            binding.ivAvatar.loadImagesGlide(item.avatar, 20)
+
         }
     }
 }
