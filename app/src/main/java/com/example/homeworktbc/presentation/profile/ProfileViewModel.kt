@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.profile
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
@@ -28,11 +29,16 @@ class ProfileViewModel @Inject constructor(
             emitEffect(ProfileEffect.NavigateToLogin)
         }
     }
+    private fun goToSettings(){
+        viewModelScope.launch {
+            emitEffect(ProfileEffect.NavigateToSetting)
+        }
+    }
 
     override fun obtainEvent(event: ProfileEvent) {
         when(event){
             ProfileEvent.Logout -> logout()
-            ProfileEvent.Settings -> TODO()
+            ProfileEvent.Settings -> goToSettings()
         }
     }
 

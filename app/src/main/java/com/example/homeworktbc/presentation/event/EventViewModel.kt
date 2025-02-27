@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.event
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.model.Event
 import com.example.homeworktbc.data.resource.Resource
@@ -22,7 +23,7 @@ class EventViewModel @Inject constructor(
 
     private var isDataFetched = false
 
-    fun isDataLoaded() : Boolean{
+    private fun isDataLoaded() : Boolean{
         return isDataFetched
     }
 

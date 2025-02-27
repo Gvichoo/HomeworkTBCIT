@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.event
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels

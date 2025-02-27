@@ -5,6 +5,7 @@ import com.example.homeworktbc.di.repository.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import com.example.homeworktbc.data.datastore.PreferenceKeys.languages
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -25,6 +26,18 @@ class DataStoreRepositoryImpl @Inject constructor(private val dataStore: DataSto
     override suspend fun removeByKey(key: Preferences.Key<String>) {
         dataStore.edit { preferences ->
             preferences.remove(key)
+        }
+    }
+
+    override suspend fun saveLanguage(language: String) {
+        dataStore.edit { preferences ->
+            preferences[languages] = language
+        }
+    }
+
+    override fun readLanguage(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[languages] ?: "en"
         }
     }
 }

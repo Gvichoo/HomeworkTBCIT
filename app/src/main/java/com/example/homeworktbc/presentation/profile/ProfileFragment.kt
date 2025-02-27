@@ -24,11 +24,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         observeState()
         observeEffects()
         startLogOutClickListener()
+        startSettingsClickListener()
     }
 
-    private fun startLogOutClickListener(){
+    private fun startLogOutClickListener() {
         binding.btnLogOut.setOnClickListener {
             viewModel.obtainEvent(ProfileEvent.Logout)
+        }
+    }
+
+    private fun startSettingsClickListener() {
+        binding.btnSettings.setOnClickListener {
+            viewModel.obtainEvent(ProfileEvent.Settings)
         }
     }
 
@@ -68,7 +75,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 )
             }
 
-            ProfileEffect.NavigateToSetting -> TODO()
+            ProfileEffect.NavigateToSetting -> {
+                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+            }
         }
     }
 }

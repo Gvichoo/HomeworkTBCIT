@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HomeworkTBC</string>
+    <string name="app_name" translatable="false">HomeworkTBC</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="let_s_sign_in_to_your_account">Let’s Sign In to Your account</string>
@@ -11,7 +11,7 @@
     <string name="sign_in">Sign In</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up_here">Sign up here</string>
-    <string name="sign_in_here">Sign in here</string>
+    <string name="sign_in_here">Already have an account?</string>
     <string name="if_you_already_have_an_account">If you already have an account</string>
     <string name="sign_up">Sign up</string>
     <string name="enter_your_password2">Enter your Password:</string>
@@ -24,4 +24,10 @@
     <string name="password3">Password</string>
     <string name="upcoming_events">Upcoming Events</string>
     <string name="info">Join industry leaders, innovators, and tech enthusiasts for three days of networking, learning, and inspiration. This year’s conference will cover the latest in AI, blockchain, cybersecurity, and the future of tech. Expect keynote speakers, hands-on workshops, and panel discussions from experts at top companies.</string>
+    <string name="organizer">Organizer:</string>
+    <string name="date">Date:</string>
+    <string name="price">Price:</string>
+    <string name="enter_you_email">Enter you Email:</string>
+    <string name="log_out">Log out</string>
+    <string name="change_language">Change language</string>
 </resources>

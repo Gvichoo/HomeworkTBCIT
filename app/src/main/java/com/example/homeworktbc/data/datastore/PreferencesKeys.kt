@@ -4,4 +4,5 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 
 object PreferenceKeys {
     val email = stringPreferencesKey("email")
+    val languages = stringPreferencesKey("language")
 }
