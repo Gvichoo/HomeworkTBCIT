@@ -16,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
-) : BaseViewModel<SplashState,SplashEvent,SplashEffect>(SplashState()) {
+) : BaseViewModel<SplashState, SplashEvent, SplashEffect>(SplashState()) {
+
 
     private fun checkSession() {
         updateState { copy(isLoading = true) }
@@ -24,14 +25,14 @@ class SplashViewModel @Inject constructor(
             val email = dataStoreRepository.readValue(PreferenceKeys.email).firstOrNull()
             val isLoggedIn = !email.isNullOrEmpty()
             updateState { copy(isLoading = false, isLoggedIn = isLoggedIn) }
-
             emitEffect(
                 if (isLoggedIn) SplashEffect.NavigateToEvents else SplashEffect.NavigateToLogin
             )
         }
     }
+
     override fun obtainEvent(event: SplashEvent) {
-        when(event){
+        when (event) {
             SplashEvent.CheckSession -> checkSession()
         }
     }

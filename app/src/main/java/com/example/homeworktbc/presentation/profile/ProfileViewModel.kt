@@ -32,6 +32,7 @@ class ProfileViewModel @Inject constructor(
     override fun obtainEvent(event: ProfileEvent) {
         when(event){
             ProfileEvent.Logout -> logout()
+            ProfileEvent.Settings -> TODO()
         }
     }
 

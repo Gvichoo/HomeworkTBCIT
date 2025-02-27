@@ -3,5 +3,14 @@
     <style name="Base.Theme.HomeworkTBC" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>4
+
+    <style name="Theme.HomeworkTBC" parent="Base.Theme.HomeworkTBC" />
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground" > @color/purple</item>
+        <item name="windowSplashScreenAnimatedIcon"> @drawable/splash</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.HomeworkTBC</item>
+
     </style>
 </resources>

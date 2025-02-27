@@ -66,6 +66,8 @@ dependencies {
     implementation (libs.glide)
     //DataStore Preferences
     implementation(libs.androidx.datastore.preferences)
+    //Splash
+    implementation(libs.androidx.core.splashscreen)
 
     implementation (libs.okhttp)
     implementation (libs.retrofit)
