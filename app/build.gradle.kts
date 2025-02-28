@@ -4,6 +4,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+
+
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 
 
 }
@@ -54,9 +59,30 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
-    
+
+    //Map
+    implementation(libs.android.maps.utils)
+    implementation(libs.maps.utils.ktx)
+    //git
+    implementation (libs.play.services.maps.v1910)
+
+    // Lifecycle Runtime KTX Library
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+
+    // Maps SDK for Android KTX Library
+    implementation (libs.android.maps.ktx)
+    ///////
+    implementation (libs.play.services.location)
+
+
+
+    //Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
     implementation (libs.okhttp)
     implementation (libs.retrofit)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
