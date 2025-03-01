@@ -11,8 +11,8 @@
     <string name="sign_in">Sign In</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up_here">Sign up here</string>
-    <string name="sign_in_here">Already have an account?</string>
-    <string name="if_you_already_have_an_account">If you already have an account</string>
+    <string name="sign_in_here">sing in here</string>
+    <string name="if_you_already_have_an_account">Don\t have an account?</string>
     <string name="sign_up">Sign up</string>
     <string name="enter_your_password2">Enter your Password:</string>
     <string name="repeat_password">Repeat password</string>
@@ -29,5 +29,9 @@
     <string name="price">Price:</string>
     <string name="enter_you_email">Enter you Email:</string>
     <string name="log_out">Log out</string>
-    <string name="change_language">Change language</string>
+    <string name="save_changes" translatable="false">Save Changes</string>
+    <string name="change_language" translatable="false">Change language</string>
+    <string name="sabagvichiani027_gmail_com">sabagvichiani027@gmail.com</string>
+    <string name="add_your_event">+ Add your event</string>
+    <string name="get_your_ticket">Get Your Ticket</string>
 </resources>

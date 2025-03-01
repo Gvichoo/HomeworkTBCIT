@@ -1,6 +1,5 @@
 package com.example.homeworktbc.presentation.event
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.model.Event
 import com.example.homeworktbc.data.resource.Resource
@@ -10,8 +9,6 @@ import com.example.homeworktbc.presentation.event.effect.EventEffect
 import com.example.homeworktbc.presentation.event.event.EventEvent
 import com.example.homeworktbc.presentation.event.state.EventState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,10 +48,21 @@ class EventViewModel @Inject constructor(
         }
     }
 
+
     override fun obtainEvent(event: EventEvent) {
         when(event){
             EventEvent.FetchEvents -> {
                 getEvents()
+            }
+
+            EventEvent.AddEventClicked -> viewModelScope.launch {
+                emitEffect(EventEffect.NavToAddEventsFragment)
+            }
+
+            is EventEvent.NewEventAdded -> {
+                updateState {
+                    copy(events = listOf(event.event) + (events ?: emptyList()))
+                }
             }
         }
     }

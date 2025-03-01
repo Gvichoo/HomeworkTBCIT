@@ -10,10 +10,8 @@ import com.example.homeworktbc.databinding.FragmentProfileBinding
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
 import com.example.homeworktbc.presentation.profile.effect.ProfileEffect
 import com.example.homeworktbc.presentation.profile.event.ProfileEvent
-import com.example.homeworktbc.presentation.profile.state.ProfileState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import androidx.navigation.navOptions
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
@@ -21,17 +19,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private val viewModel: ProfileViewModel by viewModels()
 
     override fun start() {
-        observeState()
         observeEffects()
-        startLogOutClickListener()
         startSettingsClickListener()
+        setGmail()
     }
 
-    private fun startLogOutClickListener() {
-        binding.btnLogOut.setOnClickListener {
-            viewModel.obtainEvent(ProfileEvent.Logout)
+    private fun setGmail(){
+        parentFragmentManager.setFragmentResultListener("loginResult", viewLifecycleOwner) { _, bundle ->
+            val email = bundle.getString("email")
+            binding.tvGmail.text = email
         }
     }
+
 
     private fun startSettingsClickListener() {
         binding.btnSettings.setOnClickListener {
@@ -39,15 +38,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun observeState() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.viewState.collect { state ->
-                    handleState(state)
-                }
-            }
-        }
-    }
 
     private fun observeEffects() {
         lifecycleScope.launch {
@@ -59,24 +49,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun handleState(state: ProfileState) {
-        binding.btnLogOut.isEnabled = !state.isLoggingOut
-    }
+
 
     private fun handleEffect(effect: ProfileEffect) {
         when (effect) {
-            ProfileEffect.NavigateToLogin -> {
-                findNavController().navigate(R.id.action_profileFragment_to_logInFragment,
-                    null,
-                    navOptions {
-                        popUpTo(R.id.nav_graph) { inclusive = true }
-                        launchSingleTop = true
-                    }
-                )
-            }
+
 
             ProfileEffect.NavigateToSetting -> {
-                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                val navController = findNavController()
+                if (navController.currentDestination?.id != R.id.settingsFragment) {
+                    navController.navigate(R.id.action_profileFragment_to_settingsFragment)
+                }
             }
         }
     }

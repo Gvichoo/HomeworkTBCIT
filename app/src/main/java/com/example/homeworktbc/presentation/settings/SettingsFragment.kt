@@ -1,64 +1,132 @@
 package com.example.homeworktbc.presentation.settings
 
-import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import com.example.homeworktbc.R
 import com.example.homeworktbc.databinding.FragmentSettingsBinding
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
 import com.example.homeworktbc.presentation.settings.effect.SettingsEffect
 import com.example.homeworktbc.presentation.settings.event.SettingsEvent
+import com.example.homeworktbc.presentation.settings.state.SettingsState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsBinding::inflate) {
-
     private val viewModel: SettingsViewModel by viewModels()
 
+    private lateinit var selectedLanguage: String
+
     override fun start() {
-        setupLanguageSpinner()
-        observeViewModel()
+
+        observeState()
+
+        observeEffects()
+
+        saveLanguage()
+
+        startLogOutClickListener()
+
+
     }
 
-    private fun setupLanguageSpinner() {
-        val spinner: Spinner = binding.languageSpinner
-        val languages = listOf("English", "ქართული")  // List of languages
-        val languageCodes = mapOf("English" to "en", "ქართული" to "ka")  // Mapping of languages to codes
+    private fun saveLanguage(){
+        val languagesList = arrayListOf("ქართული", "English")
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
+        val adapter = ArrayAdapter(
+            requireContext(),
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            languagesList
+        )
+        binding.languageSpinner.adapter = adapter
 
-        // When the save button is clicked, save the selected language to DataStore
-        binding.saveButton.setOnClickListener {
-            val selectedLanguage = spinner.selectedItem.toString()
-            val languageCode = languageCodes[selectedLanguage] ?: "en"
-            viewModel.obtainEvent(SettingsEvent.LanguageSelected(languageCode))  // Save the language selection
-        }
-    }
-
-    private fun observeViewModel() {
-        // Observe changes in the view state to update the spinner's selected language
         lifecycleScope.launch {
             viewModel.viewState.collect { state ->
-                val selectedPosition = if (state.selectedLanguage == "ka") 1 else 0
-                binding.languageSpinner.setSelection(selectedPosition)  // Set spinner selection based on saved language
+                selectedLanguage = state.selectedLanguage
+                val languagePosition = when (state.selectedLanguage) {
+                    "ka" -> 0
+                    "en" -> 1
+                    else -> 0
+                }
+                binding.languageSpinner.setSelection(languagePosition)
             }
         }
 
-        // Handle any effects emitted from the ViewModel
+        binding.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedLanguage = when (position) {
+                    0 -> "ka"
+                    1 -> "en"
+                    else -> "en"
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        binding.saveButton.setOnClickListener {
+            viewModel.obtainEvent(SettingsEvent.SaveLanguage(selectedLanguage))
+        }
+
+        viewModel.loadSavedLanguage()
+    }
+
+    private fun startLogOutClickListener() {
+        binding.btnLogOut.setOnClickListener {
+            viewModel.obtainEvent(SettingsEvent.LogOut)
+        }
+    }
+
+    private fun observeState() {
         lifecycleScope.launch {
-            viewModel.effects.collect { effect ->
-                when (effect) {
-                    is SettingsEffect.RestartApp -> restartApp()  // Restart the app if necessary
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewState.collect { state ->
+                    handleState(state)
                 }
             }
         }
     }
 
-    private fun restartApp() {
-        requireActivity().recreate()  // Restart the activity
+    private fun observeEffects() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.effects.collect { effect ->
+                    handleEffect(effect)
+                }
+            }
+        }
+    }
+
+
+    private fun handleEffect(effect: SettingsEffect) {
+        when (effect) {
+            SettingsEffect.NavigateToLogin ->
+                findNavController().navigate(R.id.action_settingsFragment_to_logInFragment,
+                    null,
+                    navOptions {
+                        popUpTo(R.id.nav_graph) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                )
+            is SettingsEffect.ShowLanguageChangeMessage ->
+                showLanguageChangeMessage(effect.message)
+        }
+    }
+
+
+    private fun handleState(state: SettingsState) {
+        binding.btnLogOut.isEnabled = !state.isLoggingOut
+    }
+
+    private fun showLanguageChangeMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

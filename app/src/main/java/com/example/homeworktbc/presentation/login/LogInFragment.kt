@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.login
 
+import android.os.Bundle
 import android.text.InputType
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -23,14 +24,17 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
     override fun start() {
 
-
         startSignUpClickListener()
 
         startSignInClickListener()
 
         makePasswordVisible()
 
+        observeEvent()
 
+    }
+
+    private fun observeEvent(){
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.effects.collect { effect ->
@@ -45,9 +49,15 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                         is LoginEffect.ShowError -> {
                             showError(effect.message)
                         }
+
+                        is LoginEffect.SendEmailToProfile ->{
+                            val result = Bundle().apply {
+                                putString("email", effect.email)
+                            }
+                            parentFragmentManager.setFragmentResult("loginResult", result)
+                        }
                     }
                 }
-
             }
         }
     }

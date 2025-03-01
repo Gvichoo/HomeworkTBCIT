@@ -1,6 +1,6 @@
 package com.example.homeworktbc.presentation.login.effect
 
-sealed interface LoginEffect  {
+sealed interface LoginEffect {
 
 
     data object NavToEventsFragment : LoginEffect
@@ -8,6 +8,8 @@ sealed interface LoginEffect  {
     data object NavToRegisterFragment : LoginEffect
 
     data class ShowError(val message: String) : LoginEffect
+
+    data class SendEmailToProfile(val email: String) : LoginEffect
 
 
 }

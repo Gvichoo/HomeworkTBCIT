@@ -52,7 +52,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/organizer"
         android:textColor="#AB811E "
-        android:textSize="22sp"
+        android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/info" />
@@ -64,7 +64,7 @@
         android:layout_marginStart="10dp"
         android:text="Tech Events Inc"
         android:textColor="#AB811E "
-        android:textSize="22sp"
+        android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/tvOrganizator"
         app:layout_constraintTop_toTopOf="@id/tvOrganizator" />
@@ -77,7 +77,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/date"
         android:textColor="#AB811E "
-        android:textSize="22sp"
+        android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvOrganizator" />
@@ -90,7 +90,7 @@
         android:text="2025-01-22"
         android:textStyle="bold"
         android:textColor="#AB811E "
-        android:textSize="22sp"
+        android:textSize="19sp"
         app:layout_constraintStart_toEndOf="@id/tvDate"
         app:layout_constraintTop_toTopOf="@id/tvDate" />
 
@@ -100,7 +100,7 @@
         android:id="@+id/tvPrice"
         android:text="@string/price"
         android:textStyle="bold"
-        android:textSize="22sp"
+        android:textSize="19sp"
         app:layout_constraintTop_toBottomOf="@id/tvDate"
         app:layout_constraintStart_toStartOf="@id/tvDate"
         android:layout_marginTop="20dp"
@@ -113,7 +113,7 @@
         app:layout_constraintStart_toEndOf="@id/tvPrice"
         app:layout_constraintTop_toTopOf="@id/tvPrice"
         android:id="@+id/price"
-        android:textSize="22sp"
+        android:textSize="19sp"
         android:text="333$"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
@@ -126,7 +126,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/btn_buy_ticket"
-        android:text="Add to your store"
+        android:text="@string/get_your_ticket"
         android:textAllCaps="false"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

@@ -9,8 +9,8 @@
     <string name="keep_me_signed_in">დაიმახსოვრე სესია</string>
     <string name="sign_in">შესვლა</string>
     <string name="don_t_have_an_account">არ გაქვს ექაუნთი?</string>
-    <string name="sign_up_here">გაიარე რეგისტრაცია აქ</string>
-    <string name="sign_in_here">უკვე გაქვს ექაუნთი?</string>
+    <string name="sign_up_here">რეგისტრაცია</string>
+    <string name="sign_in_here">შესვლა</string>
     <string name="if_you_already_have_an_account">თუ უკვე გაქვს ექაუნთი</string>
     <string name="sign_up">დარეგისტრირდი</string>
     <string name="enter_your_password2">შეიყვანე შენი პაროლი:</string>
@@ -21,11 +21,14 @@
     <string name="let_s_sign_you_up">გაიარე რეგისტრაცია</string>
     <string name="repeat_you_password">გაიმეორე შენი პაროლი:</string>
     <string name="password3">პაროლი</string>
-    <string name="upcoming_events">მომავალი ივენთები</string>
+    <string name="upcoming_events">ღონისძიებები</string>
     <string name="info">Join industry leaders, innovators, and tech enthusiasts for three days of networking, learning, and inspiration. This year’s conference will cover the latest in AI, blockchain, cybersecurity, and the future of tech. Expect keynote speakers, hands-on workshops, and panel discussions from experts at top companies.</string>
     <string name="organizer">ორგანიზატორი:</string>
     <string name="date">თარიღი:</string>
     <string name="price">ფასი:</string>
     <string name="enter_you_email">შეიყვანე შენი იმეილი:</string>
     <string name="log_out">გამოსვლა</string>
+    <string name="save_changes" translatable="false">შენახვა</string>
+    <string name="change_language" translatable="false">შეცვალე ენა</string>
+    <string name="get_your_ticket">შეიძინე ბილეთი</string>
 </resources>

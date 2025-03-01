@@ -21,9 +21,6 @@ class LogInViewModel @Inject constructor(
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
 
 
-
-
-
     private fun validateInputsAndLogin(email: String, password: String,rememberMe : Boolean) {
         if (validateInputs(email, password,rememberMe)) {
             loginUser(email, password)
@@ -78,6 +75,7 @@ class LogInViewModel @Inject constructor(
                     is Resource.Success -> {
                         updateState { copy(isSuccess = true) }
                         emitEffect(LoginEffect.NavToEventsFragment)
+                        emitEffect(LoginEffect.SendEmailToProfile(email))
 
                     }
                     is Resource.Failed -> {

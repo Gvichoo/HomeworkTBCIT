@@ -28,6 +28,4 @@ abstract class BaseViewModel<STATE, EVENT, EFFECT>(
     }
 
 
-
-
 }
