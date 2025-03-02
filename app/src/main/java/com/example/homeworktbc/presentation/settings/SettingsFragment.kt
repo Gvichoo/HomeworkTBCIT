@@ -106,20 +106,39 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     }
 
 
+    private var isNavigating = false
+
     private fun handleEffect(effect: SettingsEffect) {
         when (effect) {
-            SettingsEffect.NavigateToLogin ->
-                findNavController().navigate(R.id.action_settingsFragment_to_logInFragment,
-                    null,
-                    navOptions {
-                        popUpTo(R.id.nav_graph) { inclusive = true }
-                        launchSingleTop = true
+            SettingsEffect.NavigateToLogin -> {
+                try {
+                    // Ensure the fragment manager is not already executing a transaction
+                    if (childFragmentManager.isStateSaved) {
+                        return // Do not perform any transaction if state is saved
                     }
-                )
-            is SettingsEffect.ShowLanguageChangeMessage ->
-                showLanguageChangeMessage(effect.message)
+
+                    // Perform the navigation safely
+                    findNavController().navigate(
+                        R.id.action_settingsFragment_to_logInFragment,
+                        null,
+                        navOptions {
+                            popUpTo(R.id.nav_graph) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    )
+                } catch (e: IllegalStateException) {
+                    // Handle any navigation error gracefully
+                    e.printStackTrace()  // Or use a logging tool to track
+                }
+            }
+            is SettingsEffect.ShowLanguageChangeMessage -> showLanguageChangeMessage(effect.message)
         }
     }
+
+
+
+
+
 
 
     private fun handleState(state: SettingsState) {

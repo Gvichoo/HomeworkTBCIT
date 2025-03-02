@@ -9,3 +9,4 @@ import com.example.homeworktbc.data.room.entity.EventEntity
 abstract class EventDatabase : RoomDatabase() {
     abstract fun eventDao(): EventDao
 }
+

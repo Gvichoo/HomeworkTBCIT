@@ -6,6 +6,7 @@ import com.example.homeworktbc.data.datastore.PreferenceKeys
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.repository.DataStoreRepository
 import com.example.homeworktbc.domain.repository.LogInRepository
+import com.example.homeworktbc.domain.usecase.saveEmail.SaveValueUseCase
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.login.effect.LoginEffect
 import com.example.homeworktbc.presentation.login.event.LoginEvent
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LogInViewModel @Inject constructor(
     private val logInRepository: LogInRepository,
-    private val dataStoreRepository: DataStoreRepository
+    private val saveValueUseCase: SaveValueUseCase
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
 
 
@@ -61,7 +62,7 @@ class LogInViewModel @Inject constructor(
     private fun saveEmailToDataStore(email: String) {
         viewModelScope.launch {
             val emailKey = PreferenceKeys.email
-            dataStoreRepository.saveValue(emailKey, email)
+            saveValueUseCase(emailKey, email)
         }
     }
 

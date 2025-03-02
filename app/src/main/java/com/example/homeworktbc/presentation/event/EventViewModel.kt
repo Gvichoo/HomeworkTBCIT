@@ -47,13 +47,6 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun addEvent(event: Event) {
-        viewModelScope.launch {
-            eventRepository.insertEvent(event)
-            emitEffect(EventEffect.ShowSuccessMessage)
-        }
-    }
-
 
     override fun obtainEvent(event: EventEvent) {
         when(event){

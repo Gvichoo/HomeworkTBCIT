@@ -2,11 +2,13 @@ package com.example.homeworktbc.presentation.settings
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import kotlinx.coroutines.flow.collect
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
-import com.example.homeworktbc.domain.repository.DataStoreRepository
+import com.example.homeworktbc.domain.usecase.readLanguage.ReadLanguageUseCase
+import com.example.homeworktbc.domain.usecase.removeKey.RemoveKeyUseCase
+import com.example.homeworktbc.domain.usecase.saveLanguage.SaveLanguageUseCase
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
-import com.example.homeworktbc.presentation.profile.effect.ProfileEffect
 import com.example.homeworktbc.presentation.settings.effect.SettingsEffect
 import com.example.homeworktbc.presentation.settings.event.SettingsEvent
 import com.example.homeworktbc.presentation.settings.state.SettingsState
@@ -17,7 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val dataStoreRepository: DataStoreRepository
+    private val removeKeyUseCase: RemoveKeyUseCase,
+    private val saveLanguageUseCase: SaveLanguageUseCase,
+    private val readLanguageUseCase: ReadLanguageUseCase
 ) : BaseViewModel<SettingsState, SettingsEvent, SettingsEffect>(SettingsState()) {
 
     override fun obtainEvent(event: SettingsEvent) {
@@ -35,7 +39,7 @@ class SettingsViewModel @Inject constructor(
     private fun logout() {
         updateState { copy(isLoggingOut = true) }
         viewModelScope.launch {
-            dataStoreRepository.removeByKey(PreferenceKeys.email)
+            removeKeyUseCase(PreferenceKeys.email)
             updateState { copy(isLoggingOut = false) }
             emitEffect(SettingsEffect.NavigateToLogin)
 
@@ -43,7 +47,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private suspend fun saveLanguage(language: String) {
-        dataStoreRepository.saveLanguage(language)
+        saveLanguageUseCase(language)
         updateState { copy(selectedLanguage = language) }
         val locale = Locale(language)
         val localeList = LocaleListCompat.forLanguageTags(language)
@@ -55,9 +59,10 @@ class SettingsViewModel @Inject constructor(
 
     fun loadSavedLanguage() {
         viewModelScope.launch {
-            dataStoreRepository.readLanguage().collect { language ->
+            readLanguageUseCase().collect { language ->
                 updateState { copy(selectedLanguage = language) }
             }
         }
     }
+
 }

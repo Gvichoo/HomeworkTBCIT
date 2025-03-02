@@ -1,6 +1,12 @@
 package com.example.homeworktbc.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.homeworktbc.data.api.EventApiService
+import com.example.homeworktbc.data.repository.EventRepositoryImpl
+import com.example.homeworktbc.data.room.dao.EventDao
+import com.example.homeworktbc.data.room.dataBase.EventDatabase
+import com.example.homeworktbc.domain.repository.EventRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -43,5 +49,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+
+
+
 }
 

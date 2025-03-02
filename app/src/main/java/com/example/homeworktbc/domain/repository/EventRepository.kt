@@ -6,5 +6,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface EventRepository {
     suspend fun getEvents(): Flow<Resource<List<Event>>>
-    suspend fun insertEvent(event: Event)
 }
