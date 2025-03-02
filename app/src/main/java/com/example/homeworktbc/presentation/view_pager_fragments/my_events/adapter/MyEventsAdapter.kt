@@ -1,17 +1,14 @@
-package com.example.homeworktbc.presentation.event.adapter
+package com.example.homeworktbc.presentation.view_pager_fragments.my_events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.homeworktbc.data.model.EventDto
 import com.example.homeworktbc.databinding.EventItemBinding
-import com.example.homeworktbc.domain.modele.Event
 
-class EventItemAdapter(private val onItemClick : (Event) -> Unit)
-    : ListAdapter<Event, EventItemAdapter.EventViewHolder>(EventDiffCallback()) {
+class MyEventsAdapter : ListAdapter<EventDto, MyEventsAdapter.EventViewHolder>(EventDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = EventItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,13 +17,11 @@ class EventItemAdapter(private val onItemClick : (Event) -> Unit)
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = getItem(position)
-        if (event != null) {
-            holder.bind(event)
-        }
+        holder.bind(event)
     }
 
-    inner class EventViewHolder(private val binding: EventItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: Event) {
+    inner class EventViewHolder(private val binding: EventItemBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
+        fun bind(event: EventDto) {
 
             binding.name.text = event.name
             binding.organizer.text = event.organizer
@@ -35,22 +30,16 @@ class EventItemAdapter(private val onItemClick : (Event) -> Unit)
             Glide.with(binding.root.context)
                 .load(event.image)
                 .into(binding.image)
-
-
-            itemView.setOnClickListener {
-                onItemClick(event)
-            }
         }
     }
 
-    class EventDiffCallback : DiffUtil.ItemCallback<Event>() {
-        override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+    class EventDiffCallback : DiffUtil.ItemCallback<EventDto>() {
+        override fun areItemsTheSame(oldItem: EventDto, newItem: EventDto): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+        override fun areContentsTheSame(oldItem: EventDto, newItem: EventDto): Boolean {
             return oldItem == newItem
         }
     }
 }
-

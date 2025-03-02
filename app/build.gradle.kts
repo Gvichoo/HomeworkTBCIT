@@ -8,8 +8,8 @@ plugins {
     //Hilt
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-
-
+    //Room
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -46,8 +46,9 @@ android {
         viewBinding = true
     }
 }
-val paging_version = "3.3.5"
 dependencies {
+    val room_version = "2.6.1"
+    val paging_version = "3.3.5"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -68,6 +69,10 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     //Splash
     implementation(libs.androidx.core.splashscreen)
+    //Room
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 
     implementation (libs.okhttp)
     implementation (libs.retrofit)

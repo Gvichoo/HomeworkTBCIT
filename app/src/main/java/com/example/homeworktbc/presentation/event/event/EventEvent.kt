@@ -1,6 +1,6 @@
 package com.example.homeworktbc.presentation.event.event
 
-import com.example.homeworktbc.data.model.Event
+import com.example.homeworktbc.domain.modele.Event
 
 sealed class EventEvent {
     data object FetchEvents : EventEvent()

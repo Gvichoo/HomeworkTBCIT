@@ -1,7 +1,7 @@
 package com.example.homeworktbc.data.repository
 
-import com.example.homeworktbc.data.resource.Resource
-import com.example.homeworktbc.di.repository.LogInRepository
+import com.example.homeworktbc.domain.core.Resource
+import com.example.homeworktbc.domain.repository.LogInRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

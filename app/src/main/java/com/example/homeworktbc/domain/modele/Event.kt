@@ -1,8 +1,5 @@
-package com.example.homeworktbc.data.model
+package com.example.homeworktbc.domain.modele
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Event(
     val id: Int,
     val name: String,

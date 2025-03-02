@@ -10,8 +10,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworktbc.R
-import com.example.homeworktbc.data.model.Event
+import com.example.homeworktbc.data.model.EventDto
 import com.example.homeworktbc.databinding.FragmentEventsBinding
+import com.example.homeworktbc.domain.modele.Event
 import com.example.homeworktbc.presentation.event.adapter.EventItemAdapter
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
 import com.example.homeworktbc.presentation.event.effect.EventEffect
@@ -133,6 +134,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
     private fun observeViewState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+
                 eventViewModel.viewState.collect { state ->
                     binding.progressBar.visibility =
                         if (state.isLoading) View.VISIBLE else View.GONE

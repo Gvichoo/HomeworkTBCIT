@@ -1,6 +1,6 @@
-package com.example.homeworktbc.di.repository
+package com.example.homeworktbc.domain.repository
 
-import com.example.homeworktbc.data.resource.Resource
+import com.example.homeworktbc.domain.core.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface RegisterRepository {

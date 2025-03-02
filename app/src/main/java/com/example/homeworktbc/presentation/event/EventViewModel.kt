@@ -1,9 +1,9 @@
 package com.example.homeworktbc.presentation.event
 
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.model.Event
-import com.example.homeworktbc.data.resource.Resource
-import com.example.homeworktbc.di.repository.EventRepository
+import com.example.homeworktbc.domain.core.Resource
+import com.example.homeworktbc.domain.modele.Event
+import com.example.homeworktbc.domain.repository.EventRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.event.effect.EventEffect
 import com.example.homeworktbc.presentation.event.event.EventEvent
@@ -16,7 +16,6 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val eventRepository: EventRepository
 ) : BaseViewModel<EventState,EventEvent,EventEffect>(EventState()) {
-
 
     private var isDataFetched = false
 
@@ -48,17 +47,22 @@ class EventViewModel @Inject constructor(
         }
     }
 
+    fun addEvent(event: Event) {
+        viewModelScope.launch {
+            eventRepository.insertEvent(event)
+            emitEffect(EventEffect.ShowSuccessMessage)
+        }
+    }
+
 
     override fun obtainEvent(event: EventEvent) {
         when(event){
             EventEvent.FetchEvents -> {
                 getEvents()
             }
-
             EventEvent.AddEventClicked -> viewModelScope.launch {
                 emitEffect(EventEffect.NavToAddEventsFragment)
             }
-
             is EventEvent.NewEventAdded -> {
                 updateState {
                     copy(events = listOf(event.event) + (events ?: emptyList()))

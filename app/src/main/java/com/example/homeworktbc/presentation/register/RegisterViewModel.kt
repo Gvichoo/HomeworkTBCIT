@@ -1,17 +1,14 @@
 package com.example.homeworktbc.presentation.register
 
 import android.util.Patterns
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.resource.Resource
-import com.example.homeworktbc.di.repository.RegisterRepository
+import com.example.homeworktbc.domain.core.Resource
+import com.example.homeworktbc.domain.repository.RegisterRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.register.effect.RegisterEffect
 import com.example.homeworktbc.presentation.register.event.RegisterEvent
 import com.example.homeworktbc.presentation.register.state.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

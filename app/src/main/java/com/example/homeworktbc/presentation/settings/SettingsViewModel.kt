@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
-import com.example.homeworktbc.di.repository.DataStoreRepository
+import com.example.homeworktbc.domain.repository.DataStoreRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.profile.effect.ProfileEffect
 import com.example.homeworktbc.presentation.settings.effect.SettingsEffect

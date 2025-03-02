@@ -3,9 +3,9 @@ package com.example.homeworktbc.presentation.login
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
-import com.example.homeworktbc.data.resource.Resource
-import com.example.homeworktbc.di.repository.DataStoreRepository
-import com.example.homeworktbc.di.repository.LogInRepository
+import com.example.homeworktbc.domain.core.Resource
+import com.example.homeworktbc.domain.repository.DataStoreRepository
+import com.example.homeworktbc.domain.repository.LogInRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.login.effect.LoginEffect
 import com.example.homeworktbc.presentation.login.event.LoginEvent

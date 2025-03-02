@@ -1,7 +1,7 @@
 package com.example.homeworktbc.data.repository
 
 import androidx.datastore.core.DataStore
-import com.example.homeworktbc.di.repository.DataStoreRepository
+import com.example.homeworktbc.domain.repository.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit

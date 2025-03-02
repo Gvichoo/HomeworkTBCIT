@@ -1,13 +1,13 @@
-package com.example.homeworktbc.domain
+package com.example.homeworktbc.di
 
 import com.example.homeworktbc.data.repository.DataStoreRepositoryImpl
 import com.example.homeworktbc.data.repository.EventRepositoryImpl
 import com.example.homeworktbc.data.repository.LogInRepositoryImpl
 import com.example.homeworktbc.data.repository.RegisterRepositoryImpl
-import com.example.homeworktbc.di.repository.DataStoreRepository
-import com.example.homeworktbc.di.repository.EventRepository
-import com.example.homeworktbc.di.repository.LogInRepository
-import com.example.homeworktbc.di.repository.RegisterRepository
+import com.example.homeworktbc.domain.repository.DataStoreRepository
+import com.example.homeworktbc.domain.repository.EventRepository
+import com.example.homeworktbc.domain.repository.LogInRepository
+import com.example.homeworktbc.domain.repository.RegisterRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

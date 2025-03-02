@@ -1,6 +1,6 @@
 package com.example.homeworktbc.presentation.event.state
 
-import com.example.homeworktbc.data.model.Event
+import com.example.homeworktbc.domain.modele.Event
 
 data class EventState(
     val isLoading: Boolean = false,

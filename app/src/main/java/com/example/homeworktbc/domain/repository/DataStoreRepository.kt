@@ -1,4 +1,4 @@
-package com.example.homeworktbc.di.repository
+package com.example.homeworktbc.domain.repository
 
 import androidx.datastore.preferences.core.Preferences
 import kotlinx.coroutines.flow.Flow
@@ -10,5 +10,4 @@ interface DataStoreRepository {
 
     suspend fun saveLanguage(language : String)
     fun readLanguage():Flow<String>
-
 }

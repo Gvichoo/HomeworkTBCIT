@@ -1,4 +1,4 @@
-package com.example.homeworktbc.domain
+package com.example.homeworktbc.di
 
 import com.example.homeworktbc.data.api.EventApiService
 import com.google.firebase.auth.FirebaseAuth
@@ -38,9 +38,10 @@ object AppModule {
         return retrofit.create(EventApiService::class.java)
     }
 
+
+
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 }
-
 
