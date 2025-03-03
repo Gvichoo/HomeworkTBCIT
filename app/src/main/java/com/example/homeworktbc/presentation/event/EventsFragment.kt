@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.event
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
@@ -46,32 +47,32 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         eventViewModel.getEvents()
         navToProfileClickListener()
         observeEffects()
-        observeViewState()
-        observeNewEvent()
+//        observeViewState()
+//        observeNewEvent()
         addEventsClickListener()
 
     }
 
-    private fun observeNewEvent() {
-        setFragmentResultListener("new_event") { _, bundle ->
-            val newEvent = Event(
-                id = bundle.getInt("id"),
-                name = bundle.getString("name") ?: "",
-                image = bundle.getString("image") ?: "",
-                organizer = bundle.getString("organizer") ?: "",
-                date = bundle.getString("date") ?: "",
-                info = bundle.getString("info") ?: "",
-                price = bundle.getString("price") ?: ""
-            )
-
-            eventViewModel.obtainEvent(EventEvent.NewEventAdded(newEvent))
-
-            binding.recycler.post {
-                binding.recycler.layoutManager?.scrollToPosition(0)
-            }
-
-        }
-    }
+//    private fun observeNewEvent() {
+//        setFragmentResultListener("new_event") { _, bundle ->
+//            val newEvent = Event(
+//                id = bundle.getInt("id"),
+//                name = bundle.getString("name") ?: "",
+//                image = bundle.getString("image") ?: "",
+//                organizer = bundle.getString("organizer") ?: "",
+//                date = bundle.getString("date") ?: "",
+//                info = bundle.getString("info") ?: "",
+//                price = bundle.getString("price") ?: ""
+//            )
+//
+//            eventViewModel.obtainEvent(EventEvent.NewEventAdded(newEvent))
+//
+//            binding.recycler.post {
+//                binding.recycler.layoutManager?.scrollToPosition(0)
+//            }
+//
+//        }
+//    }
 
 
 
@@ -108,6 +109,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 eventViewModel.viewState.collect { state ->
+                    Log.d("EventsFragment", "State events: ${state.events}")
                     when {
                         state.isLoading -> {
                             binding.progressBar.visibility = View.VISIBLE
@@ -116,6 +118,8 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
                         state.events != null -> {
                             binding.progressBar.visibility = View.GONE
                             eventAdapter.submitList(state.events)
+                            Log.d("EventsFragment", "Adapter updated with ${state.events.size} items.")
+
                             binding.recycler.scrollToPosition(0)
                         }
 
@@ -131,19 +135,19 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
 
 
 
-    private fun observeViewState() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                eventViewModel.viewState.collect { state ->
-                    binding.progressBar.visibility =
-                        if (state.isLoading) View.VISIBLE else View.GONE
-                    state.events?.let { eventAdapter.submitList(it) }
-                    state.errorMessage?.let { showMessage(it) }
-                }
-            }
-        }
-    }
+//    private fun observeViewState() {
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//
+//                eventViewModel.viewState.collect { state ->
+//                    binding.progressBar.visibility =
+//                        if (state.isLoading) View.VISIBLE else View.GONE
+//                    state.events?.let { eventAdapter.submitList(it) }
+//                    state.errorMessage?.let { showMessage(it) }
+//                }
+//            }
+//        }
+//    }
 
     private fun addEventsClickListener(){
         binding.btnAddEvent.setOnClickListener{

@@ -8,15 +8,15 @@ import com.example.homeworktbc.presentation.view_pager_fragments.attended_events
 import com.example.homeworktbc.presentation.view_pager_fragments.my_events.MyEventsFragment
 
 class FragmentPageAdapter(
-    fragmentManager: FragmentManager,
-    lifecycle: Lifecycle
-) :FragmentStateAdapter(fragmentManager,lifecycle) {
+    fragment: Fragment
+) : FragmentStateAdapter(fragment) {
+
     override fun getItemCount(): Int {
         return 2
     }
 
     override fun createFragment(position: Int): Fragment {
-        return if (position==0)
+        return if (position == 0)
             AttendedEventsFragment()
         else
             MyEventsFragment()

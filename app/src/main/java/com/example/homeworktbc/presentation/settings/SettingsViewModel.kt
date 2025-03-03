@@ -37,14 +37,18 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun logout() {
+        if (viewState.value.isLoggingOut) return
+
         updateState { copy(isLoggingOut = true) }
+
         viewModelScope.launch {
             removeKeyUseCase(PreferenceKeys.email)
             updateState { copy(isLoggingOut = false) }
             emitEffect(SettingsEffect.NavigateToLogin)
-
         }
     }
+
+
 
     private suspend fun saveLanguage(language: String) {
         saveLanguageUseCase(language)

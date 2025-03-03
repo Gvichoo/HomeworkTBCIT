@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.event.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -20,6 +21,7 @@ class EventItemAdapter(private val onItemClick : (Event) -> Unit)
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = getItem(position)
+        Log.d("EventItemAdapter", "Binding event: ${event.name}, ID: ${event.id}")
         if (event != null) {
             holder.bind(event)
         }

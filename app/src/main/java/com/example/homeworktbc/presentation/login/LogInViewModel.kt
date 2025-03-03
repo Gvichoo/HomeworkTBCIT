@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.login
 
+import android.os.Bundle
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
@@ -22,9 +23,12 @@ class LogInViewModel @Inject constructor(
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
 
 
+    private var tempEmail: String? = null
+
+
     private fun validateInputsAndLogin(email: String, password: String,rememberMe : Boolean) {
         if (validateInputs(email, password,rememberMe)) {
-            loginUser(email, password)
+            loginUser(email, password,rememberMe)
         }
     }
 
@@ -55,6 +59,8 @@ class LogInViewModel @Inject constructor(
             saveEmailToDataStore(email)
         }
 
+        tempEmail = email
+
         return true
     }
 
@@ -67,7 +73,7 @@ class LogInViewModel @Inject constructor(
     }
 
 
-    private fun loginUser(email: String, password: String) {
+    private fun loginUser(email: String, password: String,rememberMe: Boolean) {
         updateState { copy(isLoading = true) }
 
         viewModelScope.launch {
@@ -76,7 +82,13 @@ class LogInViewModel @Inject constructor(
                     is Resource.Success -> {
                         updateState { copy(isSuccess = true) }
                         emitEffect(LoginEffect.NavToEventsFragment)
-                        emitEffect(LoginEffect.SendEmailToProfile(email))
+
+                        emitEffect(LoginEffect.SendEmailToProfile(tempEmail ?: ""))
+
+                        // Optionally, store the email in Firebase SharedPreferences or DataStore if "Remember me" is checked
+                        if (rememberMe) {
+                            saveEmailToDataStore(email)
+                        }
 
                     }
                     is Resource.Failed -> {
@@ -89,6 +101,11 @@ class LogInViewModel @Inject constructor(
             }
         }
     }
+
+    fun getTemporaryEmail(): String? {
+        return tempEmail
+    }
+
 
 
 

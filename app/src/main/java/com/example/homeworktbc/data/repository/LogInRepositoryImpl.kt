@@ -3,6 +3,7 @@ package com.example.homeworktbc.data.repository
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.repository.LogInRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -20,5 +21,9 @@ class LogInRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             emit(Resource.Failed("Login failed: ${e.message}"))
         }
+    }
+
+    override fun getCurrentUser(): FirebaseUser? {
+        return firebaseAuth.currentUser
     }
 }

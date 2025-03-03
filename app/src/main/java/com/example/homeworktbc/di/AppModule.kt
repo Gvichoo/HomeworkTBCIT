@@ -1,18 +1,13 @@
 package com.example.homeworktbc.di
 
-import android.content.Context
-import androidx.room.Room
 import com.example.homeworktbc.data.api.EventApiService
-import com.example.homeworktbc.data.repository.EventRepositoryImpl
-import com.example.homeworktbc.data.room.dao.EventDao
-import com.example.homeworktbc.data.room.dataBase.EventDatabase
-import com.example.homeworktbc.domain.repository.EventRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
@@ -28,6 +23,7 @@ object AppModule {
         Json { ignoreUnknownKeys = true }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {

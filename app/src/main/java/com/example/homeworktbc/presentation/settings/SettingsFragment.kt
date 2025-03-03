@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.settings
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -106,39 +107,42 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     }
 
 
-    private var isNavigating = false
 
     private fun handleEffect(effect: SettingsEffect) {
         when (effect) {
             SettingsEffect.NavigateToLogin -> {
-                try {
-                    // Ensure the fragment manager is not already executing a transaction
-                    if (childFragmentManager.isStateSaved) {
-                        return // Do not perform any transaction if state is saved
-                    }
+                // Ensure fragment is properly added and not in an invalid state
+                if (!isAdded || childFragmentManager.isStateSaved || !isResumed) {
+                    return
+                }
 
-                    // Perform the navigation safely
-                    findNavController().navigate(
-                        R.id.action_settingsFragment_to_logInFragment,
-                        null,
-                        navOptions {
-                            popUpTo(R.id.nav_graph) { inclusive = true }
-                            launchSingleTop = true
+                // Defer navigation to ensure FragmentManager isn't busy
+                binding.root.post {
+                    try {
+                        // Perform the navigation
+                        val navController = findNavController()
+                        if (navController.currentDestination?.id != R.id.settingsFragment) {
+                            // Only navigate if we're still in the correct fragment
+                            return@post
                         }
-                    )
-                } catch (e: IllegalStateException) {
-                    // Handle any navigation error gracefully
-                    e.printStackTrace()  // Or use a logging tool to track
+
+                        // Safely navigate with options
+                        navController.navigate(
+                            R.id.action_settingsFragment_to_logInFragment,
+                            null,
+                            navOptions {
+                                popUpTo(R.id.nav_graph) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        )
+                    } catch (e: IllegalStateException) {
+                        e.printStackTrace()
+                    }
                 }
             }
             is SettingsEffect.ShowLanguageChangeMessage -> showLanguageChangeMessage(effect.message)
         }
     }
-
-
-
-
-
 
 
     private fun handleState(state: SettingsState) {

@@ -22,7 +22,9 @@ object DatabaseModule {
             context.applicationContext,
             EventDatabase::class.java,
             "event_database"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

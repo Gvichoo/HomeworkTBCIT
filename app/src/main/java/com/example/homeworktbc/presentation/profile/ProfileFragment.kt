@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.profile
 
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +14,7 @@ import com.example.homeworktbc.presentation.profile.adapter.FragmentPageAdapter
 import com.example.homeworktbc.presentation.profile.effect.ProfileEffect
 import com.example.homeworktbc.presentation.profile.event.ProfileEvent
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -20,27 +22,49 @@ import kotlinx.coroutines.launch
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val viewModel: ProfileViewModel by viewModels()
-    private lateinit var tabLayout : TabLayout
-    private lateinit var viewPager2: ViewPager2
-    private lateinit var adapter : FragmentPageAdapter
+    private lateinit var adapter: FragmentPageAdapter
+
 
     override fun start() {
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        // Check if the user is logged in
+        if (currentUser != null) {
+            // Display the email in the TextView
+            binding.tvGmail.text = currentUser.email
+        } else {
+            // Handle the case where the user is not logged in
+            binding.tvGmail.text = "No email founddd"
+        }
+
+
+
+
+        viewModel.loadEmail()
+
+        observeEmail()
+
+
         observeEffects()
         startSettingsClickListener()
-        setGmail()
 
-        tabLayout = binding.tabLayout
-        viewPager2 = binding.viewPager
-        adapter = FragmentPageAdapter(parentFragmentManager, lifecycle)
+
+        val tabLayout = binding.tabLayout
+        val viewPager2 = binding.viewPager
+
+        adapter = FragmentPageAdapter(this)
+
 
         tabLayout.addTab(tabLayout.newTab().setText("Attended Events"))
         tabLayout.addTab(tabLayout.newTab().setText("Added Events"))
 
         viewPager2.adapter = adapter
+        viewPager2.offscreenPageLimit = 1
 
-        tabLayout.addOnTabSelectedListener(object  : TabLayout.OnTabSelectedListener{
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null ){
+                if (tab != null) {
                     viewPager2.currentItem = tab.position
                 }
 
@@ -55,7 +79,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
 
         })
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 tabLayout.selectTab(tabLayout.getTabAt(position))
@@ -63,15 +87,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         })
     }
 
-    private fun setGmail() {
-        parentFragmentManager.setFragmentResultListener(
-            "loginResult",
-            viewLifecycleOwner
-        ) { _, bundle ->
-            val email = bundle.getString("email")
-            binding.tvGmail.text = email
+
+    private fun observeEmail() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewState.collect { state ->
+                    binding.tvGmail.text = state.email.ifEmpty { "No email found" }
+                }
+            }
         }
     }
+
+
 
 
     private fun startSettingsClickListener() {
@@ -94,11 +121,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun handleEffect(effect: ProfileEffect) {
         when (effect) {
             ProfileEffect.NavigateToSetting -> {
-                val navController = findNavController()
-                if (navController.currentDestination?.id != R.id.settingsFragment) {
-                    navController.navigate(R.id.action_profileFragment_to_settingsFragment)
+                if (childFragmentManager.isStateSaved || !isResumed || childFragmentManager.isExecutingTransactions()) {
+                    return
+                }
+
+                binding.root.post {
+                    val navController = findNavController()
+                    if (navController.currentDestination?.id == R.id.profileFragment) {
+                        navController.navigate(R.id.action_profileFragment_to_settingsFragment)
+                    }
                 }
             }
         }
     }
+
+    private fun FragmentManager.isExecutingTransactions(): Boolean {
+        return this.isStateSaved || this.isDestroyed || this.backStackEntryCount > 0
+    }
+
 }

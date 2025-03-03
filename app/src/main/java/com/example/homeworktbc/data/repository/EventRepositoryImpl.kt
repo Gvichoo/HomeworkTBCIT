@@ -22,16 +22,12 @@ class EventRepositoryImpl @Inject constructor(
     override suspend fun getEvents(): Flow<Resource<List<Event>>> = flow {
         emit(Resource.Loading())
 
-        // Fetch cached data from Room
         val cachedEvents = eventDao.getAllEvents().first()
-        Log.d("EventRepository", "Fetched events from Room: $cachedEvents")
 
         if (cachedEvents.isNotEmpty()) {
-            // If Room data exists, emit it to avoid unnecessary API calls
             emit(Resource.Success(cachedEvents.map { it.toDomain() }))
         }
 
-        // Fetch data from the API
         val response = handleHttpRequest(
             apiCall = { eventApiService.getEvents() },
             mapToDomain = { it.map { event -> event.toDomain() } }
@@ -41,23 +37,31 @@ class EventRepositoryImpl @Inject constructor(
             val newEvents = response.data
 
             if (newEvents != null) {
-                // Compare cached events with new events from the API
                 val cachedEventIds = cachedEvents.map { it.id }
+
                 val newEventIds = newEvents.map { it.id }
 
-                // Insert only new or modified data into Room
                 val eventsToInsert = newEvents.filter { newEvent -> newEvent.id !in cachedEventIds }
-                eventDao.insertEvent(eventsToInsert.map { it.toEntity() })
+                if (eventsToInsert.isNotEmpty()) {
+                    eventDao.insertEvent(eventsToInsert.map { it.toEntity() })
+                    Log.d("EventRepository", "Inserted new events: ${eventsToInsert.size}")
+                }
 
-                // Remove events that are no longer in the API response
+
                 val eventsToDelete = cachedEventIds.filter { it !in newEventIds }
-                eventDao.deleteEventsByIds(eventsToDelete)  // Deleting events no longer in API
+                eventDao.deleteEventsByIds(eventsToDelete)
 
-                Log.d("EventRepository", "Inserted new events into Room.")
+                Log.d("EventRepository", "Inserted new events and deleted outdated ones.")
             }
         }
-
-        // Emit the data from the API (or from Room if no API response)
         emit(response)
     }
+
+    override suspend fun addEvent(event: Event) {
+
+        eventDao.insertEvent( event)
+        Log.d("EventRepository", "Event added: $event")
+    }
+
 }
+
