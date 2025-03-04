@@ -1,12 +1,12 @@
 package com.example.homeworktbc.data.repository
 
 import android.util.Log
-import com.example.homeworktbc.data.api.EventApiService
-import com.example.homeworktbc.data.mapper.toDomain
-import com.example.homeworktbc.data.mapper.toEntity
+import com.example.homeworktbc.data.remote.api.EventApiService
+import com.example.homeworktbc.presentation.mapper.toDomain
+import com.example.homeworktbc.presentation.mapper.toEntity
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.data.resource.handleHttpRequest
-import com.example.homeworktbc.data.room.dao.EventDao
+import com.example.homeworktbc.data.local.room.dao.EventDao
 import com.example.homeworktbc.domain.modele.Event
 import com.example.homeworktbc.domain.repository.EventRepository
 import kotlinx.coroutines.flow.Flow

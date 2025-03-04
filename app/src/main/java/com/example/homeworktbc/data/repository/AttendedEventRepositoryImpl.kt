@@ -1,8 +1,8 @@
 package com.example.homeworktbc.data.repository
 
-import com.example.homeworktbc.data.mapper.toDomain
-import com.example.homeworktbc.data.mapper.toEntity
-import com.example.homeworktbc.data.room.dao.AttendedEventDao
+import com.example.homeworktbc.presentation.mapper.toDomain
+import com.example.homeworktbc.presentation.mapper.toEntity
+import com.example.homeworktbc.data.local.room.dao.AttendedEventDao
 import com.example.homeworktbc.domain.modele.AttendedEvent
 import com.example.homeworktbc.domain.repository.AttendedEventRepository
 import kotlinx.coroutines.flow.Flow

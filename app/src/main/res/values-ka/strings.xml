@@ -30,5 +30,28 @@
     <string name="log_out">გამოსვლა</string>
     <string name="save_changes" translatable="false">შენახვა</string>
     <string name="change_language" translatable="false">შეცვალე ენა</string>
+    <string name="add_your_event">+ დაამატე ივენთი</string>
     <string name="get_your_ticket">შეიძინე ბილეთი</string>
+    <string name="event_name">ივენთის სახელი:</string>
+    <string name="organizer_add">ორგანიზატორი:</string>
+    <string name="date_add">თარიღი:</string>
+    <string name="event_info">ინფორმაცია:</string>
+    <string name="price_Add">ფასი:</string>
+    <string name="image_url">სურათის ლინკი:</string>
+    <string name="add_event">ივენთის დამატება</string>
+    <string name="add_your_eventi">დაამატე შენი ივენთი</string>
+    <string name="attended_Events">ბილეთები</string>
+    <string name="added_events">ჩემი ივენთები</string>
+    <string name="error_while_fetching_data">პრობლემა მონაცემთა ჩამოტვირთვისას!</string>
+    <string name="successfully_added">წარმატებით დაემატა</string>
+    <string name="all_fields_are_required">უნდა შეავსოთ ყველა ველი!</string>
+    <string name="please_enter_a_valid_email_address">შეიყვანეთ ვალიდური მეილი!</string>
+    <string name="password_must_be_at_least_8_characters">პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო!</string>
+    <string name="login_failed">ლოგინი ვერ მოხერხდა</string>
+    <string name="passwords_do_not_match">პაროლები არ ემთხვევა!</string>
+    <string name="registration_failed">რეგისტრაცია ვერ მოხერხდა</string>
+    <string name="no_email_found">ვერ ვიპოვეთ იმეილი</string>
+    <string name="georgian">ქართული</string>
+    <string name="English">English</string>
+    <string name="language_changed_to">ენა შეიცვალა %1$s</string>
 </resources>

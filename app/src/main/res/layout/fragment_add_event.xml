@@ -1,51 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     android:orientation="vertical"
     android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="@string/add_your_eventi"
+        android:textColor="@color/black"
+        android:textSize="27sp" />
+
 
     <EditText
         android:id="@+id/etEventName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Event Name" />
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_buy_ticket"
+        android:hint="@string/event_name"
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/etOrganizer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Organizer" />
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_buy_ticket"
+        android:hint="@string/organizer_add"
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/etDate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Date" />
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_buy_ticket"
+        android:hint="@string/date_add"
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/etInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Event Info" />
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_buy_ticket"
+        android:hint="@string/event_info"
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/etPrice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Price" />
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_buy_ticket"
+        android:hint="@string/price_Add"
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/etImageUrl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Image URL" />
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_buy_ticket"
+        android:hint="@string/image_url"
+        android:padding="15dp" />
 
     <Button
         android:id="@+id/btnAddEvent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Event" />
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/addbtn"
+        android:padding="15dp"
+        android:text="@string/add_event" />
 
 </LinearLayout>

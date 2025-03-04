@@ -17,14 +17,6 @@ class DetailViewModel @Inject constructor(
 ) : BaseViewModel<DetailViewState,DetailEvent,DetailEffect>(DetailViewState()) {
 
 
-
-
-//    fun insertAttendedEvent(attendedEvent: AttendedEvent){
-//        viewModelScope.launch {
-//            attendedEventRepository.insertAttendedEvent(attendedEvent)
-//        }
-//    }
-
     override fun obtainEvent(event: DetailEvent) {
         when(event){
             is DetailEvent.InsertAttendedEvent -> insertAttendedEvent(event.attendedEvent)

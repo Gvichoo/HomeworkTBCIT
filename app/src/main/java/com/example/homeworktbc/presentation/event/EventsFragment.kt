@@ -1,7 +1,9 @@
 package com.example.homeworktbc.presentation.event
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworktbc.R
+import com.example.homeworktbc.data.remote.model.EventDto
 import com.example.homeworktbc.databinding.FragmentEventsBinding
 import com.example.homeworktbc.presentation.event.adapter.EventItemAdapter
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
@@ -40,12 +43,31 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         setupRecyclerView()
         observeState()
         eventViewModel.getEvents()
+
         navToProfileClickListener()
         observeEffects()
         addEventsClickListener()
 
+        observeNewEvent()
+
     }
 
+
+    private fun observeNewEvent() {
+        setFragmentResultListener("my_events") { _, bundle ->
+            val newEvent = EventDto(
+                id = bundle.getInt("id"),
+                name = bundle.getString("eventName") ?: "",
+                image = bundle.getString("image") ?: "",
+                organizer = bundle.getString("organizer") ?: "",
+                date = bundle.getString("date") ?: "",
+                info = bundle.getString("info") ?: "",
+                price = bundle.getString("price") ?: ""
+            )
+
+            eventViewModel.addNewEvent(newEvent)
+        }
+    }
     private fun setupRecyclerView() {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = eventAdapter
@@ -61,11 +83,11 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
                             findNavController().navigate(R.id.action_eventsFragment_to_AddEventFragment)
                         }
                         EventEffect.ShowErrorMessage -> {
-                            showMessage("Error while fetching data!")
+                            showMessage(getString(R.string.error_while_fetching_data))
                         }
 
                         EventEffect.ShowSuccessMessage -> {
-                            showMessage("Successfully added")
+                            showMessage(getString(R.string.successfully_added))
                         }
                     }
                 }

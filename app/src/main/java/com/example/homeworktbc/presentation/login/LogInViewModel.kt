@@ -3,6 +3,7 @@ package com.example.homeworktbc.presentation.login
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
+import com.example.homeworktbc.data.resource.StringResource
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.repository.LogInRepository
 import com.example.homeworktbc.domain.usecase.saveEmail.SaveValueUseCase
@@ -35,7 +36,7 @@ class LogInViewModel @Inject constructor(
         if (email.isEmpty() || password.isEmpty()) {
             viewModelScope.launch {
                 emitEffect(LoginEffect.ShowError("All fields are required!"))
-            }
+            }//StringResource.AllFieldsRequired.toString())
             return false
         }
 
@@ -85,7 +86,9 @@ class LogInViewModel @Inject constructor(
 
                     }
 
-                    is Resource.Failed -> { emitEffect(LoginEffect.ShowError(resource.message ?: "Login failed")) }
+                    is Resource.Failed -> { emitEffect(LoginEffect.ShowError(resource.message ?:
+                    "Login failed"
+                    )) }
 
                     is Resource.Loading -> { updateState { copy(isLoading = true) }
                     }

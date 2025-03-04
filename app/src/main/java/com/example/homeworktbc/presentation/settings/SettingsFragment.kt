@@ -40,7 +40,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     }
 
     private fun saveLanguage(){
-        val languagesList = arrayListOf("ქართული", "English")
+        val languagesList = arrayListOf(getString(R.string.georgian), getString(R.string.English))
 
         val adapter = ArrayAdapter(
             requireContext(),

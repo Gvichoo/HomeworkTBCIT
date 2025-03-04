@@ -6,5 +6,4 @@ data class EventState(
     val isLoading: Boolean = false,
     val events: List<Event>? = emptyList(),
     val errorMessage: String? = null,
-    val isEventAdded: Boolean = false
 )

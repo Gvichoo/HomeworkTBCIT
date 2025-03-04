@@ -1,7 +1,10 @@
 package com.example.homeworktbc.presentation.event
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.homeworktbc.data.remote.model.EventDto
 import com.example.homeworktbc.domain.core.Resource
+import com.example.homeworktbc.domain.modele.Event
 import com.example.homeworktbc.domain.repository.EventRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.event.effect.EventEffect
@@ -21,6 +24,24 @@ class EventViewModel @Inject constructor(
     private fun isDataLoaded(): Boolean {
         return isDataFetched
     }
+
+    fun addNewEvent(eventDto: EventDto) {
+        val newEvent = Event(
+            id = eventDto.id,
+            name = eventDto.name,
+            image = eventDto.image,
+            organizer = eventDto.organizer,
+            date = eventDto.date,
+            info = eventDto.info,
+            price = eventDto.price
+        )
+
+        updateState {
+            val updatedEvents = (events ?: emptyList()) + newEvent
+            copy(events = updatedEvents)
+        }
+    }
+
 
     fun getEvents() {
 
@@ -59,8 +80,6 @@ class EventViewModel @Inject constructor(
                 emitEffect(EventEffect.NavToAddEventsFragment)
             }
 
-            is EventEvent.NewEventAdded -> {
-            }
         }
     }
 }

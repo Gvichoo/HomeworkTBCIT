@@ -2,6 +2,7 @@ package com.example.homeworktbc.presentation.register
 
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
+import com.example.homeworktbc.data.resource.StringResource
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.repository.RegisterRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
@@ -65,6 +66,7 @@ class RegisterViewModel @Inject constructor(
                     is Resource.Success -> {
                         updateState { copy(isSuccess = true) }
                         emitEffect(RegisterEffect.NavToLogInFragment)
+
                     }
 
                     is Resource.Failed -> {

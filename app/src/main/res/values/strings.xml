@@ -34,4 +34,26 @@
     <string name="sabagvichiani027_gmail_com">sabagvichiani027@gmail.com</string>
     <string name="add_your_event">+ Add your event</string>
     <string name="get_your_ticket">Get Your Ticket</string>
+    <string name="event_name">Event Name:</string>
+    <string name="organizer_add">Organizer:</string>
+    <string name="date_add">Date:</string>
+    <string name="event_info">Event Info:</string>
+    <string name="price_Add">Price:</string>
+    <string name="image_url">Image URL:</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_your_eventi">Add Your Event</string>
+    <string name="attended_Events">Event tickets</string>
+    <string name="added_events">My Events</string>
+    <string name="error_while_fetching_data">Error while fetching data!</string>
+    <string name="successfully_added">Successfully added</string>
+    <string name="all_fields_are_required">All fields are required!</string>
+    <string name="please_enter_a_valid_email_address">Please enter a valid email address!</string>
+    <string name="password_must_be_at_least_8_characters">Password must be at least 8 characters!</string>
+    <string name="login_failed">Login failed</string>
+    <string name="passwords_do_not_match">Passwords do not match!</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="no_email_found">No email found</string>
+    <string name="georgian">ქართული</string>
+    <string name="English">English</string>
+    <string name="language_changed_to">Language changed to %1$s</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view_pager_fragments.attended_events.AttendedEventsFragment">
+    tools:context=".presentation.attended_events.AttendedEventsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/attendedEventsRecycler"

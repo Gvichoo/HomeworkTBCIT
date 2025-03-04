@@ -44,8 +44,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         adapter = FragmentPageAdapter(this)
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("Attended Events"))
-        tabLayout.addTab(tabLayout.newTab().setText("Added Events"))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.attended_Events)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.added_events)))
 
         viewPager2.adapter = adapter
         viewPager2.offscreenPageLimit = 1
@@ -80,7 +80,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.viewState.collect { state ->
-                    binding.tvGmail.text = state.email.ifEmpty { "No email found" }
+                    binding.tvGmail.text = state.email.ifEmpty { getString(R.string.no_email_found) }
                 }
             }
         }

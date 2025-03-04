@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import kotlinx.coroutines.flow.collect
 import androidx.lifecycle.viewModelScope
+import com.example.homeworktbc.R
 import com.example.homeworktbc.data.datastore.PreferenceKeys
+import com.example.homeworktbc.data.resource.StringResource
 import com.example.homeworktbc.domain.usecase.readLanguage.ReadLanguageUseCase
 import com.example.homeworktbc.domain.usecase.removeKey.RemoveKeyUseCase
 import com.example.homeworktbc.domain.usecase.saveLanguage.SaveLanguageUseCase
@@ -58,7 +60,9 @@ class SettingsViewModel @Inject constructor(
         Locale.setDefault(locale)
         AppCompatDelegate.setApplicationLocales(localeList)
 
-        emitEffect(SettingsEffect.ShowLanguageChangeMessage("Language changed to $language"))
+        emitEffect(SettingsEffect.ShowLanguageChangeMessage(
+            StringResource.LanguageChangedTo.toString()
+            ))
     }
 
     fun loadSavedLanguage() {

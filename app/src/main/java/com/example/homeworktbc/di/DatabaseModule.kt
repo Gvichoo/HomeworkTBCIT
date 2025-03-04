@@ -2,9 +2,9 @@ package com.example.homeworktbc.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.homeworktbc.data.room.dao.AttendedEventDao
-import com.example.homeworktbc.data.room.dao.EventDao
-import com.example.homeworktbc.data.room.dataBase.EventDatabase
+import com.example.homeworktbc.data.local.room.dao.AttendedEventDao
+import com.example.homeworktbc.data.local.room.dao.EventDao
+import com.example.homeworktbc.data.local.room.dataBase.EventDatabase
 import com.example.homeworktbc.domain.modele.AttendedEvent
 import dagger.Module
 import dagger.Provides

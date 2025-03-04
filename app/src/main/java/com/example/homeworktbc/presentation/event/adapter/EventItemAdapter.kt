@@ -1,13 +1,12 @@
 package com.example.homeworktbc.presentation.event.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.homeworktbc.data.model.EventDto
+import com.example.homeworktbc.R
 import com.example.homeworktbc.databinding.EventItemBinding
 import com.example.homeworktbc.domain.modele.Event
 
@@ -21,7 +20,6 @@ class EventItemAdapter(private val onItemClick : (Event) -> Unit)
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = getItem(position)
-        Log.d("EventItemAdapter", "Binding event: ${event.name}, ID: ${event.id}")
         if (event != null) {
             holder.bind(event)
         }
@@ -36,6 +34,8 @@ class EventItemAdapter(private val onItemClick : (Event) -> Unit)
 
             Glide.with(binding.root.context)
                 .load(event.image)
+                .placeholder(R.drawable.place_holder)
+                .error(R.drawable.ic_launcher_foreground)
                 .into(binding.image)
 
 

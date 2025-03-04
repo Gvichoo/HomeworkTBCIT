@@ -1,6 +1,6 @@
 package com.example.homeworktbc.di
 
-import com.example.homeworktbc.data.api.EventApiService
+import com.example.homeworktbc.data.remote.api.EventApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
