@@ -10,7 +10,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.R
 import com.example.homeworktbc.databinding.FragmentLogInBinding
-import com.example.homeworktbc.domain.repository.DataStoreRepository
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
 import com.example.homeworktbc.presentation.login.effect.LoginEffect
 import com.example.homeworktbc.presentation.login.event.LoginEvent
@@ -54,9 +53,6 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                             showError(effect.message)
                         }
 
-                        is LoginEffect.SendEmailToProfile ->{
-
-                        }
                     }
                 }
             }

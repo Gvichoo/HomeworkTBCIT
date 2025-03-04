@@ -1,6 +1,5 @@
 package com.example.homeworktbc.presentation.event
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.repository.EventRepository
@@ -15,23 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EventViewModel @Inject constructor(
     private val eventRepository: EventRepository
-) : BaseViewModel<EventState,EventEvent,EventEffect>(EventState()) {
-
-
-
-//    fun saveAttendedEvent(event: Event) {
-//        viewModelScope.launch {
-//            eventRepository.insertEvent(event)
-//            emitEffect(EventEffect.ShowSuccessMessage)
-//        }
-//    }
-//
-//    fun getAttendedEvents(): Flow<List<Event>> {
-//        return eventRepository.getAllAttendedEvents()
-//    }
-
-
-
+) : BaseViewModel<EventState, EventEvent, EventEffect>(EventState()) {
 
     private var isDataFetched = false
 
@@ -50,12 +33,13 @@ class EventViewModel @Inject constructor(
                     is Resource.Loading -> {
                         updateState { copy(isLoading = true) }
                     }
+
                     is Resource.Success -> {
                         updateState { copy(isLoading = false, events = resource.data) }
                         isDataFetched = true
-                        Log.d("EventViewModel", "Events fetched: ${resource.data}")
 
                     }
+
                     is Resource.Failed -> {
                         updateState { copy(isLoading = false, errorMessage = resource.message) }
                         emitEffect(EventEffect.ShowErrorMessage)
@@ -65,9 +49,8 @@ class EventViewModel @Inject constructor(
         }
     }
 
-
     override fun obtainEvent(event: EventEvent) {
-        when(event) {
+        when (event) {
             EventEvent.FetchEvents -> {
                 getEvents()
             }

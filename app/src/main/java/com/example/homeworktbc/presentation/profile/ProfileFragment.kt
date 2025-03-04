@@ -14,7 +14,6 @@ import com.example.homeworktbc.presentation.profile.adapter.FragmentPageAdapter
 import com.example.homeworktbc.presentation.profile.effect.ProfileEffect
 import com.example.homeworktbc.presentation.profile.event.ProfileEvent
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,29 +26,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun start() {
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-
-        // Check if the user is logged in
-        if (currentUser != null) {
-            // Display the email in the TextView
-            binding.tvGmail.text = currentUser.email
-        } else {
-            // Handle the case where the user is not logged in
-            binding.tvGmail.text = "No email founddd"
-        }
-
-
-
-
         viewModel.loadEmail()
 
         observeEmail()
-
-
         observeEffects()
         startSettingsClickListener()
+        setUpTabLayoutAndViewPager()
 
 
+    }
+
+
+    private fun setUpTabLayoutAndViewPager(){
         val tabLayout = binding.tabLayout
         val viewPager2 = binding.viewPager
 
@@ -121,22 +109,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun handleEffect(effect: ProfileEffect) {
         when (effect) {
             ProfileEffect.NavigateToSetting -> {
-                if (childFragmentManager.isStateSaved || !isResumed || childFragmentManager.isExecutingTransactions()) {
-                    return
-                }
-
-                binding.root.post {
-                    val navController = findNavController()
-                    if (navController.currentDestination?.id == R.id.profileFragment) {
-                        navController.navigate(R.id.action_profileFragment_to_settingsFragment)
+                if (!childFragmentManager.isStateSaved && isResumed) {
+                    binding.root.post {
+                        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
                     }
                 }
             }
         }
     }
-
-    private fun FragmentManager.isExecutingTransactions(): Boolean {
-        return this.isStateSaved || this.isDestroyed || this.backStackEntryCount > 0
-    }
-
 }

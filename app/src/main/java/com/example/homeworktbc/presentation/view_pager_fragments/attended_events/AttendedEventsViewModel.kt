@@ -2,11 +2,12 @@ package com.example.homeworktbc.presentation.view_pager_fragments.attended_event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.domain.modele.AttendedEvent
 import com.example.homeworktbc.domain.repository.AttendedEventRepository
+import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
+import com.example.homeworktbc.presentation.view_pager_fragments.attended_events.effect.AttendedEventsEffect
+import com.example.homeworktbc.presentation.view_pager_fragments.attended_events.event.AttendedEventsEvent
+import com.example.homeworktbc.presentation.view_pager_fragments.attended_events.state.AttendedEventsState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,27 +15,30 @@ import javax.inject.Inject
 @HiltViewModel
 class AttendedEventsViewModel @Inject constructor(
     private val attendedEventRepository: AttendedEventRepository
-) : ViewModel() {
-
-    private val _uiState = MutableStateFlow<List<AttendedEvent>?>(null)
-    val uiState: StateFlow<List<AttendedEvent>?> = _uiState
-
+) : BaseViewModel<AttendedEventsState, AttendedEventsEvent, AttendedEventsEffect>(AttendedEventsState()) {
 
     init {
         getAttendedEvent()
     }
 
-    fun getAttendedEvent(){
+    override fun obtainEvent(event: AttendedEventsEvent) {
+        when (event) {
+            is AttendedEventsEvent.DeleteEvent -> deleteEvents(event.eventId)
+        }
+    }
+
+    private fun getAttendedEvent() {
         viewModelScope.launch {
             attendedEventRepository.getAttendedEvents().collectLatest {
-                _uiState.value = it
+                updateState {copy(events = it) }
             }
         }
     }
 
-    fun deleteEvents(eventIds : Int){
+    private fun deleteEvents(eventId: Int) {
         viewModelScope.launch {
-            attendedEventRepository.deleteEvent(eventIds)
+            attendedEventRepository.deleteEvent(eventId)
+            getAttendedEvent()
         }
     }
 }

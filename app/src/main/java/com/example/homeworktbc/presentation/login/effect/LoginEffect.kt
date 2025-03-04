@@ -9,7 +9,6 @@ sealed interface LoginEffect {
 
     data class ShowError(val message: String) : LoginEffect
 
-    data class SendEmailToProfile(val email: String) : LoginEffect
 
 
 }

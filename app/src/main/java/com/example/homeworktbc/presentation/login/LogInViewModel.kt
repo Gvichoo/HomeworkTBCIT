@@ -1,11 +1,9 @@
 package com.example.homeworktbc.presentation.login
 
-import android.os.Bundle
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
 import com.example.homeworktbc.domain.core.Resource
-import com.example.homeworktbc.domain.repository.DataStoreRepository
 import com.example.homeworktbc.domain.repository.LogInRepository
 import com.example.homeworktbc.domain.usecase.saveEmail.SaveValueUseCase
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
@@ -23,7 +21,6 @@ class LogInViewModel @Inject constructor(
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
 
 
-    private var tempEmail: String? = null
 
 
     private fun validateInputsAndLogin(email: String, password: String,rememberMe : Boolean) {
@@ -59,7 +56,6 @@ class LogInViewModel @Inject constructor(
             saveEmailToDataStore(email)
         }
 
-        tempEmail = email
 
         return true
     }
@@ -83,32 +79,20 @@ class LogInViewModel @Inject constructor(
                         updateState { copy(isSuccess = true) }
                         emitEffect(LoginEffect.NavToEventsFragment)
 
-                        emitEffect(LoginEffect.SendEmailToProfile(tempEmail ?: ""))
-
-                        // Optionally, store the email in Firebase SharedPreferences or DataStore if "Remember me" is checked
                         if (rememberMe) {
                             saveEmailToDataStore(email)
                         }
 
                     }
-                    is Resource.Failed -> {
-                        emitEffect(LoginEffect.ShowError(resource.message ?: "Login failed"))
-                    }
-                    is Resource.Loading -> {
-                        updateState { copy(isLoading = true) }
+
+                    is Resource.Failed -> { emitEffect(LoginEffect.ShowError(resource.message ?: "Login failed")) }
+
+                    is Resource.Loading -> { updateState { copy(isLoading = true) }
                     }
                 }
             }
         }
     }
-
-    fun getTemporaryEmail(): String? {
-        return tempEmail
-    }
-
-
-
-
 
     override fun obtainEvent(event: LoginEvent) {
         when (event) {

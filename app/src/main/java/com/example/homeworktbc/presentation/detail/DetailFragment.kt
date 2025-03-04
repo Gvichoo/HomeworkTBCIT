@@ -1,21 +1,25 @@
 package com.example.homeworktbc.presentation.detail
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.homeworktbc.databinding.FragmentDetailBinding
 import com.example.homeworktbc.domain.modele.AttendedEvent
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
+import com.example.homeworktbc.presentation.detail.effect.DetailEffect
+import com.example.homeworktbc.presentation.detail.event.DetailEvent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
 
     private val detailViewModel : DetailViewModel by viewModels()
 
-
     override fun start() {
-
 
         val args = DetailFragmentArgs.fromBundle(requireArguments())
 
@@ -41,8 +45,21 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 price = args.price,
                 image = args.image
             )
-            detailViewModel.insertAttendedEvent(attendedEvent)
-            findNavController().popBackStack()
+            detailViewModel.obtainEvent(DetailEvent.InsertAttendedEvent(attendedEvent))
+        }
+        observeEffects()
+
+    }
+
+    private fun observeEffects() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                detailViewModel.effects.collect { effect ->
+                    when (effect) {
+                        is DetailEffect.EventInserted -> findNavController().popBackStack()
+                    }
+                }
+            }
         }
     }
 

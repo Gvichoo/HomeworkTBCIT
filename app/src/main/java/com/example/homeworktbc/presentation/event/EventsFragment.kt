@@ -1,9 +1,7 @@
 package com.example.homeworktbc.presentation.event
 
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,9 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworktbc.R
-import com.example.homeworktbc.data.model.EventDto
 import com.example.homeworktbc.databinding.FragmentEventsBinding
-import com.example.homeworktbc.domain.modele.Event
 import com.example.homeworktbc.presentation.event.adapter.EventItemAdapter
 import com.example.homeworktbc.presentation.base_fragment.BaseFragment
 import com.example.homeworktbc.presentation.event.effect.EventEffect
@@ -40,43 +36,15 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         }
     }
 
-
-
     override fun start() {
         setupRecyclerView()
         observeState()
         eventViewModel.getEvents()
         navToProfileClickListener()
         observeEffects()
-//        observeViewState()
-//        observeNewEvent()
         addEventsClickListener()
 
     }
-
-//    private fun observeNewEvent() {
-//        setFragmentResultListener("new_event") { _, bundle ->
-//            val newEvent = Event(
-//                id = bundle.getInt("id"),
-//                name = bundle.getString("name") ?: "",
-//                image = bundle.getString("image") ?: "",
-//                organizer = bundle.getString("organizer") ?: "",
-//                date = bundle.getString("date") ?: "",
-//                info = bundle.getString("info") ?: "",
-//                price = bundle.getString("price") ?: ""
-//            )
-//
-//            eventViewModel.obtainEvent(EventEvent.NewEventAdded(newEvent))
-//
-//            binding.recycler.post {
-//                binding.recycler.layoutManager?.scrollToPosition(0)
-//            }
-//
-//        }
-//    }
-
-
-
 
     private fun setupRecyclerView() {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
@@ -110,7 +78,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 eventViewModel.viewState.collect { state ->
-                    Log.d("EventsFragment", "State events: ${state.events}")
                     when {
                         state.isLoading -> {
                             binding.progressBar.visibility = View.VISIBLE
@@ -119,8 +86,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
                         state.events != null -> {
                             binding.progressBar.visibility = View.GONE
                             eventAdapter.submitList(state.events)
-                            Log.d("EventsFragment", "Adapter updated with ${state.events.size} items.")
-
                             binding.recycler.scrollToPosition(0)
                         }
 
@@ -134,21 +99,6 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
         }
     }
 
-
-
-//    private fun observeViewState() {
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//
-//                eventViewModel.viewState.collect { state ->
-//                    binding.progressBar.visibility =
-//                        if (state.isLoading) View.VISIBLE else View.GONE
-//                    state.events?.let { eventAdapter.submitList(it) }
-//                    state.errorMessage?.let { showMessage(it) }
-//                }
-//            }
-//        }
-//    }
 
     private fun addEventsClickListener(){
         binding.btnAddEvent.setOnClickListener{
@@ -165,6 +115,5 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
     private fun showMessage(message: String?) {
         Toast.makeText(requireContext(), message ?: "Unknown error", Toast.LENGTH_SHORT).show()
     }
-
 
 }

@@ -23,7 +23,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
     override fun start() {
 
-        startSingInClickListener()
+        startSignInClickListener()
 
         startSignUpClickListener()
 
@@ -60,7 +60,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
         }
     }
 
-    private fun startSingInClickListener(){
+    private fun startSignInClickListener(){
         binding.btnLogIn.setOnClickListener {
             registerViewModel.obtainEvent(RegisterEvent.LogInClicked)
         }
