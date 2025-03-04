@@ -32,9 +32,9 @@ class AddEventFragment : BaseFragment<FragmentAddEventBinding>(FragmentAddEventB
                     image = imageUrl
                 )
 
-                lifecycleScope.launch {
-                    viewModel.insertEvent(event)
-                }
+//                lifecycleScope.launch {
+//                    viewModel.insertEvent(event)
+//                }
             }
         }
     }

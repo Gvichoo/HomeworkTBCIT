@@ -13,10 +13,6 @@ class AddEventViewModel @Inject constructor(
     private val eventDao: EventDao
 ) : ViewModel() {
 
-    fun insertEvent(event: EventEntity) {
-        viewModelScope.launch {
-            eventDao.insertEvent(event)
-        }
-    }
+
 
 }

@@ -43,7 +43,7 @@ class EventRepositoryImpl @Inject constructor(
 
                 val eventsToInsert = newEvents.filter { newEvent -> newEvent.id !in cachedEventIds }
                 if (eventsToInsert.isNotEmpty()) {
-                    eventDao.insertEvent(eventsToInsert.map { it.toEntity() })
+                    eventDao.insertEvents(eventsToInsert.map { it.toEntity() })
                     Log.d("EventRepository", "Inserted new events: ${eventsToInsert.size}")
                 }
 
@@ -55,12 +55,6 @@ class EventRepositoryImpl @Inject constructor(
             }
         }
         emit(response)
-    }
-
-    override suspend fun addEvent(event: Event) {
-
-        eventDao.insertEvent( event)
-        Log.d("EventRepository", "Event added: $event")
     }
 
 }

@@ -8,13 +8,6 @@
     tools:context=".presentation.event.EventsFragment">
 
 
-<!--    <ImageView-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:src="@drawable/img"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@id/tvHeadline"-->
-<!--        android:layout_marginStart="10dp"/>-->
 
 
     <androidx.appcompat.widget.AppCompatImageButton

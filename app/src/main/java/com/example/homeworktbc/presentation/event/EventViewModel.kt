@@ -1,18 +1,14 @@
 package com.example.homeworktbc.presentation.event
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.room.dao.EventDao
 import com.example.homeworktbc.domain.core.Resource
-import com.example.homeworktbc.domain.modele.Event
 import com.example.homeworktbc.domain.repository.EventRepository
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.event.effect.EventEffect
 import com.example.homeworktbc.presentation.event.event.EventEvent
 import com.example.homeworktbc.presentation.event.state.EventState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,13 +18,17 @@ class EventViewModel @Inject constructor(
 ) : BaseViewModel<EventState,EventEvent,EventEffect>(EventState()) {
 
 
-    fun addEvent(event: Event) {
-        viewModelScope.launch {
-            eventRepository.addEvent(event) // Save to Room Database
-            updateState { copy(events = listOf(event) + (events ?: emptyList())) }
-            emitEffect(EventEffect.ShowSuccessMessage)
-        }
-    }
+
+//    fun saveAttendedEvent(event: Event) {
+//        viewModelScope.launch {
+//            eventRepository.insertEvent(event)
+//            emitEffect(EventEffect.ShowSuccessMessage)
+//        }
+//    }
+//
+//    fun getAttendedEvents(): Flow<List<Event>> {
+//        return eventRepository.getAllAttendedEvents()
+//    }
 
 
 
@@ -77,10 +77,7 @@ class EventViewModel @Inject constructor(
             }
 
             is EventEvent.NewEventAdded -> {
-                Log.d("EventViewModel", "New event added: ${event.event}")
-                addEvent(event.event)
             }
-
         }
     }
 }

@@ -28,6 +28,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
     private val eventAdapter by lazy {
         EventItemAdapter { event ->
             val action = EventsFragmentDirections.actionEventsFragmentToDetailsFragment(
+                id = event.id,
                 name = event.name,
                 image = event.image,
                 organizer = event.organizer,
