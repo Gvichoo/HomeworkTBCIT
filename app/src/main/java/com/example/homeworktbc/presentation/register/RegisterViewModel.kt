@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.register
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.resource.StringResource
@@ -19,37 +20,42 @@ class RegisterViewModel @Inject constructor(
 ) : BaseViewModel<RegisterState, RegisterEvent, RegisterEffect>(RegisterState()) {
 
 
-    private fun validateInputsAndSignUp(email: String, password: String, repeatedPassword: String) {
-        if (validateInputs(email, password, repeatedPassword)) {
-            signUpUser(email, password)
+    private fun validateInputsAndSignUp(email: String, password: String, repeatedPassword: String,context : Context) {
+        if (validateInputs(email, password, repeatedPassword,context)) {
+            signUpUser(email, password,context)
         }
     }
 
-    private fun validateInputs(email: String, password: String, repeatedPassword: String): Boolean {
+    private fun validateInputs(
+        email: String,
+        password: String,
+        repeatedPassword: String,
+        context: Context
+    ): Boolean {
         if (email.isEmpty() || password.isEmpty() || repeatedPassword.isEmpty()) {
             viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("All fields are required!"))
+                emitEffect(RegisterEffect.ShowError(context.getString(StringResource.AllFieldsRequired.errorMessageResId)))
             }
             return false
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("Please enter a valid email address!"))
+                emitEffect(RegisterEffect.ShowError(context.getString(StringResource.InvalidEmail.errorMessageResId)))
             }
             return false
         }
 
         if (password.length < 8) {
             viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("Password must be at least 8 characters!"))
+                emitEffect(RegisterEffect.ShowError(context.getString(StringResource.PasswordsDoNotMatch.errorMessageResId)))
             }
             return false
         }
 
         if (password != repeatedPassword) {
             viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("Passwords do not match!"))
+                emitEffect(RegisterEffect.ShowError(context.getString(StringResource.PasswordsDoNotMatch.errorMessageResId)))
             }
             return false
         }
@@ -57,7 +63,7 @@ class RegisterViewModel @Inject constructor(
         return true
     }
 
-    private fun signUpUser(email: String, password: String) {
+    private fun signUpUser(email: String, password: String,context: Context) {
         updateState { copy(isLoading = true) }
 
         viewModelScope.launch {
@@ -72,7 +78,7 @@ class RegisterViewModel @Inject constructor(
                     is Resource.Failed -> {
                         emitEffect(
                             RegisterEffect.ShowError(
-                                result.message ?: "Registration failed"
+                                result.message ?: context.getString(StringResource.RegistrationFailed.errorMessageResId)
                             )
                         )
                     }
@@ -93,7 +99,7 @@ class RegisterViewModel @Inject constructor(
             }
 
             is RegisterEvent.SignUpButtonClicked -> {
-                validateInputsAndSignUp(event.email, event.password, event.repeatedPassword)
+                validateInputsAndSignUp(event.email, event.password, event.repeatedPassword, event.context )
             }
         }
     }

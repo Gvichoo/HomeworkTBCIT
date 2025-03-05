@@ -1,7 +1,6 @@
 package com.example.homeworktbc.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.domain.usecase.session.GetSessionValueUseCase
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.profile.effect.ProfileEffect
 import com.example.homeworktbc.presentation.profile.event.ProfileEvent

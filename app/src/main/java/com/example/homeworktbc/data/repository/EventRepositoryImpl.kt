@@ -44,14 +44,11 @@ class EventRepositoryImpl @Inject constructor(
                 val eventsToInsert = newEvents.filter { newEvent -> newEvent.id !in cachedEventIds }
                 if (eventsToInsert.isNotEmpty()) {
                     eventDao.insertEvents(eventsToInsert.map { it.toEntity() })
-                    Log.d("EventRepository", "Inserted new events: ${eventsToInsert.size}")
                 }
-
 
                 val eventsToDelete = cachedEventIds.filter { it !in newEventIds }
                 eventDao.deleteEventsByIds(eventsToDelete)
 
-                Log.d("EventRepository", "Inserted new events and deleted outdated ones.")
             }
         }
         emit(response)

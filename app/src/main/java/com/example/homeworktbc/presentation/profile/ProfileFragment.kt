@@ -109,6 +109,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun handleEffect(effect: ProfileEffect) {
         when (effect) {
             ProfileEffect.NavigateToSetting -> {
+
                 if (!childFragmentManager.isStateSaved && isResumed) {
                     binding.root.post {
                         findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)

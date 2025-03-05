@@ -1,5 +1,6 @@
 package com.example.homeworktbc.presentation.login
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.datastore.PreferenceKeys
@@ -24,32 +25,32 @@ class LogInViewModel @Inject constructor(
 
 
 
-    private fun validateInputsAndLogin(email: String, password: String,rememberMe : Boolean) {
-        if (validateInputs(email, password,rememberMe)) {
-            loginUser(email, password,rememberMe)
+    private fun validateInputsAndLogin(email: String, password: String,rememberMe : Boolean,context: Context) {
+        if (validateInputs(email, password,rememberMe, context )) {
+            loginUser(email, password,rememberMe,context)
         }
     }
 
 
-    private fun validateInputs(email: String, password: String,rememberMe: Boolean): Boolean {
+    private fun validateInputs(email: String, password: String,rememberMe: Boolean,context: Context): Boolean {
 
         if (email.isEmpty() || password.isEmpty()) {
             viewModelScope.launch {
-                emitEffect(LoginEffect.ShowError("All fields are required!"))
-            }//StringResource.AllFieldsRequired.toString())
+                emitEffect(LoginEffect.ShowError(context.getString(StringResource.AllFieldsRequired.errorMessageResId)))
+            }
             return false
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             viewModelScope.launch {
-                emitEffect(LoginEffect.ShowError("Please enter a valid email address!"))
+                emitEffect(LoginEffect.ShowError(context.getString(StringResource.InvalidEmail.errorMessageResId)))
             }
             return false
         }
 
         if (password.length < 8) {
             viewModelScope.launch {
-                emitEffect(LoginEffect.ShowError("Password must be at least 8 characters!"))
+                emitEffect(LoginEffect.ShowError(context.getString(StringResource.PasswordTooShort.errorMessageResId)))
             }
             return false
         }
@@ -70,7 +71,7 @@ class LogInViewModel @Inject constructor(
     }
 
 
-    private fun loginUser(email: String, password: String,rememberMe: Boolean) {
+    private fun loginUser(email: String, password: String,rememberMe: Boolean,context: Context) {
         updateState { copy(isLoading = true) }
 
         viewModelScope.launch {
@@ -83,11 +84,10 @@ class LogInViewModel @Inject constructor(
                         if (rememberMe) {
                             saveEmailToDataStore(email)
                         }
-
                     }
 
                     is Resource.Failed -> { emitEffect(LoginEffect.ShowError(resource.message ?:
-                    "Login failed"
+                    context.getString(StringResource.LoginFailed.errorMessageResId)
                     )) }
 
                     is Resource.Loading -> { updateState { copy(isLoading = true) }
@@ -100,7 +100,7 @@ class LogInViewModel @Inject constructor(
     override fun obtainEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.LoginButtonClicked -> {
-                validateInputsAndLogin(event.email, event.password,event.rememberMe)
+                validateInputsAndLogin(event.email, event.password,event.rememberMe,event.context)
             }
 
             LoginEvent.SignUpClicked -> viewModelScope.launch{

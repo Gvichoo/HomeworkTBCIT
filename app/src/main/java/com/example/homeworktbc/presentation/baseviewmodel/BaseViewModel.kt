@@ -27,5 +27,4 @@ abstract class BaseViewModel<STATE, EVENT, EFFECT>(
         _viewState.value = editor(_viewState.value)
     }
 
-
 }

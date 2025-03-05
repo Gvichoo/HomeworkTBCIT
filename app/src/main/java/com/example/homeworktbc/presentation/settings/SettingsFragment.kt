@@ -111,22 +111,17 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     private fun handleEffect(effect: SettingsEffect) {
         when (effect) {
             SettingsEffect.NavigateToLogin -> {
-                // Ensure fragment is properly added and not in an invalid state
                 if (!isAdded || childFragmentManager.isStateSaved || !isResumed) {
                     return
                 }
 
-                // Defer navigation to ensure FragmentManager isn't busy
                 binding.root.post {
                     try {
-                        // Perform the navigation
                         val navController = findNavController()
                         if (navController.currentDestination?.id != R.id.settingsFragment) {
-                            // Only navigate if we're still in the correct fragment
                             return@post
                         }
 
-                        // Safely navigate with options
                         navController.navigate(
                             R.id.action_settingsFragment_to_logInFragment,
                             null,
@@ -143,6 +138,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
             is SettingsEffect.ShowLanguageChangeMessage -> showLanguageChangeMessage(effect.message)
         }
     }
+
+
 
 
     private fun handleState(state: SettingsState) {

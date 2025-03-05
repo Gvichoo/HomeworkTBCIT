@@ -76,7 +76,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             val password = binding.etPassword.text.toString()
             val rememberMe = binding.cbRememberMe.isChecked
 
-            loginViewModel.obtainEvent(LoginEvent.LoginButtonClicked(email, password,rememberMe))
+            loginViewModel.obtainEvent(LoginEvent.LoginButtonClicked(email, password,rememberMe, requireContext()))
 
         }
     }

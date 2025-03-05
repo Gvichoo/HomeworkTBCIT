@@ -56,7 +56,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             val password = binding.etPassword.text.toString().trim()
             val repeatedPassword = binding.etPasswordRepeat.text.toString().trim()
 
-            registerViewModel.obtainEvent(RegisterEvent.SignUpButtonClicked(email, password, repeatedPassword))
+            registerViewModel.obtainEvent(RegisterEvent.SignUpButtonClicked(email, password, repeatedPassword,requireContext()))
         }
     }
 
