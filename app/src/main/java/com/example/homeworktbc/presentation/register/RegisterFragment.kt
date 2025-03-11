@@ -27,13 +27,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
 
         startSignUpClickListener()
 
-        observeViewModel()
+        observeEffect()
 
         makePasswordVisible()
 
     }
 
-    private fun observeViewModel() {
+    private fun observeEffect() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 registerViewModel.effects.collect { effect ->

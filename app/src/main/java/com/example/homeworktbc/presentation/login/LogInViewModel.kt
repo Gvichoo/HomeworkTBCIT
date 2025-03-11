@@ -3,7 +3,7 @@ package com.example.homeworktbc.presentation.login
 import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.datastore.PreferenceKeys
+import com.example.homeworktbc.data.local.datastore.PreferenceKeys
 import com.example.homeworktbc.data.resource.StringResource
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.repository.LogInRepository

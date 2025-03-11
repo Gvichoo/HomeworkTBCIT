@@ -1,6 +1,5 @@
 package com.example.homeworktbc.presentation.login
 
-import android.os.Bundle
 import android.text.InputType
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -30,14 +29,14 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
         makePasswordVisible()
 
-        observeEvent()
+        observeEffect()
 
 
 
 
     }
 
-    private fun observeEvent(){
+    private fun observeEffect(){
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.effects.collect { effect ->
@@ -101,7 +100,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
 
     private fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.homeworktbc.presentation.splash
 
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.datastore.PreferenceKeys
+import com.example.homeworktbc.data.local.datastore.PreferenceKeys
 import com.example.homeworktbc.domain.usecase.session.GetSessionValueUseCase
 import com.example.homeworktbc.presentation.baseviewmodel.BaseViewModel
 import com.example.homeworktbc.presentation.splash.effect.SplashEffect

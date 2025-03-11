@@ -5,7 +5,7 @@ import com.example.homeworktbc.domain.repository.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import com.example.homeworktbc.data.datastore.PreferenceKeys.languages
+import com.example.homeworktbc.data.local.datastore.PreferenceKeys.languages
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

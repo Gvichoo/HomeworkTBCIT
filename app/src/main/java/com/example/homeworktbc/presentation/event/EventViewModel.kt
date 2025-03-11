@@ -75,7 +75,6 @@ class EventViewModel @Inject constructor(
             EventEvent.FetchEvents -> {
                 getEvents()
             }
-
             EventEvent.AddEventClicked -> viewModelScope.launch {
                 emitEffect(EventEffect.NavToAddEventsFragment)
             }

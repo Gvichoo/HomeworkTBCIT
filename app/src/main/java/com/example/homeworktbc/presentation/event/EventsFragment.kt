@@ -50,6 +50,7 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
 
         observeNewEvent()
 
+
     }
 
 
@@ -106,9 +107,12 @@ class EventsFragment : BaseFragment<FragmentEventsBinding>(FragmentEventsBinding
                         }
 
                         state.events != null -> {
+                            val layoutManager = binding.recycler.layoutManager as LinearLayoutManager
+                            val savedScrollPosition = layoutManager.onSaveInstanceState()
                             binding.progressBar.visibility = View.GONE
-                            eventAdapter.submitList(state.events)
-                            binding.recycler.scrollToPosition(0)
+                            eventAdapter.submitList(state.events) {
+                                layoutManager.onRestoreInstanceState(savedScrollPosition)
+                            }
                         }
 
                         state.errorMessage != null -> {

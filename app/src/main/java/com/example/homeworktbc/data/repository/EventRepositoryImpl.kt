@@ -1,6 +1,5 @@
 package com.example.homeworktbc.data.repository
 
-import android.util.Log
 import com.example.homeworktbc.data.remote.api.EventApiService
 import com.example.homeworktbc.presentation.mapper.toDomain
 import com.example.homeworktbc.presentation.mapper.toEntity
@@ -38,7 +37,6 @@ class EventRepositoryImpl @Inject constructor(
 
             if (newEvents != null) {
                 val cachedEventIds = cachedEvents.map { it.id }
-
                 val newEventIds = newEvents.map { it.id }
 
                 val eventsToInsert = newEvents.filter { newEvent -> newEvent.id !in cachedEventIds }
