@@ -1,6 +1,6 @@
 package com.example.homeworktbc.presentation.mapping
 
-import com.example.homeworktbc.data.entity.User
+import com.example.homeworktbc.data.local.entity.User
 import com.example.homeworktbc.data.remote.response.UserData
 
 fun UserData.toUser(): User {

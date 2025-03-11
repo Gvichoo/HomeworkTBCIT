@@ -1,10 +1,10 @@
-package com.example.homeworktbc.data.dao
+package com.example.homeworktbc.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.homeworktbc.data.entity.RemoteKeyEntity
+import com.example.homeworktbc.data.local.entity.RemoteKeyEntity
 
 @Dao
 interface RemoteKeysDao {

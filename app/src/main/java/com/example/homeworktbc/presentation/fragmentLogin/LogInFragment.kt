@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.R
-import com.example.homeworktbc.data.resource.Results
+import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,18 +50,18 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.loginState.collect { result ->
                     when (result) {
-                        is Results.Loading -> {
+                        is Resource.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        is Results.Success -> {
+                        is Resource.Success -> {
                             binding.loader.visibility = View.GONE
                             Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
                             val email = binding.etLogin.text.toString().trim()
-                            // Send email to ProfileFragment
+
                             setFragmentResult("login_success_key", bundleOf("email" to email))
                             findNavController().navigate(R.id.action_logInFragment_to_homeFragment)
                         }
-                        is Results.Failed -> {
+                        is Resource.Failed -> {
                             binding.loader.visibility = View.GONE
                             Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                         }

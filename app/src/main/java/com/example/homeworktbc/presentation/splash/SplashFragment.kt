@@ -6,8 +6,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.homeworktbc.data.datastore.DataStoreRepositoryImpl
-import com.example.homeworktbc.data.datastore.PreferenceKeys
+import com.example.homeworktbc.data.local.datastore.DataStoreRepositoryImpl
+import com.example.homeworktbc.data.local.datastore.PreferenceKeys
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentSplashBinding

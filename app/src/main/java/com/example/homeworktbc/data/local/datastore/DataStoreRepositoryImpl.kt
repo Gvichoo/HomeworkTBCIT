@@ -1,4 +1,4 @@
-package com.example.homeworktbc.data.datastore
+package com.example.homeworktbc.data.local.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

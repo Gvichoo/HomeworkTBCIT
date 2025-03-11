@@ -1,6 +1,6 @@
 package com.example.homeworktbc.di
 
-import com.example.homeworktbc.data.datastore.DataStoreRepositoryImpl
+import com.example.homeworktbc.data.local.datastore.DataStoreRepositoryImpl
 import com.example.homeworktbc.data.repository.HomeRepositoryImpl
 import com.example.homeworktbc.data.repository.LoginRepositoryImpl
 import com.example.homeworktbc.data.repository.RegisterRepositoryImpl

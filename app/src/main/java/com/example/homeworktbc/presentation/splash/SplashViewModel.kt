@@ -2,7 +2,7 @@ package com.example.homeworktbc.presentation.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.datastore.PreferenceKeys
+import com.example.homeworktbc.data.local.datastore.PreferenceKeys
 import com.example.homeworktbc.domain.repository.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull

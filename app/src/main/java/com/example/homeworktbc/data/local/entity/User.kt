@@ -1,4 +1,4 @@
-package com.example.homeworktbc.data.entity
+package com.example.homeworktbc.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,27 +1,29 @@
 package com.example.homeworktbc.data.resource
 
+import com.example.homeworktbc.domain.core.Resource
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
-suspend fun <T> handleHttpRequest(apiCall: suspend () -> Response<T>): Results<T> {
+suspend fun <DTO,DOMAIN_MODEL> handleHttpRequest(apiCall: suspend () -> Response<DTO>,mapToDomain : (DTO) -> DOMAIN_MODEL): Resource<DOMAIN_MODEL> {
     return try {
         val response = apiCall.invoke()
 
         if (response.isSuccessful) {
             response.body()?.let {
-                Results.Success(it)
-            } ?: Results.Failed(Exception("Empty response body"))
+                return Resource.Success(mapToDomain(it))
+            }
+            Resource.Failed("No data received.")
         } else {
-            Results.Failed(Exception("HTTP Error: ${response.code()} - ${response.message()}"))
+            Resource.Failed("HTTP Error: ${response.code()} - ${response.message()}")
         }
     } catch (throwable: Throwable) {
         val error = when (throwable) {
-            is IOException -> Exception("Network error. Please check your connection.")
-            is HttpException -> Exception("Server error: ${throwable.code()} - ${throwable.message()}")
-            is IllegalStateException -> Exception("Unexpected response format.")
-            else -> Exception("Unknown error occurred.")
+            is IOException -> "Network error. Please check your connection."
+            is HttpException -> "Server error: ${throwable.code()} - ${throwable.message()}"
+            is IllegalStateException -> "Unexpected response format."
+            else -> "Unknown error: ${throwable.message}"
         }
-        Results.Failed(error)
+        Resource.Failed(error)
     }
 }

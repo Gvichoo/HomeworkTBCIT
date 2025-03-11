@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.resource.AuthorizationError
 import com.example.homeworktbc.data.remote.request.AuthRequest
-import com.example.homeworktbc.data.resource.Results
+import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.data.resource.handleHttpRequest
 import com.example.homeworktbc.domain.repository.RegisterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,10 +45,10 @@ class RegisterViewModel @Inject constructor(
             }
 
             _registerState.value = when (result) {
-                is Results.Success -> {
+                is Resource.Success -> {
                     RegisterState(success = "Registration successful!")
                 }
-                is Results.Failed -> {
+                is Resource.Failed -> {
                     RegisterState(error = AuthorizationError.RegistrationFailedError)
                 }
                 else -> {

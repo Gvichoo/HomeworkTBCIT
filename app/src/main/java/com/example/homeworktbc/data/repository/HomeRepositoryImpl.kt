@@ -4,8 +4,8 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.homeworktbc.data.database.RoomDb
-import com.example.homeworktbc.data.entity.User
+import com.example.homeworktbc.data.local.database.RoomDb
+import com.example.homeworktbc.data.local.entity.User
 import com.example.homeworktbc.data.remote.api.UserApi
 import com.example.homeworktbc.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.Flow

@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homeworktbc.databinding.RecyclerItemBinding
-import com.example.homeworktbc.data.entity.User
+import com.example.homeworktbc.data.local.entity.User
 import com.example.homeworktbc.presentation.extension.loadImagesGlide
 
 class UserPagingAdapter : PagingDataAdapter<User, UserPagingAdapter.MyViewHolder>(UserDiffUtil) {

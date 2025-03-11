@@ -1,11 +1,11 @@
-package com.example.homeworktbc.data.dao
+package com.example.homeworktbc.data.local.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.homeworktbc.data.entity.User
+import com.example.homeworktbc.data.local.entity.User
 
 @Dao
 interface UserDao {
