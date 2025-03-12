@@ -1,6 +1,5 @@
-package com.example.homeworktbc.data.resource
+package com.example.homeworktbc.domain.core
 
-import com.example.homeworktbc.domain.core.Resource
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException

@@ -11,7 +11,8 @@ import javax.inject.Inject
 class LoginRepositoryImpl @Inject constructor(
     private val api: AuthApi
 ) : LoginRepository {
-    override suspend fun login(email: String, password: String): Response<LoginResponseDto> {
+    override suspend fun login(email: String, password: String,rememberMe : Boolean): Response<LoginResponseDto> {
         return api.login(AuthRequest(email, password))
     }
+
 }

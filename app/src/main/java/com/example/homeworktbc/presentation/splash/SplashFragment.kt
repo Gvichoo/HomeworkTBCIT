@@ -6,38 +6,53 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.homeworktbc.data.local.datastore.DataStoreRepositoryImpl
-import com.example.homeworktbc.data.local.datastore.PreferenceKeys
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentSplashBinding
+import com.example.homeworktbc.presentation.splash.effect.SplashEffect
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
 
-    private val viewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModels()
 
     override fun start() {
         binding.progressBar.visibility = View.VISIBLE
-        checkSession()
+        observeState()
+        observeEffects()
+        splashViewModel.checkSession()
     }
-    private fun checkSession() {
+
+    private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.checkSession { isLoggedIn ->
-                    binding.progressBar.visibility = View.GONE
-                    if (isLoggedIn) {
-                        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-                    } else {
-                        findNavController().navigate(R.id.action_splashFragment_to_logInFragment)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                splashViewModel.viewState.collect { state ->
+                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                }
+            }
+        }
+    }
+
+    private fun observeEffects() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                splashViewModel.effects.collect { effect ->
+                    when (effect) {
+                        is SplashEffect.NavigateToHome -> navigateToHome()
+                        is SplashEffect.NavigateToLogin -> navigateToLogin()
                     }
                 }
             }
         }
+    }
+
+    private fun navigateToHome() {
+        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+    }
+
+    private fun navigateToLogin() {
+        findNavController().navigate(R.id.action_splashFragment_to_logInFragment)
     }
 }

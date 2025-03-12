@@ -1,24 +1,48 @@
 package com.example.homeworktbc.presentation.fragmentProfile
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.local.datastore.PreferenceKeys
-import com.example.homeworktbc.domain.repository.DataStoreRepository
+import com.example.homeworktbc.domain.usecase.dataStore.ReadValueUseCase
+import com.example.homeworktbc.domain.usecase.dataStore.RemoveByKeyUseCase
+import com.example.homeworktbc.presentation.baseViewModel.BaseViewModel
+import com.example.homeworktbc.presentation.fragmentProfile.effect.ProfileEffect
+import com.example.homeworktbc.presentation.fragmentProfile.event.ProfileEvent
+import com.example.homeworktbc.presentation.fragmentProfile.state.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val dataStoreRepository: DataStoreRepository
-) : ViewModel() {
+    private val readValueUseCase: ReadValueUseCase,
+    private val removeByKeyUseCase: RemoveByKeyUseCase
+) : BaseViewModel<ProfileState, ProfileEvent, ProfileEffect>(ProfileState()) {
 
-    val savedEmail = dataStoreRepository.readValue(PreferenceKeys.email)
-        .stateIn(viewModelScope, SharingStarted.Lazily, "")
+    init {
+        loadSavedEmail()
+    }
 
-    fun logout() = viewModelScope.launch {
-        dataStoreRepository.removeByKey(PreferenceKeys.email)
+    private fun loadSavedEmail() {
+        updateState { copy(isLoading = true) }
+
+        viewModelScope.launch {
+            readValueUseCase.invoke(PreferenceKeys.email).collect { email ->
+                updateState { copy(savedEmail = email) }
+                updateState { copy(isLoading = false) }
+            }
+        }
+    }
+
+    private fun logout() {
+        viewModelScope.launch {
+            removeByKeyUseCase.invoke(PreferenceKeys.email)
+            emitEffect(ProfileEffect.NavigateToLogin)
+        }
+    }
+
+    override fun obtainEvent(event: ProfileEvent) {
+        when(event){
+            ProfileEvent.LogoutButtonClicked -> logout()
+        }
     }
 }

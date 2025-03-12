@@ -9,7 +9,7 @@ import com.example.homeworktbc.data.local.entity.User
 
 @Database(
     entities = [User::class, RemoteKeyEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class RoomDb : RoomDatabase() {

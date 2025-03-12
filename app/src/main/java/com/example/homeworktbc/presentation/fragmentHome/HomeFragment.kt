@@ -1,6 +1,5 @@
-package com.example.homeworktbc.presentation.homeFragment
+package com.example.homeworktbc.presentation.fragmentHome
 
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -9,7 +8,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.homeworktbc.App
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentHomeBinding
@@ -32,11 +30,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         setUpRecyclerView()
 
-        binding.btnProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        profileButtonClicked()
+
+        observeEvent()
+
+        observeState()
+
+    }
+
+    private fun observeEvent(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.users.collectLatest { pagingData ->
+                        adapter.submitData(pagingData)
+
+                    }
+                }
+            }
 
         }
+    }
 
+    private fun observeState(){
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collectLatest { loadStates ->
@@ -44,19 +60,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
             }
         }
+    }
 
 
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.users.collectLatest { pagingData ->
-                        Log.d("PageFragment", "PagingData received: $pagingData")
-                        adapter.submitData(pagingData)
-
-                    }
-                }
-            }
+    private fun profileButtonClicked(){
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
 
         }
     }
@@ -71,5 +80,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         }
     }
-
 }

@@ -1,17 +1,16 @@
-package com.example.homeworktbc.presentation.homeFragment
+package com.example.homeworktbc.presentation.fragmentHome
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.example.homeworktbc.data.repository.HomeRepositoryImpl
-import com.example.homeworktbc.domain.repository.HomeRepository
+import com.example.homeworktbc.domain.usecase.home.GetUsersPagerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    homeRepository: HomeRepository
+    getUsersPagerUseCase: GetUsersPagerUseCase
 ) : ViewModel() {
-    val users = homeRepository.getUsersPager().
+    val users = getUsersPagerUseCase.invoke().
     cachedIn(viewModelScope)
 }
