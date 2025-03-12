@@ -1,4 +1,4 @@
-package com.example.homeworktbc.di
+package com.example.homeworktbc.data.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore

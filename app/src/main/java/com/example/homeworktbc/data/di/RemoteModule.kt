@@ -1,4 +1,4 @@
-package com.example.homeworktbc.di
+package com.example.homeworktbc.data.di
 
 import com.example.homeworktbc.BuildConfig
 import com.example.homeworktbc.data.remote.api.AuthApi
