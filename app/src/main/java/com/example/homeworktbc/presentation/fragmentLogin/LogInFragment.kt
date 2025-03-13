@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,15 +38,15 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
 
     }
 
+
+
     private fun observeState(){
         collect(loginViewModel.viewState){
             binding.loader.visibility = if (it.isLoading) View.VISIBLE else View.GONE
         }
     }
 
-
     private fun observeEffect(){
-
         collectLatest(loginViewModel.effects){
             when(it){
                 LoginEffect.NavToHomeFragment -> navToHomeFragment()

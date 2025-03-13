@@ -27,6 +27,8 @@ class LoginViewModel @Inject constructor(
 
 
     private fun validateInputsAndLogin(email: String, password: String, rememberMe: Boolean) {
+
+
         val emailValidation = emailValidationUseCase(email)
         val passwordValidation = passwordValidationUseCase(password)
         when {
@@ -42,6 +44,7 @@ class LoginViewModel @Inject constructor(
                 loginUser(email, password, rememberMe)
             }
         }
+
     }
 
 
@@ -93,10 +96,9 @@ class LoginViewModel @Inject constructor(
 
     override fun obtainEvent(event: LoginEvent) {
         when (event) {
-            is LoginEvent.LoginButtonClicked -> viewModelScope.launch {
+            is LoginEvent.LoginButtonClicked ->
                 validateInputsAndLogin(event.email, event.password, event.rememberMe
                 )
-            }
             LoginEvent.RegisterButtonClicked -> viewModelScope.launch {
                 emitEffect(LoginEffect.NavToRegisterFragment)
             }

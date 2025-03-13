@@ -4,13 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.remote.request.AuthRequest
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.core.ValidationResult
-import com.example.homeworktbc.domain.repository.RegisterRepository
 import com.example.homeworktbc.domain.usecase.register.RegisterUseCase
 import com.example.homeworktbc.domain.usecase.validation.EmailValidationUseCase
 import com.example.homeworktbc.domain.usecase.validation.PasswordValidationUseCase
 import com.example.homeworktbc.domain.usecase.validation.RepeatedPasswordValidationUseCase
 import com.example.homeworktbc.presentation.baseViewModel.BaseViewModel
-import com.example.homeworktbc.presentation.fragmentLogin.effect.LoginEffect
 import com.example.homeworktbc.presentation.fragmentRegister.effect.RegisterEffect
 import com.example.homeworktbc.presentation.fragmentRegister.event.RegisterEvent
 import com.example.homeworktbc.presentation.fragmentRegister.state.RegisterState

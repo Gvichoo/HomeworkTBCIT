@@ -30,5 +30,4 @@ class DataStoreRepositoryImpl @Inject constructor(private val dataStore: DataSto
             preferences.remove(key)
         }
     }
-
 }
