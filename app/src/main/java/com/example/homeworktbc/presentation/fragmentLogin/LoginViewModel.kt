@@ -85,9 +85,11 @@ class LoginViewModel @Inject constructor(
 
     private fun saveEmail(email: String) {
         viewModelScope.launch {
-            saveValueUseCase(email)
+            val emailKey = PreferenceKeys.EMAIL_KEY
+            saveValueUseCase(emailKey, email)
         }
     }
+
 
     override fun obtainEvent(event: LoginEvent) {
         when (event) {

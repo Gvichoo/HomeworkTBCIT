@@ -35,10 +35,11 @@ class ProfileViewModel @Inject constructor(
 
     private fun logout() {
         viewModelScope.launch {
-            removeByKeyUseCase.invoke(PreferenceKeys.EMAIL_KEY)
+            removeByKeyUseCase(PreferenceKeys.EMAIL_KEY)
             emitEffect(ProfileEffect.NavigateToLogin)
         }
     }
+
 
     override fun obtainEvent(event: ProfileEvent) {
         when(event){

@@ -1,4 +1,4 @@
-package com.example.homeworktbc.data.local.datastore
+package com.example.homeworktbc.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -12,21 +12,23 @@ import javax.inject.Inject
 
 class DataStoreRepositoryImpl @Inject constructor(private val dataStore: DataStore<Preferences>) :
     DataStoreRepository {
-    override suspend fun saveValue(email : String) {
+
+        override suspend fun saveValue(key: Preferences.Key<String>, value: String) {
         dataStore.edit { preferences ->
-            preferences[EMAIL_KEY] = email
+            preferences[key] = value
         }
     }
 
-    override fun readValue(): Flow<String> {
+    override fun readValue(key: Preferences.Key<String>): Flow<String> {
         return dataStore.data.map { preferences ->
-            preferences[EMAIL_KEY] ?: ""
+            preferences[key] ?: ""
         }
     }
 
-    override suspend fun removeByKey() {
+    override suspend fun removeByKey(key: Preferences.Key<String>) {
         dataStore.edit { preferences ->
-            preferences.remove(EMAIL_KEY)
+            preferences.remove(key)
         }
     }
+
 }
