@@ -7,18 +7,15 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentLogInBinding
+import com.example.homeworktbc.presentation.extension.collect
+import com.example.homeworktbc.presentation.extension.collectLatest
 import com.example.homeworktbc.presentation.fragmentLogin.effect.LoginEffect
 import com.example.homeworktbc.presentation.fragmentLogin.event.LoginEvent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
@@ -41,26 +38,19 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
     }
 
     private fun observeState(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                loginViewModel.viewState.collect { state ->
-                    binding.loader.visibility = if (state.isLoading) View.VISIBLE else View.GONE
-                }
-            }
+        collect(loginViewModel.viewState){
+            binding.loader.visibility = if (it.isLoading) View.VISIBLE else View.GONE
         }
     }
 
 
     private fun observeEffect(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                loginViewModel.effects.collectLatest{effect ->
-                    when(effect){
-                        LoginEffect.NavToHomeFragment -> navToHomeFragment()
-                        LoginEffect.NavToRegisterFragment -> navToRegisterFragment()
-                        is LoginEffect.ShowError -> showMessage(effect.message)
-                    }
-                }
+
+        collectLatest(loginViewModel.effects){
+            when(it){
+                LoginEffect.NavToHomeFragment -> navToHomeFragment()
+                LoginEffect.NavToRegisterFragment -> navToRegisterFragment()
+                is LoginEffect.ShowError -> showMessage(it.message)
             }
         }
     }

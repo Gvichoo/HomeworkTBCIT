@@ -26,7 +26,7 @@ class ProfileViewModel @Inject constructor(
         updateState { copy(isLoading = true) }
 
         viewModelScope.launch {
-            readValueUseCase.invoke(PreferenceKeys.email).collect { email ->
+            readValueUseCase.invoke(PreferenceKeys.EMAIL_KEY).collect { email ->
                 updateState { copy(savedEmail = email) }
                 updateState { copy(isLoading = false) }
             }
@@ -35,7 +35,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun logout() {
         viewModelScope.launch {
-            removeByKeyUseCase.invoke(PreferenceKeys.email)
+            removeByKeyUseCase.invoke(PreferenceKeys.EMAIL_KEY)
             emitEffect(ProfileEffect.NavigateToLogin)
         }
     }

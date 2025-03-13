@@ -17,6 +17,8 @@ import com.example.homeworktbc.BuildConfig
 import com.example.homeworktbc.R
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.databinding.FragmentRegisterBinding
+import com.example.homeworktbc.presentation.extension.collect
+import com.example.homeworktbc.presentation.extension.collectLatest
 import com.example.homeworktbc.presentation.fragmentRegister.effect.RegisterEffect
 import com.example.homeworktbc.presentation.fragmentRegister.event.RegisterEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,38 +44,35 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun observeState(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.viewState.collect { state ->
-                    binding.loader.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-                    if (state.isSuccess){
-                        setFragmentResult(
-                            "registration_request_key",
-                            Bundle().apply {
-                                putString("email", binding.etLoginRegister.text.toString())
-                                putString("password", binding.etPasswordRegister.text.toString())
-                            }
-                        )
-                        findNavController().popBackStack()
+        collect(viewModel.viewState){
+            binding.loader.visibility = if (it.isLoading) View.VISIBLE else View.GONE
+
+            if (it.isSuccess){
+                setFragmentResult(
+                    "registration_request_key",
+                    Bundle().apply {
+                        putString("email", binding.etLoginRegister.text.toString())
+                        putString("password", binding.etPasswordRegister.text.toString())
                     }
-                }
+                )
+                findNavController().popBackStack()
             }
         }
+
+
     }
 
     private fun observeEffect(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.effects.collectLatest { effect ->
-                    when(effect){
-                        RegisterEffect.NavToLogInFragment -> RegisterEffect.NavToLogInFragment
-                        is RegisterEffect.ShowError -> showMessage(effect.message)
-                    }
 
-                }
+        collectLatest(viewModel.effects){
+            when(it){
+                RegisterEffect.NavToLogInFragment -> RegisterEffect.NavToLogInFragment
+                is RegisterEffect.ShowError -> showMessage(it.message)
             }
         }
+
+
     }
 
 

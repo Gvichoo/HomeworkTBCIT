@@ -18,7 +18,7 @@ class SplashViewModel @Inject constructor(
 
     fun checkSession() {
         viewModelScope.launch {
-            val email = readValueUseCase.invoke(PreferenceKeys.email).firstOrNull()
+            val email = readValueUseCase.invoke(PreferenceKeys.EMAIL_KEY).firstOrNull()
             val isLoggedIn = !email.isNullOrEmpty()
             if (isLoggedIn) {
                 emitEffect(SplashEffect.NavigateToHome)

@@ -3,9 +3,14 @@ package com.example.homeworktbc.presentation.fragmentRegister
 import androidx.lifecycle.viewModelScope
 import com.example.homeworktbc.data.remote.request.AuthRequest
 import com.example.homeworktbc.domain.core.Resource
+import com.example.homeworktbc.domain.core.ValidationResult
 import com.example.homeworktbc.domain.repository.RegisterRepository
 import com.example.homeworktbc.domain.usecase.register.RegisterUseCase
+import com.example.homeworktbc.domain.usecase.validation.EmailValidationUseCase
+import com.example.homeworktbc.domain.usecase.validation.PasswordValidationUseCase
+import com.example.homeworktbc.domain.usecase.validation.RepeatedPasswordValidationUseCase
 import com.example.homeworktbc.presentation.baseViewModel.BaseViewModel
+import com.example.homeworktbc.presentation.fragmentLogin.effect.LoginEffect
 import com.example.homeworktbc.presentation.fragmentRegister.effect.RegisterEffect
 import com.example.homeworktbc.presentation.fragmentRegister.event.RegisterEvent
 import com.example.homeworktbc.presentation.fragmentRegister.state.RegisterState
@@ -15,42 +20,41 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val registerUseRepositoryCase: RegisterUseCase
+    private val registerUseRepositoryCase: RegisterUseCase,
+    private val emailValidationUseCase: EmailValidationUseCase,
+    private val passwordValidationUseCase: PasswordValidationUseCase,
+    private val repeatedPasswordValidationUseCase: RepeatedPasswordValidationUseCase
 ) : BaseViewModel<RegisterState, RegisterEvent, RegisterEffect>(RegisterState()) {
 
 
 
     private fun validateInputsAndRegister(email: String, password: String, passwordRepeated: String){
-        if(validateInputs(email, password, passwordRepeated)){
-            registerUser(email, password)
+        val emailValidation = emailValidationUseCase(email)
+        val passwordValidation = passwordValidationUseCase(password)
+        val repeatedPasswordValidation = repeatedPasswordValidationUseCase(password,passwordRepeated)
+        when{
+            emailValidation is ValidationResult.Failure ->{
+                showError(emailValidation.error.message)
+                return
+            }
+            passwordValidation is ValidationResult.Failure ->{
+                showError(passwordValidation.error.message)
+                return
+            }
+            repeatedPasswordValidation is ValidationResult.Failure -> {
+                showError(repeatedPasswordValidation.error.message)
+            }
+            else -> {
+                registerUser(email,password,)
+            }
         }
     }
 
-
-    private fun validateInputs(email: String, password: String, passwordRepeated: String): Boolean {
-        if (email.isEmpty() || password.isEmpty() || passwordRepeated.isEmpty()) {
-            viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("Empty fields!"))
-            }
-            return false
+    private fun showError(errorMessage: String) {
+        viewModelScope.launch {
+            emitEffect(RegisterEffect.ShowError(errorMessage))
         }
-
-        if (password.length < 8) {
-            viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("Password should be at least 8 characters!"))
-            }
-            return false
-        }
-
-        if (password != passwordRepeated) {
-            viewModelScope.launch {
-                emitEffect(RegisterEffect.ShowError("Passwords doesn't match!"))
-            }
-            return false
-        }
-        return true
     }
-
 
     private fun registerUser(email: String, password: String) {
         updateState { copy(isLoading = true) }
@@ -65,8 +69,7 @@ class RegisterViewModel @Inject constructor(
                     updateState { copy(isLoading = true) }
 
                 is Resource.Success -> {
-                    updateState { copy(isSuccess = true) }
-                    updateState { copy(isLoading = true) }
+                    updateState { copy(isSuccess = true,isLoading = true) }
                     emitEffect(RegisterEffect.NavToLogInFragment)
                 }
             }
