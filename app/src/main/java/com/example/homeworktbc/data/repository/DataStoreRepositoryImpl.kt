@@ -13,19 +13,19 @@ import javax.inject.Inject
 class DataStoreRepositoryImpl @Inject constructor(private val dataStore: DataStore<Preferences>) :
     DataStoreRepository {
 
-        override suspend fun saveValue(key: Preferences.Key<String>, value: String) {
+    override suspend fun <T> saveValue(key: Preferences.Key<T>, value: T) {
         dataStore.edit { preferences ->
             preferences[key] = value
         }
     }
 
-    override fun readValue(key: Preferences.Key<String>): Flow<String> {
+    override fun <T> readValue(key: Preferences.Key<T>): Flow<T> {
         return dataStore.data.map { preferences ->
-            preferences[key] ?: ""
+            preferences[key] ?: "" as T
         }
     }
 
-    override suspend fun removeByKey(key: Preferences.Key<String>) {
+    override suspend fun <T> removeByKey(key: Preferences.Key<T>) {
         dataStore.edit { preferences ->
             preferences.remove(key)
         }

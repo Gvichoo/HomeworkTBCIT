@@ -4,9 +4,11 @@ import androidx.datastore.preferences.core.Preferences
 import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepository {
-    suspend fun saveValue(key: Preferences.Key<String>, value: String)
 
-    fun readValue(key: Preferences.Key<String>): Flow<String>
+    suspend fun <T> saveValue(key: Preferences.Key<T>, value: T)
 
-    suspend fun removeByKey(key: Preferences.Key<String>)
+    fun <T> readValue(key: Preferences.Key<T>): Flow<T>
+
+    suspend fun <T> removeByKey(key: Preferences.Key<T>)
+
 }

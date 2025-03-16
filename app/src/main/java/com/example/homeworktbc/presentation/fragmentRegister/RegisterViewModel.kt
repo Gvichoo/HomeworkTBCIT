@@ -57,18 +57,19 @@ class RegisterViewModel @Inject constructor(
     private fun registerUser(email: String, password: String) {
         updateState { copy(isLoading = true) }
         viewModelScope.launch {
-            when(val result = registerUseRepositoryCase.invoke(AuthRequest(email, password))){
-                is Resource.Failed -> {
-                    emitEffect(RegisterEffect.ShowError(result.message.toString())
-                    )
-                    updateState { copy(isLoading = true) }
-                }
-                is Resource.Loading ->
-                    updateState { copy(isLoading = true) }
+            registerUseRepositoryCase(AuthRequest(email,password)).collect{
+                result ->
+                when (result){
+                    is Resource.Failed ->
+                        {emitEffect(RegisterEffect.ShowError(result.message.toString()))
+                        updateState { copy(isLoading = true) }}
 
-                is Resource.Success -> {
-                    updateState { copy(isSuccess = true,isLoading = true) }
-                    emitEffect(RegisterEffect.NavToLogInFragment)
+                    is Resource.Loading -> updateState { copy(isLoading = true) }
+
+                    is Resource.Success -> {
+                        updateState { copy(isSuccess = true,isLoading = true) }
+                        emitEffect(RegisterEffect.NavToLogInFragment)
+                    }
                 }
             }
         }

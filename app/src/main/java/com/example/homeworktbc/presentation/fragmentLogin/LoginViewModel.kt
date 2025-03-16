@@ -20,14 +20,13 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepositoryUseCase: LoginUseCase,
-    private val saveValueUseCase: SaveValueUseCase,
+//    private val saveValueUseCase: SaveValueUseCase,
     private val emailValidationUseCase: EmailValidationUseCase,
     private val passwordValidationUseCase: PasswordValidationUseCase
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
 
 
     private fun validateInputsAndLogin(email: String, password: String, rememberMe: Boolean) {
-
 
         val emailValidation = emailValidationUseCase(email)
         val passwordValidation = passwordValidationUseCase(password)
@@ -48,50 +47,45 @@ class LoginViewModel @Inject constructor(
     }
 
 
-
     private fun showError(errorMessage: String) {
         viewModelScope.launch {
             emitEffect(LoginEffect.ShowError(errorMessage))
         }
     }
 
-
     private fun loginUser(email: String, password: String, rememberMe: Boolean) {
         updateState { copy(isLoading = true) }
 
         viewModelScope.launch {
-            when (val result = loginRepositoryUseCase.invoke(email, password, rememberMe)) {
-                is Resource.Failed -> {
-                    emitEffect(
-                        LoginEffect.ShowError(
-                            result.message ?: "Failed login!"
-                        )
-                    )
-                    updateState { copy(isLoading = false) }
-                }
-                is Resource.Loading -> {
-                    updateState { copy(isLoading = true) }
-                }
-
-                is Resource.Success -> {
-                    updateState { copy(isSuccess = true) }
-                    emitEffect(LoginEffect.NavToHomeFragment)
-                    if (rememberMe) {
-                        saveEmail(email)
+            loginRepositoryUseCase.invoke(email, password, rememberMe)
+                .collect { result ->
+                    when (result) {
+                        is Resource.Failed -> {
+                            emitEffect(LoginEffect.ShowError(result.message ?: "Failed login!"))
+                            updateState { copy(isLoading = false) }
+                        }
+                        is Resource.Loading -> {
+                            updateState { copy(isLoading = true) }
+                        }
+                        is Resource.Success -> {
+                            updateState { copy(isSuccess = true,isLoading = false) }
+                            emitEffect(LoginEffect.NavToHomeFragment)
+//                            if (rememberMe) {
+//                                saveEmail(email)
+//                            }
+                        }
                     }
-                    updateState { copy(isLoading = false) }
                 }
-            }
         }
     }
 
 
-    private fun saveEmail(email: String) {
-        viewModelScope.launch {
-            val emailKey = PreferenceKeys.EMAIL_KEY
-            saveValueUseCase(emailKey, email)
-        }
-    }
+//    private fun saveEmail(email: String) {
+//        viewModelScope.launch {
+//            val emailKey = PreferenceKeys.EMAIL_KEY
+//            saveValueUseCase(emailKey, email)
+//        }
+//    }
 
 
     override fun obtainEvent(event: LoginEvent) {

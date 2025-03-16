@@ -1,7 +1,8 @@
-package com.example.homeworktbc.data.di
+package com.example.homeworktbc.di
 
 import com.example.homeworktbc.BuildConfig
-import com.example.homeworktbc.data.remote.api.AuthApi
+import com.example.homeworktbc.data.remote.api.LogInApi
+import com.example.homeworktbc.data.remote.api.RegisterApi
 import com.example.homeworktbc.data.remote.api.UserApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -22,11 +23,10 @@ import javax.inject.Singleton
 class RemoteModule {
 
     @Provides
-    fun provideHttpLoggingInterceptor():HttpLoggingInterceptor{
-        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-        return httpLoggingInterceptor
     }
 
 
@@ -52,8 +52,14 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit : Retrofit) : AuthApi {
-        return retrofit.create(AuthApi::class.java)
+    fun provideRegisterApi(retrofit : Retrofit) : RegisterApi {
+        return retrofit.create(RegisterApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogInApi(retrofit : Retrofit) : LogInApi {
+        return retrofit.create(LogInApi::class.java)
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package com.example.homeworktbc.data.di
+package com.example.homeworktbc.di
 
 import com.example.homeworktbc.data.repository.DataStoreRepositoryImpl
 import com.example.homeworktbc.data.repository.HomeRepositoryImpl
