@@ -20,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepositoryUseCase: LoginUseCase,
-//    private val saveValueUseCase: SaveValueUseCase,
     private val emailValidationUseCase: EmailValidationUseCase,
     private val passwordValidationUseCase: PasswordValidationUseCase
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
@@ -70,23 +69,11 @@ class LoginViewModel @Inject constructor(
                         is Resource.Success -> {
                             updateState { copy(isSuccess = true,isLoading = false) }
                             emitEffect(LoginEffect.NavToHomeFragment)
-//                            if (rememberMe) {
-//                                saveEmail(email)
-//                            }
                         }
                     }
                 }
         }
     }
-
-
-//    private fun saveEmail(email: String) {
-//        viewModelScope.launch {
-//            val emailKey = PreferenceKeys.EMAIL_KEY
-//            saveValueUseCase(emailKey, email)
-//        }
-//    }
-
 
     override fun obtainEvent(event: LoginEvent) {
         when (event) {
@@ -98,5 +85,4 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
 }
