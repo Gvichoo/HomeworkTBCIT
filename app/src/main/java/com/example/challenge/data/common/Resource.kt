@@ -1,7 +1,5 @@
 package com.example.challenge.data.common
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 sealed class Resource<out D : Any> {
     data class Success<out D : Any>(val data: D) : Resource<D>()
