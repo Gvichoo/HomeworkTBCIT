@@ -23,6 +23,8 @@ class MainAdapter : ListAdapter<CategoryPresentation, MainAdapter.CategoryViewHo
     class CategoryViewHolder(private val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: CategoryPresentation) {
             binding.tvHeavyExcavator.text = category.name
+            val indentation = " ".repeat(category.depth * 4) // 4 spaces per level of depth
+            binding.tvHeavyExcavator.text = "$indentation${category.name}"
         }
     }
 

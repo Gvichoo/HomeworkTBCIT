@@ -10,5 +10,6 @@ data class Category (
     val bglVariant: String?,
     val orderId: Int?,
     val main: Boolean?,
-    val children: List<Category> = emptyList()
+    val children: List<Category> = emptyList(),
+    val depth : Int
 )

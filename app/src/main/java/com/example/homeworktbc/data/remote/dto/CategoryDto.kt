@@ -17,5 +17,5 @@ data class CategoryDto(
     @SerialName("order_id")
     val orderId: Int?,
     val main: Boolean?,
-    val children: List<CategoryDto> = emptyList()
+    val children: List<CategoryDto> = emptyList(),
 )

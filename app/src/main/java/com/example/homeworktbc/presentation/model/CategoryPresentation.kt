@@ -10,5 +10,6 @@ data class CategoryPresentation(
     val bglVariant: String?,
     val orderId: Int?,
     val main: Boolean?,
-    val children: List<CategoryPresentation> = emptyList()
+    val children: List<CategoryPresentation> = emptyList(),
+    val depth : Int
 )

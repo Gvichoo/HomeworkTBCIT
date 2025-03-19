@@ -13,6 +13,7 @@ fun Category.toPresentation(): CategoryPresentation{
         bglVariant =bglVariant ,
         orderId = orderId,
         main = main,
-        children = children.map { it.toPresentation() }
+        children = children.map { it.toPresentation() },
+        depth = depth
     )
 }
