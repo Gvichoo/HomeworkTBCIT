@@ -1,8 +1,7 @@
 package com.example.challenge.data.common
 
-
-sealed class Resource<out D : Any> {
-    data class Success<out D : Any>(val data: D) : Resource<D>()
-    data class Error<out D : Any>(val errorMessage: String) : Resource<D>()
-    data class Loading<Nothing : Any>(val loading: Boolean) : Resource<Nothing>()
+sealed class Resource<T>(val data: T? = null, val message: String? = null) {
+    class Success<T>(data: T?) : Resource<T>(data)
+    class Failed<T>(message: String, data: T? = null) : Resource<T>(data, message)
+    class Loading<T>(data: T? = null) : Resource<T>(data)
 }

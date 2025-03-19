@@ -5,6 +5,6 @@ import com.example.challenge.domain.model.connection.GetConnection
 import kotlinx.coroutines.flow.Flow
 
 interface ConnectionsRepository {
-    suspend fun getConnections(): Flow<Resource<List<GetConnection>>>
+    suspend fun getConnections(): Flow<Resource<GetConnection>>
 
 }
