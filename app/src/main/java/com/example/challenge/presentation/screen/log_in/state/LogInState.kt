@@ -1,4 +1,4 @@
-package com.example.challenge.presentation.state.log_in
+package com.example.challenge.presentation.screen.log_in.state
 
 
 data class LogInState(

@@ -35,9 +35,9 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogIn"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:id="@+id/btnLogIn"
         android:layout_marginTop="10dp"
         android:background="@color/blue"
         android:text="@string/log_in"
@@ -45,9 +45,18 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"/>
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

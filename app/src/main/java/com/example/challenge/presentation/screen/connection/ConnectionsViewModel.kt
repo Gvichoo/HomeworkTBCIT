@@ -1,19 +1,16 @@
 package com.example.challenge.presentation.screen.connection
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.challenge.VSS.presentation.mapper.connection.toPresenter
-import com.example.challenge.data.common.Resource
+import com.example.challenge.presentation.mapper.connection.toPresenter
+import com.example.challenge.domain.core.Resource
+import com.example.challenge.domain.model.connection.GetConnection
 import com.example.challenge.domain.usecase.connection.GetConnectionsUseCase
 import com.example.challenge.domain.usecase.datastore.ClearDataStoreUseCase
-import com.example.challenge.presentation.event.conection.ConnectionEvent
-import com.example.challenge.presentation.state.connection.ConnectionState
+import com.example.challenge.presentation.base.BaseViewModel
+import com.example.challenge.presentation.screen.connection.effect.ConnectionEffect
+import com.example.challenge.presentation.screen.connection.event.ConnectionEvent
+import com.example.challenge.presentation.screen.connection.state.ConnectionState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,53 +20,64 @@ class ConnectionsViewModel @Inject constructor(
     private val getConnectionsUseCase: GetConnectionsUseCase,
     private val clearDataStoreUseCase: ClearDataStoreUseCase
 ) :
-    ViewModel() {
-    private val _connectionState = MutableStateFlow(ConnectionState())
-    val connectionState: SharedFlow<ConnectionState> = _connectionState.asStateFlow()
+    BaseViewModel<ConnectionState,ConnectionEvent,ConnectionEffect>(ConnectionState()) {
 
-    private val _uiEvent = MutableSharedFlow<ConnectionUiEvent>()
-    val uiEvent: SharedFlow<ConnectionUiEvent> get() = _uiEvent
-
-    fun onEvent(event: ConnectionEvent) {
-        when (event) {
-            is ConnectionEvent.FetchConnections -> fetchConnections()
-            is ConnectionEvent.LogOut -> logOut()
-            is ConnectionEvent.ResetErrorMessage -> updateErrorMessage(message = null)
-        }
-    }
-
-    private fun fetchConnections() {
+    private fun  fetchConnections(){
         viewModelScope.launch {
-            getConnectionsUseCase().collect {
-                when (it) {
-                    is Resource.Loading -> _connectionState.update { currentState ->
-                        currentState.copy(
-                            isLoading = it.loading
-                        )
+            getConnectionsUseCase().collect{
+                when(it){
+                    is Resource.Failed -> {
+                        updateErrorMessage(message = it.message)
                     }
-
+                    is Resource.Loading -> {
+                        updateState { copy(isLoading = true) }
+                    }
                     is Resource.Success -> {
-                        _connectionState.update { currentState -> currentState.copy(connections = it.data.map { it.toPresenter() }) }
+                        updateState { copy(connections = (it.data as? List<*>).orEmpty().map { item -> (item as GetConnection).toPresenter() })
+                        }
                     }
-
-                    is Resource.Failed -> updateErrorMessage(message = it.errorMessage)
                 }
             }
         }
     }
 
+//    private fun fetchConnectionss() {
+//        viewModelScope.launch {
+//            getConnectionsUseCase().collect {
+//                when (it) {
+//                    is Resource.Loading -> _connectionState.update { currentState ->
+//                        currentState.copy(
+//                            isLoading = it.loading
+//                        )
+//                    }
+//
+//                    is Resource.Success -> {
+//                        _connectionState.update { currentState -> currentState.copy(connections = it.data.map { it.toPresenter() }) }
+//                    }
+//
+//                    is Resource.Failed -> updateErrorMessage(message = it.errorMessage)
+//                }
+//            }
+//        }
+//    }
+
     private fun logOut(){
         viewModelScope.launch {
             clearDataStoreUseCase()
-            _uiEvent.emit(ConnectionUiEvent.NavigateToLogIn)
+            emitEffect(ConnectionEffect.NavigateToLogIn)
         }
     }
 
     private fun updateErrorMessage(message: String?) {
-        _connectionState.update { currentState -> currentState.copy(errorMessage = message) }
+        updateState { copy(errorMessage = message) }
     }
 
-    sealed interface ConnectionUiEvent {
-        object NavigateToLogIn : ConnectionUiEvent
+
+    override fun obtainEvent(event: ConnectionEvent) {
+        when(event){
+            ConnectionEvent.FetchConnections -> fetchConnections()
+            ConnectionEvent.LogOut -> logOut()
+            ConnectionEvent.ResetErrorMessage -> updateErrorMessage(message = null)
+        }
     }
 }

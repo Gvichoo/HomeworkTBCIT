@@ -28,10 +28,15 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/\"")
+            buildConfigField(name = "BASE_URL", type = "String", value = "\"https://run.mocky.io/v3/\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/\"" )
+            buildConfigField(name = "BASE_URL", type = "String", value = "\"https://run.mocky.io/v3//\"")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -79,6 +84,11 @@ dependencies {
 
     implementation("androidx.fragment:fragment-ktx:1.8.6")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+
+
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.9")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.9")
+
 
 
 

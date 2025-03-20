@@ -1,4 +1,4 @@
-package com.example.challenge.data.common
+package com.example.challenge.domain.core
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
@@ -34,3 +34,5 @@ suspend fun <DTO, DOMAIN_MODEL> handleHttpRequest(apiCall: suspend () -> Respons
         emit(Resource.Failed(error))
     }
 }
+
+

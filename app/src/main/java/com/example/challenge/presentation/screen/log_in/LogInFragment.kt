@@ -1,76 +1,67 @@
 package com.example.challenge.presentation.screen.log_in
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.challenge.R
 import com.example.challenge.presentation.base.BaseFragment
 import com.example.challenge.databinding.FragmentLogInBinding
-import com.example.challenge.presentation.event.log_in.LogInEvent
+import com.example.challenge.presentation.extension.collect
+import com.example.challenge.presentation.extension.collectLatest
+import com.example.challenge.presentation.screen.log_in.event.LogInEvent
 import com.example.challenge.presentation.extension.showSnackBar
-import com.example.challenge.presentation.state.log_in.LogInState
+import com.example.challenge.presentation.screen.log_in.effect.LoginEffect
+import com.example.challenge.presentation.screen.log_in.state.LogInState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
 
     private val viewModel: LogInViewModel by viewModels()
 
-    override fun bind() {
 
+    override fun start() {
+        observeState()
+        observeEffect()
+        logIn()
     }
 
-    override fun bindViewActionListeners() {
-        binding.btnLogIn.setOnClickListener {
-            logIn()
-        }
-    }
 
-    override fun bindObserves() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.logInState.collect {
-                    handleLogInState(logInState = it)
-                }
-            }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiEvent.collect {
-                    handleNavigationEvents(event = it)
-                }
+    private fun observeState(){
+        collect(viewModel.viewState){ state ->
+            binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+            state.errorMessage?.let {
+                binding.root.showSnackBar(message = it)
+                viewModel.onEvent(LogInEvent.ResetErrorMessage)
             }
         }
     }
 
-    private fun logIn() {
-        viewModel.onEvent(
-            LogInEvent.LogIn(
-                email = binding.etEmail.text.toString(),
-                password = binding.etPassword.text.toString()
-            )
-        )
-    }
 
-    private fun handleLogInState(logInState: LogInState) {
-        binding.loaderInclude.loaderContainer.visibility =
-            if (logInState.isLoading) View.VISIBLE else View.GONE
-
-        logInState.errorMessage?.let {
-            binding.root.showSnackBar(message = it)
-            viewModel.onEvent(LogInEvent.ResetErrorMessage)
+    private fun observeEffect(){
+        collectLatest(viewModel.effects){
+            when(it){
+                LoginEffect.NavigateToConnections -> {
+                    Log.d("LogInFragment", "Navigating to connections fragment")
+                    navigateToConnectionsFragment()
+                }
+            }
         }
     }
 
-    private fun handleNavigationEvents(event: LogInViewModel.LogInUiEvent) {
-        when (event) {
-            is LogInViewModel.LogInUiEvent.NavigateToConnections -> findNavController().navigate(
-                LogInFragmentDirections.actionLogInFragmentToFriendsFragment()
-            )
+    private fun navigateToConnectionsFragment(){
+        findNavController().navigate(R.id.action_logInFragment_to_connectionsFragment)
+    }
+
+    private fun logIn(){
+        binding.btnLogIn.setOnClickListener{
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+            Log.d("LogInFragment", "Nope or Yes")
+
+            viewModel.obtainEvent(LogInEvent.LogIn(email,password))
         }
     }
 }

@@ -1,51 +1,83 @@
 package com.example.challenge.di
 
-import com.example.challenge.data.service.connection.ConnectionsService
-import com.example.challenge.data.service.log_in.LogInService
+import com.example.challenge.BuildConfig
+import com.example.challenge.data.remote.service.connection.ConnectionsService
+import com.example.challenge.data.remote.service.log_in.LogInService
+import com.example.challenge.domain.core.HandleResponse
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
-
     @Provides
-    fun provideOkhttpClient(logging:HttpLoggingInterceptor):OkHttpClient{
-        return OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
+    @Singleton
+    fun provideOkHttpClient(
+        authTokenFlow: Flow<String?>, loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        val clientBuilder = OkHttpClient.Builder()
+
+        clientBuilder
+            .addInterceptor { chain ->
+                val authToken = runBlocking { authTokenFlow.first() }
+                val newRequest = if (!authToken.isNullOrBlank()) {
+                    chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer $authToken")
+                        .build()
+                } else {
+                    chain.request()
+                }
+                chain.proceed(newRequest)
+            }
+        clientBuilder.addInterceptor(loggingInterceptor)
+        return clientBuilder.build()
     }
+
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit {
-        val moshi = Moshi.Builder().build()
-        val moshiConverterFactory = MoshiConverterFactory.create(moshi)
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideRetrofitClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://run.mocky.io/v3/")
-            .client(client)
-            .addConverterFactory(moshiConverterFactory)
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+                )
+            )
             .build()
     }
 
 
-//
-//    @Singleton
-//    @Provides
-//    fun provideHandleResponse(): HandleResponse {
-//        return HandleResponse()
-//    }
+    @Singleton
+    @Provides
+    fun provideHandleResponse(): HandleResponse {
+        return HandleResponse()
+    }
 
     @Singleton
     @Provides
@@ -59,3 +91,4 @@ object AppModule {
         return retrofit.create(ConnectionsService::class.java)
     }
 }
+

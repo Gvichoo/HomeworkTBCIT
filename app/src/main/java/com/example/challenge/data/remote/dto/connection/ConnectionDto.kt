@@ -1,4 +1,4 @@
-package com.example.challenge.data.model.connection
+package com.example.challenge.data.remote.dto.connection
 
 import com.squareup.moshi.Json
 
