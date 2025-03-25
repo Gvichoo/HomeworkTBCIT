@@ -4,6 +4,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
+    //Hilt
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    //Firebase
+    id("com.google.gms.google-services")
 
 
 }
@@ -54,7 +59,17 @@ dependencies {
     implementation (libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.androidx.paging.runtime)
-    
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.play.services.cast.framework)
+    implementation(libs.firebase.messaging.ktx)
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
     implementation (libs.okhttp)
     implementation (libs.retrofit)
     testImplementation(libs.junit)
