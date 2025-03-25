@@ -1,10 +1,8 @@
 package com.example.homeworktbc.presentation.fragmentLogin
 
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.data.local.datastore.PreferenceKeys
 import com.example.homeworktbc.domain.core.Resource
 import com.example.homeworktbc.domain.core.ValidationResult
-import com.example.homeworktbc.domain.usecase.dataStore.SaveValueUseCase
 import com.example.homeworktbc.domain.usecase.login.LoginUseCase
 import com.example.homeworktbc.domain.usecase.validation.EmailValidationUseCase
 import com.example.homeworktbc.domain.usecase.validation.PasswordValidationUseCase
@@ -23,6 +21,7 @@ class LoginViewModel @Inject constructor(
     private val emailValidationUseCase: EmailValidationUseCase,
     private val passwordValidationUseCase: PasswordValidationUseCase
 ) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
+
 
 
     private fun validateInputsAndLogin(email: String, password: String, rememberMe: Boolean) {
@@ -56,7 +55,7 @@ class LoginViewModel @Inject constructor(
         updateState { copy(isLoading = true) }
 
         viewModelScope.launch {
-            loginRepositoryUseCase.invoke(email, password, rememberMe)
+            loginRepositoryUseCase(email, password, rememberMe)
                 .collect { result ->
                     when (result) {
                         is Resource.Failed -> {
@@ -74,6 +73,8 @@ class LoginViewModel @Inject constructor(
                 }
         }
     }
+
+
 
     override fun obtainEvent(event: LoginEvent) {
         when (event) {
