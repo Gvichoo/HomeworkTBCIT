@@ -6,16 +6,28 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.homeworktbc.databinding.FragmentImageBinding
 import com.example.homeworktbc.presentation.base.BaseFragment
 import com.example.homeworktbc.presentation.screen.BottomSheetFragment
 import com.example.homeworktbc.presentation.screen.imageFragment.event.ImageEvent
+import com.example.homeworktbc.presentation.worker.UploadWorker
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.util.concurrent.TimeUnit
 
 class ImageFragment : BaseFragment<FragmentImageBinding>(FragmentImageBinding::inflate) {
 
@@ -76,12 +88,39 @@ class ImageFragment : BaseFragment<FragmentImageBinding>(FragmentImageBinding::i
     }
 
     private fun observeImageState() {
-        lifecycleScope.launch {
-            imageViewModel.viewState.collect { state ->
-                state.image?.let { image ->
-                    binding.ivImageHolder.setImageBitmap(image)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                imageViewModel.viewState.collect { state ->
+                    state.image?.let { image ->
+                        binding.ivImageHolder.setImageBitmap(image)
+                        binding.btnUpload.visibility = View.VISIBLE
+                    }
                 }
             }
         }
     }
+
+
+
+//    private fun startWorkManager(){
+//    val constraint = Constraints.Builder()
+//        .setRequiresCharging(true)
+//        .setRequiredNetworkType(NetworkType.CONNECTED)
+//        .build()
+//        val request = OneTimeWorkRequestBuilder<UploadWorker>()
+//            .setConstraints(constraint)
+//            .setBackoffCriteria(
+//                BackoffPolicy.LINEAR,
+//                10000,
+//                TimeUnit.MILLISECONDS)
+//            .build()
+//
+//        WorkManager.getInstance(requireContext())
+//            .enqueueUniqueWork("UploadWorker",ExistingWorkPolicy.KEEP,request)
+//    }
+
+
+
+
+
 }

@@ -61,14 +61,20 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.hilt.android)
     implementation(libs.play.services.cast.framework)
     implementation(libs.firebase.messaging.ktx)
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.androidx.hilt.common)
+    implementation(libs.firebase.storage.ktx)
+    kapt(libs.hilt.android.compiler)
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.analytics)
+
+    //WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
+
 
     implementation (libs.okhttp)
     implementation (libs.retrofit)
