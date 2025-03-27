@@ -18,6 +18,10 @@ class App : Application() {
         createNotificationChannel()
     }
 
+
+
+
+
     private fun setUpCloudMessaging(){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -53,3 +57,5 @@ class App : Application() {
         const val FIREBASE_MESSAGING_TAG = "FIREBASE_MESSAGING_TAG"
     }
 }
+
+
