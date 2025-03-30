@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000217"
+    tools:context=".presentation.screen.MainFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/transfer_internally"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/from"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/accountsFrom"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/cardview_background"
+        app:layout_constraintTop_toBottomOf="@+id/tvFrom" />
+
+    <ImageView
+        android:id="@+id/ivCardFrom"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/visa"
+        app:layout_constraintBottom_toBottomOf="@id/accountsFrom"
+        app:layout_constraintStart_toStartOf="@id/accountsFrom"
+        app:layout_constraintTop_toTopOf="@id/accountsFrom" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCashFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-4dp"
+        android:text="@string/cash"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/ivCardFrom"
+        app:layout_constraintTop_toTopOf="@id/ivCardFrom" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/_10"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/tvCashFrom"
+        app:layout_constraintTop_toBottomOf="@id/tvCashFrom" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="33dp"
+        android:text="@string/_2345"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivCardFrom" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/to"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/tvFrom"
+        app:layout_constraintTop_toBottomOf="@id/ivCardFrom" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/accountsTo"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/cardview_background"
+        app:layout_constraintTop_toBottomOf="@+id/tvTo" />
+
+    <ImageView
+        android:id="@+id/ivCardTo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/visa"
+        app:layout_constraintBottom_toBottomOf="@id/accountsTo"
+        app:layout_constraintStart_toStartOf="@id/accountsTo"
+        app:layout_constraintTop_toTopOf="@id/accountsTo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCashTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-4dp"
+        android:text="@string/cash"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/ivCardTo"
+        app:layout_constraintTop_toTopOf="@id/ivCardTo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/_10"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/tvCashTo"
+        app:layout_constraintTop_toBottomOf="@id/tvCashTo" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="33dp"
+        android:text="@string/_2345"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivCardTo" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etFrom"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text"
+        android:hint="@string/money"
+        android:paddingStart="20dp"
+        android:paddingEnd="1dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintStart_toStartOf="@id/accountsTo"
+        app:layout_constraintTop_toBottomOf="@id/accountsTo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/sell"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etFrom" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etTo"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edit_text"
+        android:hint="@string/money"
+        android:paddingStart="20dp"
+        android:paddingEnd="1dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/accountsTo"
+        app:layout_constraintTop_toBottomOf="@id/accountsTo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/sell"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="@id/etTo"
+        app:layout_constraintTop_toTopOf="@id/etTo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/lorem_psum_1_0_25_lorem_psum_is_ismply"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etTo" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text"
+        android:hint="@string/transfer_between_your_accounts"
+        android:paddingStart="20dp"
+        android:paddingEnd="1dp"
+        android:paddingTop="10dp"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/etTo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/description"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="@id/etDescription"
+        app:layout_constraintTop_toTopOf="@id/etDescription" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
