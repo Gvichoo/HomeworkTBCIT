@@ -5,9 +5,11 @@ plugins {
     alias(libs.plugins.safeargs)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-    //HILT
+    //Hilt
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    //Compose
+//    id("org.jetbrains.kotlin.plugin.compose") version "1.9.0"
 }
 
 android {
@@ -36,12 +38,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
     kapt {
         correctErrorTypes = true
@@ -49,6 +55,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
     val paging_version = "3.3.5"
     val room_version = "2.6.1"
     implementation(libs.androidx.core.ktx)
@@ -109,6 +116,24 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Compose
+    implementation(libs.androidx.activity.compose)
+
+    implementation(libs.androidx.ui)
+
+    implementation(libs.androidx.material3)
+
+    implementation(libs.androidx.ui.tooling.preview)
+
+    debugImplementation(libs.androidx.ui.tooling)
+
+    implementation ("androidx.compose.material:material-icons-extended:1.7.8")
+
+
+
+
+
 
 }
 
