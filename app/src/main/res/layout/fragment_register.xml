@@ -1,192 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragmentRegister.RegisterFragment">
+    >
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="115dp"
-        android:layout_height="125dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/circle_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/tvRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:text="@string/registeri"
-        android:textColor="@color/black"
-        android:textSize="45sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:layout_width="115dp"-->
+    <!--        android:layout_height="125dp"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/circle_top"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnRegister"
-        android:layout_width="330dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="90dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/registerbtn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvRegister"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="90dp"-->
+    <!--        android:text="@string/registeri"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textSize="45sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="@string/register"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnRegister"
-        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
-        app:layout_constraintStart_toStartOf="@+id/btnRegister"
-        app:layout_constraintTop_toTopOf="@+id/btnRegister" />
+    <!--    <androidx.appcompat.widget.AppCompatImageButton-->
+    <!--        android:id="@+id/btnRegister"-->
+    <!--        android:layout_width="330dp"-->
+    <!--        android:layout_height="45dp"-->
+    <!--        android:layout_marginBottom="90dp"-->
+    <!--        android:background="@null"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/registerbtn"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/circle_bot"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginBottom="5dp"-->
+    <!--        android:text="@string/register"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/btnRegister"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/btnRegister"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/btnRegister"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/btnRegister" />-->
 
-    <ImageView
-        android:id="@+id/ivMaan"
-        android:layout_width="305dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="40dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/loginiv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRegister" />
+    <!--    <ImageView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/circle_bot"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etLoginRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/edit_text_back"
-        android:drawableStart="@drawable/convert"
-        android:drawablePadding="13dp"
-        android:hint="@string/username"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="1dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/black"
-        android:textColorHint="#b886f8"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivMaan" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/ivMaan"-->
+    <!--        android:layout_width="305dp"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/loginiv"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tvRegister" />-->
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPasswordRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/edit_text_back"
-        android:drawableStart="@drawable/iconblock"
-        android:drawablePadding="13dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="1dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/black"
-        android:textColorHint="#b886f8"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLoginRegister" />
+    <!--    <androidx.appcompat.widget.AppCompatEditText-->
+    <!--        android:id="@+id/etLoginRegister"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginTop="50dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        android:background="@drawable/edit_text_back"-->
+    <!--        android:drawableStart="@drawable/convert"-->
+    <!--        android:drawablePadding="13dp"-->
+    <!--        android:hint="@string/username"-->
+    <!--        android:paddingStart="16dp"-->
+    <!--        android:paddingTop="8dp"-->
+    <!--        android:paddingEnd="1dp"-->
+    <!--        android:paddingBottom="8dp"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textColorHint="#b886f8"-->
+    <!--        android:textSize="24sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/ivMaan" />-->
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ivEye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:background="#D4B6FB"
-        android:src="@drawable/iconeye"
-        app:layout_constraintBottom_toBottomOf="@+id/etPasswordRegister"
-        app:layout_constraintEnd_toEndOf="@+id/etPasswordRegister"
-        app:layout_constraintTop_toTopOf="@+id/etPasswordRegister" />
+    <!--    <androidx.appcompat.widget.AppCompatEditText-->
+    <!--        android:id="@+id/etPasswordRegister"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        android:background="@drawable/edit_text_back"-->
+    <!--        android:drawableStart="@drawable/iconblock"-->
+    <!--        android:drawablePadding="13dp"-->
+    <!--        android:hint="@string/password"-->
+    <!--        android:inputType="textPassword"-->
+    <!--        android:paddingStart="16dp"-->
+    <!--        android:paddingTop="8dp"-->
+    <!--        android:paddingEnd="1dp"-->
+    <!--        android:paddingBottom="8dp"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textColorHint="#b886f8"-->
+    <!--        android:textSize="24sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/etLoginRegister" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ball"
-        app:layout_constraintBottom_toBottomOf="@+id/ivEye"
-        app:layout_constraintEnd_toEndOf="@+id/ivEye"
-        app:layout_constraintStart_toStartOf="@+id/ivEye"
-        app:layout_constraintTop_toTopOf="@+id/ivEye" />
+    <!--    <androidx.appcompat.widget.AppCompatImageButton-->
+    <!--        android:id="@+id/ivEye"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:background="#D4B6FB"-->
+    <!--        android:src="@drawable/iconeye"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/etPasswordRegister"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/etPasswordRegister"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/etPasswordRegister" />-->
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPasswordRepeat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/edit_text_back"
-        android:drawableStart="@drawable/iconblock"
-        android:drawablePadding="13dp"
-        android:hint="@string/repeat_password"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="1dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/black"
-        android:textColorHint="#b886f8"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
+    <!--    <ImageView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/ball"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/ivEye"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/ivEye"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/ivEye"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/ivEye" />-->
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ivEye2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:background="#D4B6FB"
-        android:src="@drawable/iconeye"
-        app:layout_constraintBottom_toBottomOf="@+id/etPasswordRepeat"
-        app:layout_constraintEnd_toEndOf="@+id/etPasswordRepeat"
-        app:layout_constraintTop_toTopOf="@+id/etPasswordRepeat" />
+    <!--    <androidx.appcompat.widget.AppCompatEditText-->
+    <!--        android:id="@+id/etPasswordRepeat"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        android:background="@drawable/edit_text_back"-->
+    <!--        android:drawableStart="@drawable/iconblock"-->
+    <!--        android:drawablePadding="13dp"-->
+    <!--        android:hint="@string/repeat_password"-->
+    <!--        android:inputType="textPassword"-->
+    <!--        android:paddingStart="16dp"-->
+    <!--        android:paddingTop="8dp"-->
+    <!--        android:paddingEnd="1dp"-->
+    <!--        android:paddingBottom="8dp"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textColorHint="#b886f8"-->
+    <!--        android:textSize="24sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ball"
-        app:layout_constraintBottom_toBottomOf="@+id/ivEye2"
-        app:layout_constraintEnd_toEndOf="@+id/ivEye2"
-        app:layout_constraintStart_toStartOf="@+id/ivEye2"
-        app:layout_constraintTop_toTopOf="@+id/ivEye2" />
+    <!--    <androidx.appcompat.widget.AppCompatImageButton-->
+    <!--        android:id="@+id/ivEye2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:background="#D4B6FB"-->
+    <!--        android:src="@drawable/iconeye"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/etPasswordRepeat"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/etPasswordRepeat"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/etPasswordRepeat" />-->
 
-    <ProgressBar
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPasswordRepeat" />
+    <!--    <ImageView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/ball"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/ivEye2"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/ivEye2"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/ivEye2"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/ivEye2" />-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/loader"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/etPasswordRepeat" />-->
+
+</FrameLayout>

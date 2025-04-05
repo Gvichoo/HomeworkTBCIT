@@ -41,7 +41,6 @@ class LoginViewModel @Inject constructor(
                 loginUser(email, password, rememberMe)
             }
         }
-
     }
 
 

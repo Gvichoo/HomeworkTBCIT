@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,9 +21,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::inflate) {
 
+
+
+
+
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun start() {
+
+
+
         setupPasswordToggle(binding.etPassword, binding.ivEye)
 
         logInButtonClicked()

@@ -81,12 +81,12 @@ fun LoginScreen() {
                             modifier = Modifier.size(24.dp)
                         )
                     },
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color(0xFFD4B6FB),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = Color.Black
-                    ),
+//                    colors = TextFieldDefaults.textFieldColors(
+//                        containerColor = Color(0xFFD4B6FB),
+//                        focusedIndicatorColor = Color.Transparent,
+//                        unfocusedIndicatorColor = Color.Transparent,
+//                        cursorColor = Color.Black
+//                    ),
 
                     modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 20.dp)
 
