@@ -26,12 +26,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
+        }
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
         }
     }
     compileOptions {
@@ -47,6 +46,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
         compose = true
     }
 
@@ -93,5 +93,35 @@ dependencies {
     implementation ("androidx.compose.ui:ui:1.4.0")
     implementation ("androidx.compose.ui:ui-tooling-preview:1.4.0")
     implementation ("androidx.compose.material:material:1.7.8")
+
+    //Okhttp
+    implementation(libs.logging.interceptor)
+
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    //JUnit4
+    // Required -- JUnit 4 framework
+    testImplementation ("junit:junit:4.13.2")
+    // Optional -- Mockito framework (Mocking)
+    testImplementation ("org.mockito:mockito-core:4.0.0")
+    // Optional -- Mockito Kotlin (Mocking in Kotlin)
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    // Optional -- Mockk framework (Alternative mocking framework for Kotlin)
+    testImplementation ("io.mockk:mockk:1.13.10")
+    // Optional -- Robolectric (only if needed for Android-related tests)
+    testImplementation ("androidx.test:core:1.6.1")
+
+
+
+    testImplementation("app.cash.turbine:turbine:1.1.0")
+
+    testImplementation("io.mockk:mockk:1.13.10") // or latest version
+
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0") // Ensure correct version
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")// JUnit for tests
+
+
 
 }
