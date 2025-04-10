@@ -1,6 +1,5 @@
 package com.example.homeworktbc.presentation.screen.login
 
-import com.example.homeworktbc.domain.usecase.login.LoginUseCase
 import com.example.homeworktbc.domain.usecase.validation.EmailValidationUseCase
 import com.example.homeworktbc.domain.usecase.validation.PasswordValidationUseCase
 import io.mockk.MockKAnnotations

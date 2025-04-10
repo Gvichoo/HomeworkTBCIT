@@ -1,16 +1,14 @@
 package com.example.homeworktbc.presentation.screen.login
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homeworktbc.domain.core.Resource
-import com.example.homeworktbc.domain.core.ValidationResult
-import com.example.homeworktbc.domain.usecase.login.LoginUseCase
-import com.example.homeworktbc.domain.usecase.validation.EmailValidationUseCase
-import com.example.homeworktbc.domain.usecase.validation.PasswordValidationUseCase
-import com.example.homeworktbc.presentation.base.BaseViewModel
-import com.example.homeworktbc.presentation.screen.login.effect.LoginEffect
-import com.example.homeworktbc.presentation.screen.login.event.LoginEvent
-import com.example.homeworktbc.presentation.screen.login.state.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,62 +18,146 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepositoryUseCase: LoginUseCase,
-    private val emailValidationUseCase: EmailValidationUseCase,
-    private val passwordValidationUseCase: PasswordValidationUseCase
-) : BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState()) {
+    private val logInUserUseCase: LogInUserUseCase,
+    private val validateEmailUseCase: ValidateEmailUseCase,
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+) : ViewModel() {
 
+    var state by mutableStateOf(LoginState())
+        private set
 
+    var uiState by mutableStateOf(LoginUiState())
+        private set
 
-    private fun validateInputsAndLogin(email: String, password: String, rememberMe: Boolean) {
+    private val _sideEffect = Channel<LoginSideEffect>()
+    val sideEffect: Flow<LoginSideEffect> = _sideEffect.receiveAsFlow()
 
-        val emailValidation = emailValidationUseCase(email)
-        val passwordValidation = passwordValidationUseCase(password)
-        when {
-            emailValidation is ValidationResult.Failure -> {
-                showError(emailValidation.error.message)
-                return
-            }
-            passwordValidation is ValidationResult.Failure -> {
-                showError(passwordValidation.error.message)
-                return
-            }
-            else -> {
-                loginUser(email, password, rememberMe)
-            }
+    fun onEvent(event: LoginEvent) {
+        when (event) {
+            // Email Validation
+            is LoginEvent.EmailChanged -> onEmailChange(email = event.email)
+
+            // Password Validation
+            is LoginEvent.PasswordChanged -> onPasswordChange(password = event.password)
+
+            // Password Visibility Toggle
+            is LoginEvent.TogglePasswordVisibility -> onPasswordVisibilityToggle()
+
+            // Remember Me Handling
+            is LoginEvent.ToggleRememberMe -> onRememberMeToggle()
+
+            // Submit Form
+            is LoginEvent.Submit -> submitLoginData()
+
+            // Register Navigation
+            is LoginEvent.NavigateToRegister -> navigateToRegister()
+
+            // Set Credentials
+            is LoginEvent.SetCredentials -> onCredentialsReceive(
+                email = event.email,
+                password = event.password
+            )
         }
     }
 
+    // Ui Events
 
-    private fun showError(errorMessage: String) {
+    // Register Clicked
+    private fun navigateToRegister() {
         viewModelScope.launch {
-            emitEffect(LoginEffect.ShowError(errorMessage))
+            _sideEffect.send(LoginSideEffect.NavigateToRegister)
         }
     }
 
-    private fun loginUser(email: String, password: String, rememberMe: Boolean) {
-        updateState { copy(isLoading = true) }
+    // Credentials Received from registration screen
+    private fun onCredentialsReceive(email: String, password: String) {
+        uiState = uiState.copy(email = email, password = password)
+    }
 
+    // Email Changed
+    private fun onEmailChange(email: String) {
+        uiState = uiState.copy(email = email)
+
+        val emailError =
+            if (state.formBeenSubmitted) validateEmailUseCase(email = email) else null
+        state = state.copy(emailErrorResource = emailError?.mapToStringResource())
+    }
+
+    // Password Changed
+    private fun onPasswordChange(password: String) {
+        uiState = uiState.copy(password = password)
+
+        val passwordError =
+            if (state.formBeenSubmitted) validatePasswordUseCase(password = password) else null
+        state = state.copy(passwordErrorResource = passwordError?.mapToStringResource())
+    }
+
+    // Toggle Password Visibility
+    private fun onPasswordVisibilityToggle() {
+        uiState = uiState.copy(passwordVisible = !uiState.passwordVisible)
+    }
+
+    // Remember me toggled
+    private fun onRememberMeToggle() {
+        uiState = uiState.copy(rememberMe = !uiState.rememberMe)
+    }
+
+    // Form Submitted
+    private fun submitLoginData() {
+        if (validateForm(
+                email = uiState.email,
+                password = uiState.password
+            )
+        )
+            login(
+                email = uiState.email,
+                password = uiState.password,
+                rememberMe = uiState.rememberMe
+            )
+        else
+            state = state.copy(formBeenSubmitted = true)
+    }
+
+    // Form Validation
+    private fun validateForm(
+        email: String, password: String
+    ): Boolean {
+        val emailError: AuthFieldErrorType? = validateEmailUseCase(email)
+        val passwordError: AuthFieldErrorType? = validatePasswordUseCase(password)
+
+        state = state.copy(
+            emailErrorResource = emailError?.mapToStringResource(),
+            passwordErrorResource = passwordError?.mapToStringResource()
+        )
+
+        val errors: List<AuthFieldErrorType?> = listOf(emailError, passwordError)
+        return errors.all { it == null }
+    }
+
+    // Data Api Call
+    fun login(email: String, password: String, rememberMe: Boolean) {
         viewModelScope.launch {
-            loginRepositoryUseCase(email, password, rememberMe)
-                .collect { result ->
-                    when (result) {
-                        is Resource.Failed -> {
-                            emitEffect(LoginEffect.ShowError(result.message ?: "Failed login!"))
-                            updateState { copy(isLoading = false) }
-                        }
-                        is Resource.Loading -> {
-                            updateState { copy(isLoading = true) }
-                        }
-                        is Resource.Success -> {
-                            updateState { copy(isSuccess = true,isLoading = false) }
-                            emitEffect(LoginEffect.NavToHomeFragment)
-                        }
+            logInUserUseCase(
+                email = email,
+                password = password,
+                rememberMe = rememberMe
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Loader -> state = state.copy(loader = resource.loading)
+
+                    is Resource.Success -> {
+                        _sideEffect.send(LoginSideEffect.NavigateToHome)
+                    }
+
+                    is Resource.Error -> {
+                        state = state.copy(apiError = resource.errorMessage)
+                        _sideEffect.send(LoginSideEffect.ShowAuthError(message = resource.errorMessage))
                     }
                 }
+            }
         }
     }
-
+}
 
 
     override fun obtainEvent(event: LoginEvent) {

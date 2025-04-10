@@ -7,14 +7,16 @@ import androidx.compose.runtime.Composable
 
 
 @Composable
-fun UITheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) DarkColors else LightColors
+fun UsersSocialAppTheme(
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (useDarkTheme) DarkColors else LightColors
 
     MaterialTheme(
-        colorScheme  = colors,
+        colorScheme = colors,
         typography = AppTypography,
-        shapes = Shapes,
-        content = content
+        shapes = AppShapes,
+        content = content,
     )
 }
-

@@ -4,6 +4,10 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.ui.graphics.Color
+
 val PrimaryColor = Color(0xFF700BEF)
 val SecondaryColor = Color(0xFF8e3ef2)
 val BackgroundColor = Color(0xFFd4b6fb)
@@ -29,4 +33,4 @@ val DarkColors = darkColorScheme(
     onSecondary = Color.White,
     onBackground = Color.White,
     onSurface = Color.White
-)//bar
+)
