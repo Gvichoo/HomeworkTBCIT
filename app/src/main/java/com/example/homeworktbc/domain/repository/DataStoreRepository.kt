@@ -7,8 +7,8 @@ interface DataStoreRepository {
 
     suspend fun <T> saveValue(key: Preferences.Key<T>, value: T)
 
-    fun <T> readValue(key: Preferences.Key<T>): Flow<T>
+    fun <T> readValue(key: Preferences.Key<T> , value : T): Flow<T>
 
-    suspend fun <T> removeByKey(key: Preferences.Key<T>)
+    suspend fun clear()
 
 }

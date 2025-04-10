@@ -19,15 +19,18 @@ class DataStoreRepositoryImpl @Inject constructor(private val dataStore: DataSto
         }
     }
 
-    override fun <T> readValue(key: Preferences.Key<T>): Flow<T> {
+    override fun <T> readValue(key: Preferences.Key<T> , value : T): Flow<T> {
         return dataStore.data.map { preferences ->
-            preferences[key] ?: "" as T
+            preferences[key] ?: value
         }
     }
 
-    override suspend fun <T> removeByKey(key: Preferences.Key<T>) {
-        dataStore.edit { preferences ->
-            preferences.remove(key)
-        }
+    override suspend fun clear() {
+        dataStore.edit { it.clear() }
     }
+//    override suspend fun <T> removeByKey(key: Preferences.Key<T>) {
+//        dataStore.edit { preferences ->
+//            preferences.remove(key)
+//        }
+//    }
 }
